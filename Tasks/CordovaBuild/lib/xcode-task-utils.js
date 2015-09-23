@@ -112,7 +112,7 @@ function determineProfile(input) {
 	
 function removeExecOutputNoise(input) {
 	var output = input + "";
-	output = output.trim().replace(/[,\n\r\f\v]/gm,'');	
+	output = output.trim().replace(/[",\n\r\f\v]/gm,'');	
 	return output;
 }
 	

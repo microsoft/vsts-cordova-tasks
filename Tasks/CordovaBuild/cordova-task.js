@@ -7,6 +7,7 @@ var tl = require('vso-task-lib'),
 	path = require('path'),
 	fs = require('fs'),
 	Q = require ('q'),
+	semver = require('semver'),
 	xcutils = require('./lib/xcode-task-utils.js'),
 	ttb = require('taco-team-build');
 
@@ -88,8 +89,7 @@ function processInputs() {
 	platform = tl.getInput('platform', true);
 	switch(platform) {
 		case 'android':
-			processAndroidInputs();
-			return Q(0);
+			return processAndroidInputs();
 		case 'ios':
 			return iosIdentity().then(iosProfile);
 		default: 
@@ -117,7 +117,7 @@ function iosIdentity(code) {
 				tl.debug('No explicit signing identity specified in task.')
 			}
 			if(result.keychain) {
-				iosXcConfig += 'OTHER_CODE_SIGN_FLAGS="--keychain=' + result.keychain + '\n';
+				iosXcConfig += 'OTHER_CODE_SIGN_FLAGS=--keychain=' + result.keychain + '\n';
 			}	
 			deleteKeychain = result.deleteCommand;
 		});
@@ -140,42 +140,43 @@ function iosProfile(code) {
 	});
 }
 
-function processAndroidInputs() {
+function processAndroidInputs() {	
 	if(tl.getInput('forceAnt', false) == "true") {
-		buildArgs.push('--ant');
+			buildArgs.push('--ant');			
 	} else {
-		buildArgs.push('--gradleArg=--no-daemon');  // Gradle daemon will hang the agent - need to turn it off			
+		buildArgs.push('--gradleArg=--no-daemon');  // Gradle daemon will hang the agent - need to turn it off								
 	}
-
+	
 	// Pass in args for Android 4.0.0+, modify ant.properties before_compile for < 4.0.0 (event handler added at exec time)
 	// Override gradle args
 	var keystoreFile = tl.getPathInput('keystoreFile', false);
 	if(fs.lstatSync(keystoreFile).isFile()) {
-		buildArgs.push('--keystore="' + keystoreFile + '"');
 		antProperties['key.store'] = keystoreFile;
-		antProperties.override = true;		
+		antProperties.override = true;						
+		buildArgs.push('--keystore="' + keystoreFile + '"');			
 	}
 	
 	var keystorePass = tl.getInput('keystorePass', false);
 	if(keystorePass) {
-		buildArgs.push('--storePassword="' + keystorePass + '"');
 		antProperties['key.store.password'] = keystorePass;		
-		antProperties.override = true;		
+		antProperties.override = true;						
+		buildArgs.push('--storePassword="' + keystorePass + '"');			
 	}
 	
 	var keystoreAlias = tl.getInput('keystoreAlias', false);
 	if(keystoreAlias) {
-		buildArgs.push('--alias="' + keystoreAlias + '"');
 		antProperties['key.alias'] = keystoreAlias;		
 		antProperties.override = true;		
+		buildArgs.push('--alias="' + keystoreAlias + '"');
 	}
 
 	var keyPass = tl.getInput('keyPass', false);
 	if(keyPass) {
-		buildArgs.push('--password="' + keyPass + '"');
 		antProperties['key.alias.password'] = keyPass;		
-		antProperties.override = true;		
+		antProperties.override = true;						
+		buildArgs.push('--password="' + keyPass + '"');			
 	}
+	return Q();
 }
 
 
@@ -226,7 +227,7 @@ function execBuild(code) {
 }
 
 function writeVsoXcconfig(data) {
-	tl.debug('before_prepare fired hook  writeVsoXcconfig');
+	tl.debug('before_compile fired hook  writeVsoXcconfig');
 	var includeText = '\n#include "build-vso.xcconfig"';
 	var buildVsoXcconfig = path.join(cwd, 'platforms', 'ios', 'cordova', 'build-vso.xcconfig');
 	var buildXccondig;
@@ -258,7 +259,7 @@ function writeVsoXcconfig(data) {
 }
 
 function writeAntProperties(data) {
-	tl.debug('before_prepare fired hook writeAntProperties');
+	tl.debug('before_compile fired hook writeAntProperties');
 	var antFile = path.join(cwd, 'platforms', 'android', 'ant.propeties');
 	var contents = '\n';
 	for(var prop in antProperties) {
