@@ -7,7 +7,7 @@ var tl = require('vso-task-lib'),
 	path = require('path'),
 	fs = require('fs'),
 	Q = require ('q'),
-	xcutils = require('xcode-task-utils'),
+	xcutils = require('./lib/xcode-task-utils.js'),
 	ttb = require('taco-team-build');
 
 // Commands

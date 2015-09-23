@@ -223,7 +223,7 @@
     ],
     "execution": {
         "Node": {
-            "target": "cordova.js",
+            "target": "cordova-task.js",
             "argumentFormat": ""
         },
         "PowerShell": {
