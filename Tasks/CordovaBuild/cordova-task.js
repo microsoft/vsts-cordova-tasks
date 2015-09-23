@@ -208,6 +208,7 @@ function execBuild(code) {
 				cordova.on('before_compile', writeVsoXcconfig)
 			}
 			if(antProperties.override) {
+				console.log('WARN: Cordova versions < 5.0.0 may see build option warnings when specifying Android signing options. These can be safely ignored and do not affect signing when building with Ant.');
 				tl.debug('Adding ant.properties update hook')
 				cordova.on('before_compile', writeAntProperties)				
 			}
@@ -247,7 +248,7 @@ function writeVsoXcconfig(data) {
 			tl.debug('Appended build-vso.xcconfig include to ' + xcconfig);
 		} else {
 			tl.debug('build-vso.xcconfig include already present in ' + xcconfig);			
-		}		
+		}
 	});
 	// Delete existing build-vso.xcconfig if present
 	if(fs.existsSync(buildVsoXcconfig)) {

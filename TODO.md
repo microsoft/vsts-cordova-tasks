@@ -1,5 +1,9 @@
 #To dos
 
+##Known Issues
+1. Warning messages that appear for logging events only when run from the Hosted agent or a Windows agent - unclear why this is happening
+2. Windows support is not yet complete.
+
 ##taco-team-build
 1. Move lib/taco-team-build/cordova-plugin-vs-taco-support/hooks/hook-execute-bit-fix.js code into taco-team-build in getCordova(). Existing logic won't fire when taco-team-build adds platforms if one already exist without execute bits. Then drop from plugin.
 2. Merge these changes along with existing edits into core Microsoft/taco-team-build and Microsoft/cordova-vs-taco-support-plugin repos. 
@@ -26,6 +30,7 @@
 		6. Windows with no arguments specified, no contents in config.xml
 		7. Windows with no arguments specified, contents in config.xml from VS
 		8. Windows with signing args specified in task
+4. P2: Only specify Android args for signing for versions of Cordova that support it (4.0.0+)
 
 ##Decrypt Task
 1. Implement Windows version of the decrypt task. Openssl is not available on Windows by default, so we'll need to either find an alternate decrypt method, require openssl be on the system in the path, or ship openssl with the task (which has LCA implications - though it looks like shipping it has been approved for C&E previously)

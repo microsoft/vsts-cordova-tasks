@@ -12,7 +12,7 @@
     "version": {
         "Major": 0,
         "Minor": 0,
-        "Patch": 84
+        "Patch": 92
     },
     "instanceNameFormat": "Cordova Build $(platform)",
      "groups": [
@@ -80,7 +80,7 @@
             "type": "filePath",
             "label": "Keystore File",
             "required": false,
-            "helpMarkDown": "Path to the keystore file.",
+            "helpMarkDown": "Optional relative path to a Java keystore file that should be used for signing your app.",
             "groupName":"android"   
         },
         {
@@ -88,13 +88,15 @@
             "type": "string",
             "label": "Keystore Password",
             "required": false,
+            "helpMarkDown": "Password for the specified Keystore File.",
             "groupName":"android"   
         },
         {
             "name": "keystoreAlias",
             "type": "string",
-            "label": "Alias",
+            "label": "Key Alias",
             "required": false,
+            "helpMarkDown": "Alias to the key to use for signing in the specified Keystore File.",
             "groupName":"android"   
         },
         {
@@ -102,6 +104,7 @@
             "type": "string",
             "label": "Key Password",
             "required": false,
+            "helpMarkDown": "Password for key referenced by Key Alias in the specified Keystore File.",
             "groupName":"android"   
         },
         { 
@@ -109,7 +112,7 @@
             "type": "string", 
             "label": "Signing Identity", 
             "required":false,
-            "helpMarkDown": "Optional signing identity override that should be used to sign the build. **Not required if P12 Certificate File specified.** Defaults to Xcode Project setting. You may need to select Unlock Default Keychain if you use this option.",
+            "helpMarkDown": "Optional signing identity override that should be used to sign the build. **Not required if P12 Certificate File specified.** You may need to select Unlock Default Keychain if you use this option. Cordova defaults to \"iPhone Developer\" for debug builds and \"iPhone Distribution\" for release builds.",
             "groupName":"ios"
         },
         { 
@@ -142,7 +145,7 @@
             "type": "string", 
             "label": "Default Keychain Password", 
             "required": false,
-            "helpMarkDown": "Password to unlock the default keychain when this option is set.",
+            "helpMarkDown": "Password to unlock the default keychain when this option is set. Use a Build Variable to encrypt.",
             "groupName":"ios"
         },
         { 
@@ -150,7 +153,7 @@
             "type": "string", 
             "label": "Provisioning Profile UUID", 
             "required":false,
-            "helpMarkDown": "Optional UUID of an installed provisioning profile to be used for this build. Not required if Provisioning Profile File specified. Use separate build tasks with different Schemes or Targets to specify separate provisioning profiles by target in a single workspace (iOS, WatchKit, tvOS).",
+            "helpMarkDown": "Optional UUID of an installed provisioning profile to be used for this build. Not required if Provisioning Profile File specified. Attempts to auto-match by default.",
             "groupName":"ios"
         },
         { 
@@ -158,7 +161,7 @@
             "type": "filePath", 
             "label": "Provisioning Profile File", 
             "required":false,
-            "helpMarkDown": "Optional relative path to file containing provisioning profile override to be used for this build. **Omit Provisioning Profile UUID if specified.** Use separate build tasks with different Schemes or Targets to specify separate provisioning profiles by target in a single workspace (iOS, WatchKit, tvOS).",
+            "helpMarkDown": "Optional relative path to file containing provisioning profile override to be used for this build. **Omit Provisioning Profile UUID if specified.**",
             "groupName":"ios"
         },
         { 
