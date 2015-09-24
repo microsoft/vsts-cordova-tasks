@@ -92,9 +92,34 @@ function processInputs() {
 			return processAndroidInputs();
 		case 'ios':
 			return iosIdentity().then(iosProfile);
+		case 'windows':
+			return processWindowsInputs();
 		default: 
 			return Q(0);
 	}
+}
+
+function processWindowsInputs() {
+	var appx = tl.getInput('windowsAppx');
+	if(appx) {
+		buildArgs.push('--appx=' + appx);
+	}
+	
+	var windowsOnly = (tl.getInput('windowsOnly') == 'true');
+	var windowsPhoneOnly = (tl.getInput('windowsPhoneOnly') == 'true');
+	if(windowsOnly) {
+		if(!windowsPhoneOnly) {
+			buildArgs.push('--win');			
+		} else {
+			console.warn('WARN: Both Target Windows Only and Target Windows Phone Only were selected. Building both.')
+		}
+	} else {
+		if(windowsPhoneOnly) {
+			buildArgs.push('--phone');
+		}		
+	}
+	
+	return Q(0);
 }
 
 function iosIdentity(code) {
@@ -176,7 +201,7 @@ function processAndroidInputs() {
 		antProperties.override = true;						
 		buildArgs.push('--password="' + keyPass + '"');			
 	}
-	return Q();
+	return Q(0);
 }
 
 

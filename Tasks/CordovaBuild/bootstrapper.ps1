@@ -23,6 +23,8 @@ param (
     [string]$removeProfile,
     [string]$xcodeDeveloperDir,
     [string]$windowsAppx,
+    [string]$windowsOnly,
+    [string]$windowsPhoneOnly,
     [string]$inputArgs,
     [string]$cwd,
     [string]$outputPattern,
@@ -52,6 +54,8 @@ $Env:INPUT_PROVPROFILE = $provProfile
 $Env:INPUT_REMOVEPROFILE = $removeProfile
 $Env:INPUT_XCODEDEVELOPMENTDIR = $xcodeDeveloperDir
 $Env:INPUT_WINDOWSAPPX = $windowsAppx
+$Env:INPUT_WINDOWSONLY = $windowsOnly
+$Env:INPUT_WINDOWSPHONEONLY = $windowsPhoneOnly
 $Env:INPUT_ARGS = $inputArgs
 $Env:INPUT_CWD = $cwd
 $Env:INPUT_OUTPUTPATTERN = $outputPattern

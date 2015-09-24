@@ -30,10 +30,12 @@
 		6. Windows with no arguments specified, no contents in config.xml
 		7. Windows with no arguments specified, contents in config.xml from VS
 		8. Windows with signing args specified in task
-4. P2: Only specify Android args for signing for versions of Cordova that support it (4.0.0+)
+4. Localization
+5. P2: Only specify Android args for signing for versions of Cordova that support it (4.0.0+)
 
 ##Decrypt Task
-1. Implement Windows version of the decrypt task. Openssl is not available on Windows by default, so we'll need to either find an alternate decrypt method, require openssl be on the system in the path, or ship openssl with the task (which has LCA implications - though it looks like shipping it has been approved for C&E previously)
+1. Localization
+2. P2: Create command line utility to help encrypt certs on Windows and OSX (though OSX is pretty easy without a script)
 
 ##VSO Extension
 1. Work with the VSO team to create a VSO extension encapsulating Cordova tasks
@@ -42,5 +44,6 @@
 	2. Failing that, a possible workaround that has some risk is to update the core VSO agent with the node modules we need and then add a "npm install" step into bootstrap.ps1 that fires if and only if the node_modules folder is missing from the task. This should reslove the problem though its a bit error prone since task installs are unattended.
 
 ##General Repo To-dos
-1. Create README.md
+1. Create better README.md
+2. Shell script version of upload.cmd for OSX/Linux
 2. On-prem TFS will not support VSO extensions until Update 2 sometime mid-2016. As a result we'll need to maintain the update.cmd and author an update.sh script for on-prem deployments w/o an extension.

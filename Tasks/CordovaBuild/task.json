@@ -12,7 +12,7 @@
     "version": {
         "Major": 0,
         "Minor": 0,
-        "Patch": 92
+        "Patch": 95
     },
     "instanceNameFormat": "Cordova Build $(platform)",
      "groups": [
@@ -186,7 +186,25 @@
             "type": "string", 
             "label": "Windows APPX Target", 
             "required":false,
-            "helpMarkDown": "Overrides type of APPX generated (Windows/Phone 8.1, 10). Valid values include: 8.1-win, 8.1-phone, uap (aka Windows/Phone 10).",
+            "helpMarkDown": "Overrides type of APPX generated (Windows/Phone 8.1, 10). Valid values include: 8.1-win, 8.1-phone, uap (aka Windows/Phone 10) on Cordova 5.0.0 (Cordova Windows 4.0.0) and up.",
+            "groupName":"windows"
+        },
+        {
+            "name": "windowsPhoneOnly", 
+            "type": "boolean", 
+            "label": "Target Windows Phone Only", 
+            "required":false,
+            "default": true,
+            "helpMarkDown": "Only generate an appx that works on Windows Phone.",
+            "groupName":"windows"
+        },
+        {
+            "name": "windowsOnly", 
+            "type": "boolean", 
+            "label": "Target Windows Only", 
+            "required":false,
+            "default": true,
+            "helpMarkDown": "Only generate an appx that works on Windows.",
             "groupName":"windows"
         },
         { 
