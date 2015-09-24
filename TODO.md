@@ -13,9 +13,10 @@
 6. P2: Refactor taco-team-build to encapsulate singing features (Tasks/CordovaBuild/cordova-task.js iosIdentity, iosProfile, processAndroidInputs, code in execBuild + writeVsoXcconfig, writeAntProperties)
 
 ##CordovaBuild Task
-1. Implement population of Windows related signing proprties in config.xml and expose those as optional through the VSO task
-2. Work with VSO team to deal with warning messages that appear for logging events - unclear why this is happening
-3. Test, test, test, test, test
+1. Implement the "output folder" where resulting build binaries should be copied
+2. Implement population of Windows related signing proprties in config.xml and expose those as optional through the VSO task
+3. Work with VSO team to deal with warning messages that appear for logging events - unclear why this is happening
+4. Test, test, test, test, test
 	1. Cordova 3.5.0
 	2. Cordova 4.3.1
 	3. Cordova 5.1.1
@@ -30,8 +31,8 @@
 		6. Windows with no arguments specified, no contents in config.xml
 		7. Windows with no arguments specified, contents in config.xml from VS
 		8. Windows with signing args specified in task
-4. Localization
-5. P2: Only specify Android args for signing for versions of Cordova that support it (4.0.0+)
+5. Localization
+6. P2: Only specify Android args for signing for versions of Cordova that support it (4.0.0+)
 
 ##Decrypt Task
 1. Localization

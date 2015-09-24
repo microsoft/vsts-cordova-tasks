@@ -41,7 +41,7 @@
         { 
             "name": "platform", 
             "type": "string", 
-            "label": "Platforms", 
+            "label": "Platform", 
             "defaultValue":"android", 
             "required":true, 
             "helpMarkDown": "Cordova platform to build. Valid options include android, ios, windows, and wp8."
@@ -51,6 +51,7 @@
             "type": "string", 
             "label": "Configuration", 
             "defaultValue":"$(Configuration)", 
+            "helpMarkDown": "Debug or Release",
             "required":true 
         },
         { 
@@ -72,7 +73,7 @@
             "type": "boolean",
             "label": "Force Ant Build",
             "required": false,
-            "helpMarkDown": "Forces Cordova to use Apache Ant to build instead of Gradle on version of Cordova 5.0.0 and up.",
+            "helpMarkDown": "Forces Cordova to use Apache Ant to build instead of Gradle on version of Cordova 5.0.0 / Cordova Android 4.0.0 and up.",
             "groupName":"android"   
         },
         {
@@ -120,7 +121,7 @@
             "type": "filePath", 
             "label": "P12 Certificate File", 
             "required":false,
-            "helpMarkDown": "Optional relative path to a PKCS12 formated p12 certificate file containing a signing certificate to be used for this build. **Omit Signing Idenity if specified.**",
+            "helpMarkDown": "Optional relative path to a PKCS12 formatted p12 certificate file containing a signing certificate to be used for this build. **Omit Signing Identity if specified.**",
             "groupName":"ios"
         },
         { 
