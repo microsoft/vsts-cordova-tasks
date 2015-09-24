@@ -7,13 +7,13 @@ var tl = require('vso-task-lib'),
 	path = require('path'),
 	fs = require('fs'),
 	Q = require ('q'),
-	semver = require('semver'),
+	glob = require('glob'),
 	xcutils = require('./lib/xcode-task-utils.js'),
 	ttb = require('taco-team-build');
 
 // Commands
-var deleteKeychain = null, 
-	deleteProvProfile = null;
+var deleteKeychain, 
+	deleteProfile;
 
 // Globals
 var origXcodeDeveloperDir, configuration, platform, out, buildArgs = [], iosXcConfig = '', antProperties = {}, cwd, targetEmulator;
@@ -25,29 +25,27 @@ processInputs()														// Process inputs to task and create xcv, xcb
 	.then(execBuild)												// Run main xcodebuild / xctool task
 	.then(function() {
 		return targetEmulator ? 0 : ttb.packageProject(platform);	// Package apps if configured
-	})												
-	.then(function(code) {											// When done, delete the temporary keychain if it exists
-		return deleteKeychain ? deleteKeychain.exec() : 0;
 	})
-	.then(function(code) {											// Next delete the provisioning profile if says this should happen		
-		return deleteProvProfile ? deleteProvProfile.exec() : 0;
-	})
+	.then(copyToOutputFolder)												
 	.then(function(code) {											// On success, exit
-		process.env['DEVELOPER_DIR'] = origXcodeDeveloperDir;
 		tl.exit(code);
 	})
-	.fail(function(err) {
+	.fin(function(code) {
+		tl.debug('Promise chain fin')
 		process.env['DEVELOPER_DIR'] = origXcodeDeveloperDir;
+		var promise = deleteKeychain ? deleteKeychain.exec() : Q(0);
+		if(deleteProfile) {
+			tl.debug('Delete profile is true');
+			promise = promise.then(function(code) {
+				return deleteProfile.exec();
+			});
+		}
+		return promise;
+	})
+	.fail(function(err) {
 		console.error(err.message);
 		tl.debug('taskRunner fail');
-		if(deleteKeychain) {										// Delete keychain if created - catch all to avoid problems
-			deleteKeychain.exec()
-				.then(function(code) {
-					tl.exit(1);
-				});
-		} else {
-			tl.exit(1);
-		}
+		tl.exit(1);
 	});
 
 function processInputs() {  
@@ -60,9 +58,6 @@ function processInputs() {
 	cwd = tl.getInput('cwd') || buildSourceDirectory;
 	tl.cd(cwd);
 
-	// Create output directory if not present
-	tl.mkdirP(out);
-
 	// Set the path to the developer tools for this process call if not the default
 	var xcodeDeveloperDir = tl.getInput('xcodeDeveloperDir', false);
 	if(xcodeDeveloperDir) {
@@ -72,7 +67,7 @@ function processInputs() {
 	}
 		
 	configuration = tl.getInput('configuration', true).toLowerCase();
-	buildArgs.push('--' + configuration);		
+	buildArgs.push('--' + configuration);
 	
 	var archs = tl.getInput('archs', false);
 	if(archs) {
@@ -87,6 +82,12 @@ function processInputs() {
 	}
 
 	platform = tl.getInput('platform', true);
+	// Create output directory if not present
+	tl.mkdirP(out);
+	tl.mkdirP(path.join(out, platform));
+	out=path.join(out, platform, configuration);
+	tl.rmRF(out);
+	tl.mkdirP(out);
 	switch(platform) {
 		case 'android':
 			return processAndroidInputs();
@@ -135,6 +136,7 @@ function iosIdentity(code) {
 		
 	return xcutils.determineIdentity(input)
 		.then(function(result) {
+			tl.debug('determineIdentity result ' + JSON.stringify(result));
 			if(result.identity) {
 				iosXcConfig += 'CODE_SIGN_IDENTITY=' + result.identity + '\n';
 				iosXcConfig += 'CODE_SIGN_IDENTITY[sdk=iphoneos*]=' + result.identity + '\n';
@@ -152,17 +154,18 @@ function iosProfile(code) {
 	var input = {
 		cwd: cwd,
 		provProfileUuid:tl.getInput('provProfileUuid', false),
-		provProfilePath:tl.getPathInput('provProfilePath', false),
+		provProfilePath:tl.getPathInput('provProfile', false),
 		removeProfile:(tl.getInput('removeProfile', false)=="true")
 	}
 	
 	return xcutils.determineProfile(input)
 		.then(function(result) {
-		if(result.uuid) {
-			iosXcConfig += 'PROVISIONING_PROFILE=' + result.uuid + '\n';	
-		}
-		deleteProvProfile = result.deleteCommand;
-	});
+			tl.debug('determineProfile result ' + JSON.stringify(result));
+			if(result.uuid) {
+				iosXcConfig += 'PROVISIONING_PROFILE=' + result.uuid + '\n';	
+			}
+			deleteProfile = result.deleteCommand;
+		});
 }
 
 function processAndroidInputs() {	
@@ -202,6 +205,33 @@ function processAndroidInputs() {
 		buildArgs.push('--password="' + keyPass + '"');			
 	}
 	return Q(0);
+}
+
+function copyToOutputFolder(code) {
+	var sources = [];
+	switch(platform) {
+		case 'android':
+			sources = ["platforms/android/ant-build/*.apk", "platforms/android/bin/*.apk"];
+			break;
+		case 'ios':
+			sources = ["platforms/ios/build/device/*.ipa"];
+			break;
+		case 'windows':
+			sources = ["platforms/windows/AppPackages"];
+			break;
+		case 'wp8':
+			sources = ["platforms/wp8/bin/" + configuration + "/*.xap"];
+			break;
+	}
+
+
+	sources.forEach(function(source) {
+		var fullSource = path.join(cwd, source);
+		tl.debug('Copying ' + fullSource + ' to ' + out);
+		tl.cp('-Rf', fullSource, out);
+	});
+	
+	return(0);
 }
 
 

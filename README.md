@@ -33,7 +33,9 @@ You can then do one of two things:
 2. Copy openssl.exe into the Tasks/DecryptFile folder in a local copy of this repository before uploading the task to the build server.
 
 ##Cordova Build Task Usage
-After uploading to your collection you can find the Cordova build task under the Build category when creating build definitions. The task uses [taco-team-build](http://github.com/Microsoft/taco-team-build) and inherits its ability to dynamically acquire the appropriate version of Cordova. Build options are as follows:
+After uploading to your collection you can find the Cordova build task under the Build category when creating build definitions. The task uses [taco-team-build](http://github.com/Microsoft/taco-team-build) and inherits its ability to dynamically acquire the appropriate version of Cordova. It automatically adds the platform you specify so there is no need to call additional Cordova CLI commands if your plugins are checked in with your project.
+
+Build options are as follows:
 
 1. **Platform**: Cordova platform to build. Valid options include android, ios, windows, and wp8.
 2. **Configuration**: debug or release
@@ -51,21 +53,21 @@ After uploading to your collection you can find the Cordova build task under the
 ###iOS Options
 iOS signing can be problematic so the task includes a few different options along with some common capabilities:
 
+**Signing Using a Exported Identity in a P12 File**:
+
+1. **P12 Certificate File**: Optional relative path to a PKCS12 formatted p12 certificate file containing a signing certificate to be used for this build. *Omit Signing Identity if specified.* Generates a temporary keychain with the signing certs that is then cleaned up after the build. Use the Decrypt File task to add further security by encrypting your P12 file before uploading and decrypting during the build.
+2. **P12 Password**: Password to P12 Certificate File if specified. Use a Build Variable to encrypt.
+
 **Signing Using the Default Keychain**:
 
 1. **Signing Identity**: Optional signing identity override that should be used to sign the build. *Not required if P12 Certificate File specified.* You may need to select Unlock Default Keychain if you use this option. Cordova defaults to "iPhone Developer" for debug builds and "iPhone Distribution" for release builds.
 2. **Unlock Default Keychain**: Resolve "User interaction is not allowed" errors by unlocking the default keychain.
 3. **Default Keychain Password**: Password to unlock the default keychain when this option is set. Use a Build Variable to encrypt.
 
-**Signing Using a Exported Identity in a P12 File**:
-
-1. **P12 Certificate File**: Optional relative path to a PKCS12 formatted p12 certificate file containing a signing certificate to be used for this build. *Omit Signing Identity if specified.* Generates a temporary keychain with the signing certs that is then cleaned up after the build.
-2. **P12 Password**: Password to P12 Certificate File if specified. Use a Build Variable to encrypt.
-
 **Mobile Provisioning Profile Options**:
 
 1. **Provisioning Profile UUID**: Optional UUID of an installed provisioning profile to be used for this build. Not required if Provisioning Profile File specified. Attempts to auto-match by default.
-2. **Provisioning Profile File**: Optional relative path to file containing provisioning profile override to be used for this build. *Omit Provisioning Profile UUID if specified.*
+2. **Provisioning Profile File**: Optional relative path to file containing provisioning profile override to be used for this build. *Omit Provisioning Profile UUID if specified.* Use the Decrypt File task to add further security by encrypting your .mobileprovision file before uploading and decrypting during the build.
 3. **Remove Profile After Build**: Specifies that the contents of the Provisioning Profile File should be removed from the build agent after the build is complete. *Only check if you are running one agent per user.*
 
 **Other Options**:

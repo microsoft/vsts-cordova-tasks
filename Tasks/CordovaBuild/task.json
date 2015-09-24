@@ -12,7 +12,7 @@
     "version": {
         "Major": 0,
         "Minor": 0,
-        "Patch": 95
+        "Patch": 120
     },
     "instanceNameFormat": "Cordova Build $(platform)",
      "groups": [

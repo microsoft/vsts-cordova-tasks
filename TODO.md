@@ -13,10 +13,9 @@
 6. P2: Refactor taco-team-build to encapsulate singing features (Tasks/CordovaBuild/cordova-task.js iosIdentity, iosProfile, processAndroidInputs, code in execBuild + writeVsoXcconfig, writeAntProperties)
 
 ##CordovaBuild Task
-1. Implement the "output folder" where resulting build binaries should be copied
-2. Implement population of Windows related signing proprties in config.xml and expose those as optional through the VSO task
-3. Work with VSO team to deal with warning messages that appear for logging events - unclear why this is happening
-4. Test, test, test, test, test
+1. Implement population of Windows related signing proprties in config.xml and expose those as optional through the VSO task
+2. Work with VSO team to deal with warning messages that appear for logging events - unclear why this is happening
+3. Test, test, test, test, test
 	1. Cordova 3.5.0
 	2. Cordova 4.3.1
 	3. Cordova 5.1.1
@@ -31,8 +30,8 @@
 		6. Windows with no arguments specified, no contents in config.xml
 		7. Windows with no arguments specified, contents in config.xml from VS
 		8. Windows with signing args specified in task
-5. Localization
-6. P2: Only specify Android args for signing for versions of Cordova that support it (4.0.0+)
+4. Localization
+5. P2: Only specify Android args for signing for versions of Cordova that support it (4.0.0+)
 
 ##Decrypt Task
 1. Localization
@@ -45,6 +44,6 @@
 	2. Failing that, a possible workaround that has some risk is to update the core VSO agent with the node modules we need and then add a "npm install" step into bootstrap.ps1 that fires if and only if the node_modules folder is missing from the task. This should reslove the problem though its a bit error prone since task installs are unattended.
 
 ##General Repo To-dos
-1. Create better README.md
-2. Shell script version of upload.cmd for OSX/Linux
+1. Shell script version of upload.cmd for OSX/Linux
+2. Get rid of npm install warnings visible in upload script
 2. On-prem TFS will not support VSO extensions until Update 2 sometime mid-2016. As a result we'll need to maintain the update.cmd and author an update.sh script for on-prem deployments w/o an extension.
