@@ -3,12 +3,12 @@
   Licensed under the MIT license. See LICENSE file in the project root for full license information.
 */
 
-var tl = require('vso-task-lib'),
-	path = require('path'),
+var path = require('path'),
 	fs = require('fs'),
 	Q = require ('q'),
 	glob = require('glob'),
 	xcutils = require('./lib/xcode-task-utils.js'),
+	tl = require('./lib/vso-task-lib-proxy.js'),
 	ttb = require('taco-team-build');
 
 // Commands
@@ -31,11 +31,9 @@ processInputs()														// Process inputs to task and create xcv, xcb
 		tl.exit(code);
 	})
 	.fin(function(code) {
-		tl.debug('Promise chain fin')
 		process.env['DEVELOPER_DIR'] = origXcodeDeveloperDir;
 		var promise = deleteKeychain ? deleteKeychain.exec() : Q(0);
 		if(deleteProfile) {
-			tl.debug('Delete profile is true');
 			promise = promise.then(function(code) {
 				return deleteProfile.exec();
 			});
@@ -81,11 +79,28 @@ function processInputs() {
 	platform = tl.getInput('platform', true);
 	switch(platform) {
 		case 'android':
+			if(process.platform == 'darwin') {
+				console.log('Building Android on OSX. Add "cmd" as a "Demand" under "General" to your build definition to cause the build to always route to a Windows agent.')
+			}
 			return processAndroidInputs();
 		case 'ios':
+			if(process.platform != 'darwin') {
+				console.error('Unable to build ios on ' + process.platform + '. Add "Xcode" as a "Demand" under "General" to your build definition to cause the build to always route to a OSX agent.');
+				tl.exit(1);
+			}
 			return iosIdentity().then(iosProfile);
 		case 'windows':
+			if(process.platform == 'darwin' || process.platform == 'linux') {
+				console.error('Unable to build windows on ' + process.platform + '. Add "cmd" as a "Demand" under "General" to your build definition to cause the build to always route to a Windows agent.');
+				tl.exit(1);
+			}
 			return processWindowsInputs();
+		case 'wp8':
+			if(process.platform == 'darwin' || process.platform == 'linux') {
+				console.error('Unable to build wp8 on ' + process.platform + '. Add "cmd" as a "Demand" under "General" to your build definition to cause the build to always route to a Windows agent.');
+				tl.exit(1);
+			}
+			return Q(0);
 		default: 
 			return Q(0);
 	}
@@ -212,7 +227,12 @@ function copyToOutputFolder(code) {
 		var sources = [];
 		switch(platform) {
 			case 'android':
-				sources = ["platforms/android/ant-build/*.apk", "platforms/android/bin/*.apk"];
+				sources = [	"platforms/android/ant-build/*.apk", 				// Ant Build binary
+							"platforms/android/ant-build/*mapping.txt", 		// Need for HockeyApp w/ProGuard
+							"platforms/android/bin/*.apk",						// One possible Gradle landing spot
+							"platforms/android/bin/*mapping.txt",				//
+							"platforms/android/build/outputs/apk/*.apk",		// Another possible Gralde landing spot
+							"platforms/android/build/outputs/apk/*mapping.txt"];
 				break;
 			case 'ios':
 				sources = ["platforms/ios/build/device/*.ipa", "platforms/ios/build/device/*.dSYM"];
@@ -321,22 +341,35 @@ function writeVsoXcconfig(data) {
 
 function writeAntProperties(data) {
 	tl.debug('before_compile fired hook writeAntProperties');
-	var antFile = path.join(cwd, 'platforms', 'android', 'ant.propeties');
+	var antFile = path.join(cwd, 'platforms', 'android', 'ant.properties');
 	var contents = '\n';
 	for(var prop in antProperties) {
 		if(prop != 'override') {
-			contents += prop + '="' + antProperties[prop] + '"\n'; 
+			contents += prop + '=' + escapeReservedChars(antProperties[prop]) + '\n'; 
 		}
 	}
 	if(fs.existsSync(antFile)) {
-		var origContents = fs.readFileSync(antFile);
+		var origContents = fs.readFileSync(antFile, 'ascii') + '\n'; // \n helps end of file match - properties files are Latin-1
 		for(var prop in antProperties) {
-			origContents=origContents.replace(prop + '[.*?]\n','');
+			if(prop != 'override') {
+				// Remove existing property references
+				var reg = new RegExp(prop.trim() + '.?=.*?\\r?\\n\\r?', 'gm')
+				origContents=origContents.replace(reg,'');				
+			}
 		}
 		contents = origContents + contents;
 		fs.unlinkSync(antFile);
 	}
 	tl.debug('Writing config to ' + antFile + '. Contents:');
 	tl.debug(contents);
-	fs.writeFileSync(antFile, contents);
+	fs.writeFileSync(antFile, contents, 'ascii');
 }
+
+function escapeReservedChars(str) {
+
+	str = str.replace(/\\/g,'\\\\');
+	str = str.replace(/:/g,'\\:');
+	str = str.replace(/!/g,'\\!');
+	str = str.replace(/#/g,'\\#');
+	str = str.replace(/=/g,'\\=');
+	return str;}

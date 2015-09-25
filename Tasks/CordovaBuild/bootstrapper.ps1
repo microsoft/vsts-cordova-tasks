@@ -73,4 +73,5 @@ if(!$node)
 
 #cordova Script is in same spot as this powershell script
 $scriptRoot = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
-Invoke-Tool -Path $node.Path -Arguments "cordova-task.js" -WorkingFolder $scriptRoot -WarningPattern "(^npm |^Note: |^Build option --|^WARN: )"
+Invoke-Tool -Path $node.Path -Arguments "cordova-task.js ##vso-task-powershell" -WorkingFolder $scriptRoot -WarningPattern "(^npm |^Note: |^Build option --|^WARN: )" -FailOnStandardError false
+    

@@ -3,10 +3,10 @@
   Licensed under the MIT license. See LICENSE file in the project root for full license information.
 */
 
-var tl = require('vso-task-lib'),
-	path = require('path'),
+var path = require('path'),
 	fs = require('fs'),
 	Q = require ('q'),
+	tl = require('./vso-task-lib-proxy.js'),
 	exec = Q.nfbind(require('child_process').exec);
 
 function determineIdentity(input) {
