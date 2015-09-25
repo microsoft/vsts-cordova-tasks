@@ -24,13 +24,7 @@ Visual Studio Online / TFS build tasks for Cordova app development.  See [TODOs]
 ##Decrypt File Task Setup for Windows
 The decrypt task uses OpenSSL to decrypt which is available at the command line on OSX but may not be available on Windows. 
 
-Download a binary distribution of OpenSSL for Windows from [one of the community mirrors](http://openssl.org/community/binaries.html).
-
-You can then do one of two things:
-
-1. Install it on your build servers and add it to the path - which often occurs by installing the Git command line tools for Windows
-
-2. Copy openssl.exe into the Tasks/DecryptFile folder in a local copy of this repository before uploading the task to the build server.
+OpenSSL comes with the [Git for Windows](https://git-for-windows.github.io/) command line tools for Windows so if the "bin" folder in the installation directory (Ex: C:\Program Files (x86)\Git\bin) is in your path you should already have openssl as an available command in the command prompt.  If not, either install the Git command line tools and add them to your path or download a binary distribution of OpenSSL for Windows from [one of the community mirrors](http://openssl.org/community/binaries.html) and it to your path.
 
 ##Cordova Build Task Usage
 After uploading to your collection you can find the Cordova build task under the Build category when creating build definitions. The task uses [taco-team-build](http://github.com/Microsoft/taco-team-build) and inherits its ability to dynamically acquire the appropriate version of Cordova. It automatically adds the platform you specify so there is no need to call additional Cordova CLI commands if your plugins are checked in with your project.

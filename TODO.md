@@ -4,6 +4,9 @@
 1. Warning messages that appear for logging events only when run from the Hosted agent or a Windows agent - unclear why this is happening
 2. Windows support is not yet complete.
 
+##Code Cleanup Tasks
+1. Elimate the use of fs.existsSync in favor of fs.statSync or fs.accessSync since it has been deprecated in recent versions of Node. (Affects taco-team-build, support plugin, VSO task)
+
 ##taco-team-build
 1. Move lib/taco-team-build/cordova-plugin-vs-taco-support/hooks/hook-execute-bit-fix.js code into taco-team-build in getCordova(). Existing logic won't fire when taco-team-build adds platforms if one already exist without execute bits. Then drop from plugin.
 2. Merge these changes along with existing edits into core Microsoft/taco-team-build and Microsoft/cordova-vs-taco-support-plugin repos. 

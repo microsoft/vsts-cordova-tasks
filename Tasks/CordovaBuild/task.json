@@ -12,8 +12,11 @@
     "version": {
         "Major": 0,
         "Minor": 0,
-        "Patch": 120
+        "Patch": 127
     },
+    "demands": [
+        "npm"
+    ],
     "instanceNameFormat": "Cordova Build $(platform)",
      "groups": [
         {
@@ -231,7 +234,7 @@
             "label": "Output Directory", 
             "defaultValue":"bin", 
             "required":true,
-            "helpMarkDown": "Relative path where build output (binaries) will be placed.",
+            "helpMarkDown": "Relative path where build output (binaries) should be copied. Leave blank if you do not want to copy any output out of the platfom folders.",
             "groupName":"advanced"
         },
         { 

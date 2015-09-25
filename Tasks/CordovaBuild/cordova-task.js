@@ -16,7 +16,7 @@ var deleteKeychain,
 	deleteProfile;
 
 // Globals
-var origXcodeDeveloperDir, configuration, platform, out, buildArgs = [], iosXcConfig = '', antProperties = {}, cwd, targetEmulator;
+var origXcodeDeveloperDir, configuration, platform, buildSourceDirectory, buildArgs = [], iosXcConfig = '', antProperties = {}, cwd, targetEmulator;
 
 // Store original Xcode developer directory so we can restore it after build completes if its overridden
 var origXcodeDeveloperDir = process.env['DEVELOPER_DIR'];
@@ -49,10 +49,7 @@ processInputs()														// Process inputs to task and create xcv, xcb
 	});
 
 function processInputs() {  
-	// if output is rooted ($(build.buildDirectory)/output/...), will resolve to fully qualified path, 
-	// else relative to repo root
-	var buildSourceDirectory = tl.getVariable('build.sourceDirectory') || tl.getVariable('build.sourcesDirectory');
-	out = path.resolve(buildSourceDirectory, tl.getInput('outputPattern', true));
+	buildSourceDirectory = tl.getVariable('build.sourceDirectory') || tl.getVariable('build.sourcesDirectory');
 
 	//Process working directory
 	cwd = tl.getInput('cwd') || buildSourceDirectory;
@@ -82,12 +79,6 @@ function processInputs() {
 	}
 
 	platform = tl.getInput('platform', true);
-	// Create output directory if not present
-	tl.mkdirP(out);
-	tl.mkdirP(path.join(out, platform));
-	out=path.join(out, platform, configuration);
-	tl.rmRF(out);
-	tl.mkdirP(out);
 	switch(platform) {
 		case 'android':
 			return processAndroidInputs();
@@ -208,28 +199,42 @@ function processAndroidInputs() {
 }
 
 function copyToOutputFolder(code) {
-	var sources = [];
-	switch(platform) {
-		case 'android':
-			sources = ["platforms/android/ant-build/*.apk", "platforms/android/bin/*.apk"];
-			break;
-		case 'ios':
-			sources = ["platforms/ios/build/device/*.ipa"];
-			break;
-		case 'windows':
-			sources = ["platforms/windows/AppPackages"];
-			break;
-		case 'wp8':
-			sources = ["platforms/wp8/bin/" + configuration + "/*.xap"];
-			break;
+	
+	var out = path.resolve(buildSourceDirectory, tl.getInput('outputPattern', true));	
+	if(out != buildSourceDirectory) {
+		// Create output directory if not present
+		tl.mkdirP(out);
+		tl.mkdirP(path.join(out, platform));
+		out=path.join(out, platform, configuration);
+		tl.rmRF(out);	// Clean folder out if it was there before - incremental build scenario
+		tl.mkdirP(out);
+		
+		var sources = [];
+		switch(platform) {
+			case 'android':
+				sources = ["platforms/android/ant-build/*.apk", "platforms/android/bin/*.apk"];
+				break;
+			case 'ios':
+				sources = ["platforms/ios/build/device/*.ipa", "platforms/ios/build/device/*.dSYM"];
+				break;
+			case 'windows':
+				sources = ["platforms/windows/AppPackages"];
+				break;
+			case 'wp8':
+				sources = ["platforms/wp8/bin/" + configuration + "/*.xap"];
+				break;
+		}
+	
+		sources.forEach(function(source) {
+			var fullSource = path.join(cwd, source);
+			if(fs.existsSync(fullSource.replace(/\*.*$/g,''))) {
+				tl.debug('Copying ' + fullSource + ' to ' + out);
+				tl.cp('-Rf', fullSource, out);			
+			}
+		});
+	} else {
+		tl.debug('No output folder specified. Skipping copy.');
 	}
-
-
-	sources.forEach(function(source) {
-		var fullSource = path.join(cwd, source);
-		tl.debug('Copying ' + fullSource + ' to ' + out);
-		tl.cp('-Rf', fullSource, out);
-	});
 	
 	return(0);
 }
