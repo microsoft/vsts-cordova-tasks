@@ -11,29 +11,36 @@ var path = require('path'),
 	tl = require('./lib/vso-task-lib-proxy.js'),
 	ttb = require('taco-team-build');
 
+
+// Globals - Easy way to have data avaialble across promises.
+var origXcodeDeveloperDir = process.env['DEVELOPER_DIR'], 	// Store original Xcode developer directory so we can restore it after build completes if its overridden
+	configuration, 											// debug or release
+	platform, 												// android, ios, windows, wp8
+	buildSourceDirectory, 									// Source root. May or may not be working directory.
+	cwd, 													// Working directory
+	buildArgs = [], 										// Cordova build command arguments
+	iosXcConfig = '', 										// Content to put in build-vso.xcconfig 
+	antProperties = {}, 									// Properties to put in ant.properties
+	targetEmulator;											// Build for emulator instead of device
+
 // Commands
-var deleteKeychain, 
-	deleteProfile;
+var deleteKeychain, 										// Command to delete OSX keychain if needed
+	deleteProfile;											// Command to delete Mobile Provisioning Profile if needed
 
-// Globals
-var origXcodeDeveloperDir, configuration, platform, buildSourceDirectory, buildArgs = [], iosXcConfig = '', antProperties = {}, cwd, targetEmulator;
-
-// Store original Xcode developer directory so we can restore it after build completes if its overridden
-var origXcodeDeveloperDir = process.env['DEVELOPER_DIR'];
-
-processInputs()														// Process inputs to task and create xcv, xcb
-	.then(execBuild)												// Run main xcodebuild / xctool task
+// Main execution chain
+processInputs()															// Process inputs to task
+	.then(execBuild)													// Run main Cordova build via taco-team-build
 	.then(function() {
-		return targetEmulator ? 0 : ttb.packageProject(platform);	// Package apps if configured
+		return targetEmulator ? 0 : ttb.packageProject(platform);		// Package apps if configured
 	})
 	.then(copyToOutputFolder)												
-	.then(function(code) {											// On success, exit
+	.then(function(code) {												// On success, exit
 		tl.exit(code);
 	})
 	.fin(function(code) {
-		process.env['DEVELOPER_DIR'] = origXcodeDeveloperDir;
-		var promise = deleteKeychain ? deleteKeychain.exec() : Q(0);
-		if(deleteProfile) {
+		process.env['DEVELOPER_DIR'] = origXcodeDeveloperDir;			// Return to original developer dir if set
+		var promise = deleteKeychain ? deleteKeychain.exec() : Q(0);	// Delete temp keychain if created 
+		if(deleteProfile) {												// Delete installed profile only if flag is set
 			promise = promise.then(function(code) {
 				return deleteProfile.exec();
 			});
@@ -46,6 +53,7 @@ processInputs()														// Process inputs to task and create xcv, xcb
 		tl.exit(1);
 	});
 
+// Process VSO task inputs and get ready to build
 function processInputs() {  
 	buildSourceDirectory = tl.getVariable('build.sourceDirectory') || tl.getVariable('build.sourcesDirectory');
 
@@ -106,6 +114,7 @@ function processInputs() {
 	}
 }
 
+// Process VSO task inputs specific to Windows
 function processWindowsInputs() {
 	var appx = tl.getInput('windowsAppx');
 	if(appx) {
@@ -129,6 +138,7 @@ function processWindowsInputs() {
 	return Q(0);
 }
 
+// Process VSO task inputs specific to iOS signing identities and keychains
 function iosIdentity(code) {
 	
 	var input = {
@@ -156,6 +166,7 @@ function iosIdentity(code) {
 		});
 }
 
+// Process VSO task inputs specific to iOS mobile provisioning profiles
 function iosProfile(code) {
 	var input = {
 		cwd: cwd,
@@ -174,6 +185,7 @@ function iosProfile(code) {
 		});
 }
 
+// Process VSO task inputs specific to Android
 function processAndroidInputs() {	
 	if(tl.getInput('forceAnt', false) == "true") {
 			buildArgs.push('--ant');			
@@ -213,6 +225,7 @@ function processAndroidInputs() {
 	return Q(0);
 }
 
+// Utility function to copy outputs to appropriate folder if specified in the VSO task
 function copyToOutputFolder(code) {
 	
 	var out = path.resolve(buildSourceDirectory, tl.getInput('outputPattern', true));	
@@ -259,7 +272,7 @@ function copyToOutputFolder(code) {
 	return(0);
 }
 
-
+// Main Cordova build exec
 function execBuild(code) {
 	var cordovaConfig = {
 		projectPath: cwd
@@ -307,6 +320,7 @@ function execBuild(code) {
 		});
 }
 
+// Event handler for before_compile that adds xcconfig file - done before_compile so res/native doesn't overwrite xcconfig file we need to mod
 function writeVsoXcconfig(data) {
 	tl.debug('before_compile fired hook  writeVsoXcconfig');
 	var includeText = '\n#include "build-vso.xcconfig"';
@@ -339,6 +353,7 @@ function writeVsoXcconfig(data) {
 	fs.writeFileSync(buildVsoXcconfig, iosXcConfig);
 }
 
+// Event handler for before_compile that adds ant.properties file - done before_compile so res/native doesn't overwrite ant.properties file we need to mod
 function writeAntProperties(data) {
 	tl.debug('before_compile fired hook writeAntProperties');
 	var antFile = path.join(cwd, 'platforms', 'android', 'ant.properties');
@@ -365,6 +380,7 @@ function writeAntProperties(data) {
 	fs.writeFileSync(antFile, contents, 'ascii');
 }
 
+// Utility function to escape resrved characters in Java properties files
 function escapeReservedChars(str) {
 
 	str = str.replace(/\\/g,'\\\\');
@@ -372,4 +388,5 @@ function escapeReservedChars(str) {
 	str = str.replace(/!/g,'\\!');
 	str = str.replace(/#/g,'\\#');
 	str = str.replace(/=/g,'\\=');
-	return str;}
+	return str;
+}

@@ -5,7 +5,7 @@
 -->
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
     id="cordova-plugin-vs-taco-support"
-    version="0.2.1-dev">
+    version="0.2.0">
     <name>Visual Studio Tools for Apache Cordova CLI Support Plugin</name>
     <description>Visual Studio Tools for Apache Cordova CLI Support Plugin</description>
     <license>MIT</license>
