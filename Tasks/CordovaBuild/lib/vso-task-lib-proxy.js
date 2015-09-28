@@ -1,3 +1,5 @@
+// Monkey patch to get vso-task-lib logging and exit functions to work when calling from PowerShell
+
 var tl;
 
 if(!tl && process.argv.length > 2 && process.argv[2] == '##vso-task-powershell' ) {

@@ -47,6 +47,5 @@
 	2. Failing that, a possible workaround that has some risk is to update the core VSO agent with the node modules we need and then add a "npm install" step into bootstrap.ps1 that fires if and only if the node_modules folder is missing from the task. This should reslove the problem though its a bit error prone since task installs are unattended.
 
 ##General Repo To-dos
-1. Shell script version of upload.cmd for OSX/Linux
 2. Get rid of npm install warnings visible in upload script
 2. On-prem TFS will not support VSO extensions until Update 2 sometime mid-2016. As a result we'll need to maintain the update.cmd and author an update.sh script for on-prem deployments w/o an extension.

@@ -13,10 +13,16 @@ Visual Studio Online / TFS build tasks for Cordova app development.  See [TODOs]
 
 3. Enter your VSO collection URL (Ex: https://my-vso-instance.visualsutdio.com/DefaultCollection) and an auth token. Note that you only need to use the "tfx login" command to switch collections not every time you need to upload. After logging in you can simply type "upload" from that point forward. Also, the upload script below will attempt to install the tfx-cli if it is not found and prompt you to specify a collection.
 
-4. Type the following from the root of the repo:
+4. Type the following from the root of the repo from Windows:
 
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	upload
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+	Or from a Mac:
+
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	sh upload.sh
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 5. Profit!
