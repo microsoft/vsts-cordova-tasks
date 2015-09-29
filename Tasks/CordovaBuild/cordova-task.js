@@ -240,12 +240,11 @@ function copyToOutputFolder(code) {
 		var sources = [];
 		switch(platform) {
 			case 'android':
-				sources = [	"platforms/android/ant-build/*.apk", 				// Ant Build binary
-							"platforms/android/bin/*.apk",						// One possible Gradle landing spot
-							"platforms/android/build/outputs/apk/*.apk",		// Another possible Gralde landing spot
-							"platforms/android/ant-build/proguard/*.txt",		// mapping.txt can land in a few sponts or and is need for HockeyApp w/ProGuard enabled
-							"platforms/android/bin/proguard/*.txt",				//  See Android documentation on ProGuard for details: http://developer.android.com/tools/help/proguard.html
-							"platforms/android/build/outputs/proguard/*.txt"];	//
+				sources = [	"platforms/android/ant-build/*.apk", 									// Ant Build binary
+							"platforms/android/bin/*.apk",											// One possible Gradle landing spot
+							"platforms/android/build/outputs/apk/*.apk",							// Another possible Gralde landing spot
+							"platforms/android/ant-build/proguard/*.txt",							// mapping.txt can land in a few sponts or and is need for HockeyApp w/ProGuard enabled
+							"platforms/android/build/outputs/mapping/"+ configuration + "/*.txt"];	//  See Android documentation on ProGuard for details: http://developer.android.com/tools/help/proguard.html
 				break;
 			case 'ios':
 				sources = ["platforms/ios/build/device/*.ipa", "platforms/ios/build/device/*.dSYM"];
