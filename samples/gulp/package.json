@@ -1,0 +1,12 @@
+{
+  "name": "my-cordova-app",
+  "version": "0.0.1",
+  "dependencies": { },
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-typescript": "^2.9.0",
+    "karma": "^0.13.0",
+    "karma-jasmine": "^0.3.6",
+    "karma-chrome-launcher": "^0.2.0"
+  }
+}
