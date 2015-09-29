@@ -1,8 +1,8 @@
+@ECHO OFF
+REM
 REM  Copyright (c) Microsoft. All rights reserved.  
 REM  Licensed under the MIT license. See LICENSE file in the project root for full license information.
 REM
-
-@ECHO OFF
 ECHO vso-cordova-tasks upload
 ECHO Copyright Microsoft Corporation
 

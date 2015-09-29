@@ -12,7 +12,7 @@
     "version": {
         "Major": 0,
         "Minor": 0,
-        "Patch": 182
+        "Patch": 187
     },
     "demands": [
         "npm"
@@ -212,7 +212,7 @@
             "groupName":"windows"
         },
         { 
-            "name": "args", 
+            "name": "cordovaArgs", 
             "type": "string", 
             "label": "Arguments", 
             "required":false,

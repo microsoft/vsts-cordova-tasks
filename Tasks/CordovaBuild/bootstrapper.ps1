@@ -25,12 +25,12 @@ param (
     [string]$windowsAppx,
     [string]$windowsOnly,
     [string]$windowsPhoneOnly,
-    [string]$inputArgs,
+    [string]$cordovaArgs,
     [string]$cwd,
     [string]$outputPattern,
     [string]$targetEmulator
 ) 
- 
+
 import-module "Microsoft.TeamFoundation.DistributedTask.Task.Internal"
 import-module "Microsoft.TeamFoundation.DistributedTask.Task.Common"
  
@@ -58,7 +58,7 @@ $Env:INPUT_XCODEDEVELOPMENTDIR = $xcodeDeveloperDir
 $Env:INPUT_WINDOWSAPPX = $windowsAppx
 $Env:INPUT_WINDOWSONLY = $windowsOnly
 $Env:INPUT_WINDOWSPHONEONLY = $windowsPhoneOnly
-$Env:INPUT_ARGS = $inputArgs
+$Env:INPUT_CORDOVAARGS = $cordovaArgs
 $Env:INPUT_CWD = $cwd
 $Env:INPUT_OUTPUTPATTERN = $outputPattern
 $Env:INPUT_TARGETEMULATOR = $targetEmulator

@@ -241,11 +241,11 @@ function copyToOutputFolder(code) {
 		switch(platform) {
 			case 'android':
 				sources = [	"platforms/android/ant-build/*.apk", 				// Ant Build binary
-							"platforms/android/ant-build/*mapping.txt", 		// Need for HockeyApp w/ProGuard
 							"platforms/android/bin/*.apk",						// One possible Gradle landing spot
-							"platforms/android/bin/*mapping.txt",				//
 							"platforms/android/build/outputs/apk/*.apk",		// Another possible Gralde landing spot
-							"platforms/android/build/outputs/apk/*mapping.txt"];
+							"platforms/android/ant-build/proguard/*.txt",		// mapping.txt can land in a few sponts or and is need for HockeyApp w/ProGuard enabled
+							"platforms/android/bin/proguard/*.txt",				//  See Android documentation on ProGuard for details: http://developer.android.com/tools/help/proguard.html
+							"platforms/android/build/outputs/proguard/*.txt"];	//
 				break;
 			case 'ios':
 				sources = ["platforms/ios/build/device/*.ipa", "platforms/ios/build/device/*.dSYM"];
@@ -279,11 +279,12 @@ function execBuild(code) {
 	}
 
 	// Add optional additional args
-	var args=tl.getDelimitedInput('args', ' ', false);			
+	var args=tl.getDelimitedInput('cordovaArgs', ' ', false);			
 	if(args) {
 		args.forEach(function(arg) {
-			arg = arg.replace('-- --', '--');  // Cut out double-double dash for platform specific args... not needed here	
-			buildArgs.push(arg);	
+			if(arg != '--') {  		// Double-double dash syntax not required when invoking cordova-lib directly
+				buildArgs.push(arg);				
+			}
 		});
 	}
 			
