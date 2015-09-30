@@ -7,6 +7,7 @@
     "gulp-typescript": "^2.9.0",
     "karma": "^0.13.0",
     "karma-jasmine": "^0.3.6",
-    "karma-chrome-launcher": "^0.2.0"
+    "karma-phantomjs-launcher": "~0.1",
+    "karma-junit-reporter": "^0.3.6"
   }
 }
