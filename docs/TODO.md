@@ -13,13 +13,12 @@
 5. Update Tasks/CordovaBuild/package.json to reference the npm location of taco-team-build, remove /lib/taco-team-build from the vso-cordova-tasks repo
 
 ##To dos: Cordova Build Task
-1. Implement population of Windows related signing proprties in config.xml and expose those as optional through the VSO task
-2. Work with VSO team to deal with warning messages that appear for logging events - unclear why this is happening
-3. Test, test, test, test, test
-	1. Cordova 3.5.0
-	2. Cordova 4.3.1
-	3. Cordova 5.1.1
-	4. Cordova 5.3.1
+1. In-progress: Work with VSO team to deal with warning messages that appear for logging events. This appears to be a VSO Windows agent bug. Fix is in progress and the VSO team is looking to enable node scripts from the Windows agent which allows us to do away with the powershell boostrap.  TBD on timelines.
+2. Test, test, test, test, test
+	1. Cordova 3.5.0 - Version of cordova that requires the "cordova" lib instead of cordova-lib since numbering differed
+	2. Cordova 4.3.1 - Ant based build
+	3. Cordova 5.1.1 - Default version in TACO 1.0 and first solid Gradle based build version along with Win 10
+	4. Cordova 5.3.3 - Most recent
 	5. Variations:
 		1. iOS specifying p12 and mobile prov
 		2. iOS when running vsoagent as daemon: 
@@ -31,8 +30,14 @@
 			1. Windows with no arguments specified, no contents in config.xml
 			2. Windows with no arguments specified, contents in config.xml from VS
 			3. Windows with signing args specified in task
-4. Localization of task.json contents (no node localization support yet available in vso agent)
-5. P2: Only specify Android args for signing for versions of Cordova that support it (4.0.0+)
+4. Telemetry for some key information:
+	1. Cordova versions used - pulled either from the VSO task or taco.json. Likely should be added to taco-team-build
+	2. Which signing approach is being used for iOS. Likely can key off the radio button on the task.
+	3. Breakdown of builds by platform - key'd off the "platform" attribute
+	4. This is in addition to basic usage metrics we should get from VSO itself already - but we need to understand how to get data from on-prem TFS too (if possible)
+5. Implement population of Windows related signing proprties in config.xml and expose those as optional through the VSO task
+6. Localization of task.json contents (no node localization support yet available in vso agent)
+7. P2: Only specify Android args for signing for versions of Cordova that support it (4.0.0+)
 
 ##To dos: Decrypt Task
 1. **Remove from repo! Getting merged into vso-agent-tasks main repo.** Left here for convienence.
