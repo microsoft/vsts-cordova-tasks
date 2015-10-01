@@ -35,6 +35,7 @@
 5. P2: Only specify Android args for signing for versions of Cordova that support it (4.0.0+)
 
 ##To dos: Decrypt Task
+1. **Remove from repo! Getting merged into vso-agent-tasks main repo.** Left here for convienence.
 1. Localization of task.json and decrypt.ps1 messages (no node localization support yet available in vso agent)
 2. P2: Create command line utility to help encrypt certs on Windows and OSX (though OSX is pretty easy without a script)
 

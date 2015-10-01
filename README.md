@@ -28,6 +28,8 @@ Visual Studio Online / TFS build tasks for Cordova app development.  See [TODOs]
 5. Profit!
 
 ##Decrypt File Task Setup for Windows
+**Note: The decrypt task will ultimatley be merged into the primary [vso-agent-tasks](http://github.com/Microsoft/vso-agent-tasks) repo. It's presence here is temporary.**
+
 The decrypt task uses OpenSSL to decrypt which is available at the command line on OSX but may not be available on Windows. 
 
 OpenSSL comes with the [Git for Windows](https://git-for-windows.github.io/) command line tools for Windows so if the "bin" folder in the installation directory (Ex: C:\Program Files (x86)\Git\bin) is in your path you should already have openssl as an available command in the command prompt.  If not, either install the Git command line tools and add them to your path or download a binary distribution of OpenSSL for Windows from [one of the community mirrors](http://go.microsoft.com/fwlink/?LinkID=627128) and it to your path.

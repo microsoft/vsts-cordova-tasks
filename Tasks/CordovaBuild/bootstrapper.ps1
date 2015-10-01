@@ -13,6 +13,7 @@ param (
     [string]$keystorePass,
     [string]$keystoreAlias,
     [string]$keyPass,
+    [string]$iosSignMethod,
     [string]$iosSigningIdentity,
     [string]$p12,
     [string]$p12pwd,
@@ -46,6 +47,7 @@ $Env:INPUT_KEYSTOREFILE = $keystoreFile
 $Env:INPUT_KEYSTOREPASS = $keystorePass
 $Env:INPUT_KEYSTOREALIAS = $keystoreAlias
 $Env:INPUT_KEYPASS = $keyPass
+$Env:INPUT_IOSSIGNMETHOD= $iosSignMethod
 $Env:INPUT_IOSSIGNINGIDENTITY = $iosSigningIdentity
 $Env:INPUT_P12 = $p12
 $Env:INPUT_P12PWD = $p12pwd
