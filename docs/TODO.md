@@ -11,6 +11,7 @@
 3. Update sub-module in taco-team-build to latest commit.  Still need to reference this way because plugins.cordova.io is now read only so there's no way to publish the support plugin for use with Cordova < 4.0.0
 4. Publish taco-team-build, cordova-plugin-vs-taco-support to npm
 5. Update Tasks/CordovaBuild/package.json to reference the npm location of taco-team-build, remove /lib/taco-team-build from the vso-cordova-tasks repo
+6. Investigate reusing TACO code or the newly released version-manager-cordova-software as an alternate way to acuqire and manage cordova versions instead of the custom logic in taco-team-build that pre-dated these modules
 
 ##To dos: Cordova Build Task
 1. In-progress: Work with VSO team to deal with warning messages that appear for logging events. This appears to be a VSO Windows agent bug. Fix is in progress and the VSO team is looking to enable node scripts from the Windows agent which allows us to do away with the powershell boostrap.  TBD on timelines.
@@ -57,6 +58,7 @@
 ##To do: Cordova VSO cache script
 1. Update with the latest few versions of Cordova
 2. Update with any test npm modules we want to reccomend
+3. Refactor cache script after investigating switching taco-team-build to reuse TACO code or the newly released version-manager-cordova-software as an alternate way to acuqire and manage cordova versions instead of the custom logic in taco-team-build that pre-dated these modules.
 
 ##To do: Other tasks to create
 1. Cordova Command Task - Reuses taco-team-build code to supprot other Cordova commands
