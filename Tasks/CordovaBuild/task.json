@@ -12,7 +12,7 @@
     "version": {
         "Major": 0,
         "Minor": 0,
-        "Patch": 190
+        "Patch": 192
     },
     "demands": [
         "npm"
@@ -43,7 +43,7 @@
     "inputs": [
         { 
             "name": "platform", 
-            "type": "dropdown", 
+            "type": "string", 
             "label": "Platform", 
             "defaultValue":"android", 
             "required":true, 

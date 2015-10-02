@@ -1,0 +1,72 @@
+{
+    "id": "61EC6339-4A6A-4A69-875E-5A6f4DB157A2",
+    "name": "CordovaCommand",
+    "friendlyName": "Cordova Command",
+    "description": "Run a Cordova CLI command",
+    "helpMarkDown": "[More Information](http://go.microsoft.com/fwlink/?LinkID=613730)",
+    "category": "Build",
+    "visibility": [
+                "Build"
+                  ],
+    "author": "Microsoft Corporation",
+    "version": {
+        "Major": 0,
+        "Minor": 0,
+        "Patch": 18
+    },
+    "demands": [
+        "npm"
+    ],
+    "instanceNameFormat": "Cordova Command $(cordovaCommand)",
+     "groups": [
+        {
+            "name":"advanced",
+            "displayName":"Advanced",
+            "isExpanded":false
+        }
+    ],
+    "inputs": [
+        { 
+            "name": "cordovaCommand", 
+            "type": "string", 
+            "label": "Command", 
+            "defaultValue":"", 
+            "required":true, 
+            "helpMarkDown": "Cordova command to run. Ex: \"platform add android\""
+        },
+        { 
+            "name": "cordovaArgs", 
+            "type": "string", 
+            "label": "Arguments", 
+            "required":false,
+            "helpMarkDown": "Arguments that should be used for the command."
+        },
+        { 
+            "name": "cordovaVersion", 
+            "type": "string", 
+            "label": "Cordova Version", 
+            "required":false, 
+            "helpMarkDown": "Version of Cordova tools to use to run the command If not specified, looks at taco.json to determine the version and falls back on a default if no taco.json is found."
+        },
+        { 
+            "name": "cwd", 
+            "type": "filePath", 
+            "label": "Working Directory", 
+            "defaultValue":"", 
+            "required":false,
+            "helpMarkDown": "Working directory for build runs. Defaults to the root of the repository.",
+            "groupName":"advanced"
+        }
+    ],
+    "execution": {
+        "Node": {
+            "target": "cordova-command-task.js",
+            "argumentFormat": ""
+        },
+        "PowerShell": {
+            "target": "$(currentDirectory)\\bootstrapper.ps1",
+            "argumentFormat": "",
+            "workingDirectory": "$(currentDirectory)"
+        }        
+    }    
+}

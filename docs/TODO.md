@@ -6,6 +6,7 @@
 3. P2: Refactor taco-team-build to encapsulate singing features (Tasks/CordovaBuild/cordova-task.js iosIdentity, iosProfile, processAndroidInputs, code in execBuild + writeVsoXcconfig, writeAntProperties)
 
 ##To dos: taco-team-build
+1. Merge in latest changes from lib to taco-team-build 
 1. Refactor caching
 	1. P0: Update base cache location to mirror TACO CLI location.  Accept either CORDOVA_CACHE or TACO_HOME env vars for location
 	1. P1: Investigate reusing TACO code ... 
@@ -39,15 +40,15 @@
 	2. Which signing approach is being used for iOS. Likely can key off the radio button on the task.
 	3. Breakdown of builds by platform - key'd off the "platform" attribute
 	4. This is in addition to basic usage metrics we should get from VSO itself already - but we need to understand how to get data from on-prem TFS too (if possible)
-5. Implement population of Windows related signing proprties in config.xml and expose those as optional through the VSO task
+5. Update More Information "fwlink" location in all tasks in task.json
 6. Localization of task.json contents (no node localization support yet available in vso agent)
-7. P2: Only specify Android args for signing for versions of Cordova that support it (4.0.0+)
+7. Implement population of Windows related signing proprties in config.xml and expose those as optional through the VSO task
+8. P2: Only specify Android args for signing for versions of Cordova that support it (4.0.0+)
 
 ##To do: Other tasks to create
-1. P1: Cordova Command Task - Support making arbitrary CLI commands for specified version of Cordova or what is in taco.json
-2. P1: Ionic (CLI) Command Task
-3. P2: PhoneGap (CLI) Command Task
-4. P2: Pre-cache these CLIs in VSO
+1. P1: Ionic (CLI) Command Task
+2. P2: PhoneGap (CLI) Command Task
+3. P2: Pre-cache these CLIs in VSO
 
 ##To dos: Decrypt Task
 1. **Remove from repo! Getting merged into vso-agent-tasks main repo.** Left here for convienence.
