@@ -6,12 +6,15 @@
 3. P2: Refactor taco-team-build to encapsulate singing features (Tasks/CordovaBuild/cordova-task.js iosIdentity, iosProfile, processAndroidInputs, code in execBuild + writeVsoXcconfig, writeAntProperties)
 
 ##To dos: taco-team-build
+1. Refactor caching
+	1. P0: Update base cache location to mirror TACO CLI location.  Accept either CORDOVA_CACHE or TACO_HOME env vars for location
+	1. P1: Investigate reusing TACO code ... 
+	2. .... the newly released version-manager-cordova-software as an alternate way to acuqire and manage cordova versions instead of the custom logic in taco-team-build that pre-dated these modules
 1. Move lib/taco-team-build/cordova-plugin-vs-taco-support/hooks/hook-execute-bit-fix.js code into taco-team-build in getCordova(). Existing logic won't fire when taco-team-build adds platforms if one already exist without execute bits. Then drop from plugin.
 2. Merge these changes along with existing edits into core Microsoft/taco-team-build and Microsoft/cordova-vs-taco-support-plugin repos. 
 3. Update sub-module in taco-team-build to latest commit.  Still need to reference this way because plugins.cordova.io is now read only so there's no way to publish the support plugin for use with Cordova < 4.0.0
 4. Publish taco-team-build, cordova-plugin-vs-taco-support to npm
 5. Update Tasks/CordovaBuild/package.json to reference the npm location of taco-team-build, remove /lib/taco-team-build from the vso-cordova-tasks repo
-6. Investigate reusing TACO code or the newly released version-manager-cordova-software as an alternate way to acuqire and manage cordova versions instead of the custom logic in taco-team-build that pre-dated these modules
 
 ##To dos: Cordova Build Task
 1. In-progress: Work with VSO team to deal with warning messages that appear for logging events. This appears to be a VSO Windows agent bug. Fix is in progress and the VSO team is looking to enable node scripts from the Windows agent which allows us to do away with the powershell boostrap.  TBD on timelines.
@@ -40,6 +43,12 @@
 6. Localization of task.json contents (no node localization support yet available in vso agent)
 7. P2: Only specify Android args for signing for versions of Cordova that support it (4.0.0+)
 
+##To do: Other tasks to create
+1. P1: Cordova Command Task - Support making arbitrary CLI commands for specified version of Cordova or what is in taco.json
+2. P1: Ionic (CLI) Command Task
+3. P2: PhoneGap (CLI) Command Task
+4. P2: Pre-cache these CLIs in VSO
+
 ##To dos: Decrypt Task
 1. **Remove from repo! Getting merged into vso-agent-tasks main repo.** Left here for convienence.
 1. Localization of task.json and decrypt.ps1 messages (no node localization support yet available in vso agent)
@@ -60,7 +69,3 @@
 2. Update with any test npm modules we want to reccomend
 3. Refactor cache script after investigating switching taco-team-build to reuse TACO code or the newly released version-manager-cordova-software as an alternate way to acuqire and manage cordova versions instead of the custom logic in taco-team-build that pre-dated these modules.
 
-##To do: Other tasks to create
-1. Cordova Command Task - Reuses taco-team-build code to supprot other Cordova commands
-2. Ionic (CLI) Command Task
-3. PhoneGap (CLI) Command Task
