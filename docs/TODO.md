@@ -6,12 +6,13 @@
 3. P2: Refactor taco-team-build to encapsulate singing features (Tasks/CordovaBuild/cordova-task.js iosIdentity, iosProfile, processAndroidInputs, code in execBuild + writeVsoXcconfig, writeAntProperties)
 
 ##To dos: taco-team-build
-1. Merge in latest changes from lib to taco-team-build 
-1. Refactor caching
+1. Merge in latest changes from lib to taco-team-build - Latest refactoring enables using cache w/o loading Cordova module
+1. Move lib/taco-team-build/cordova-plugin-vs-taco-support/hooks/hook-execute-bit-fix.js code into taco-team-build in getCordova(). Existing logic won't fire when taco-team-build adds platforms if one already exist without execute bits. Then drop from plugin.
+1. Update default version logic to use latest in npm instead of static default version - do same for Cordova and other modules
+1. Refactor caching - Note: Needs to support Cordova, Ionic, and other CLIs!
 	1. P0: Update base cache location to mirror TACO CLI location.  Accept either CORDOVA_CACHE or TACO_HOME env vars for location
 	1. P1: Investigate reusing TACO code ... 
-	2. .... the newly released version-manager-cordova-software as an alternate way to acuqire and manage cordova versions instead of the custom logic in taco-team-build that pre-dated these modules
-1. Move lib/taco-team-build/cordova-plugin-vs-taco-support/hooks/hook-execute-bit-fix.js code into taco-team-build in getCordova(). Existing logic won't fire when taco-team-build adds platforms if one already exist without execute bits. Then drop from plugin.
+	2. .... or the newly released version-manager-cordova-software as an alternate way to acuqire and manage cordova versions instead of the custom logic in taco-team-build that pre-dated these modules
 2. Merge these changes along with existing edits into core Microsoft/taco-team-build and Microsoft/cordova-vs-taco-support-plugin repos. 
 3. Update sub-module in taco-team-build to latest commit.  Still need to reference this way because plugins.cordova.io is now read only so there's no way to publish the support plugin for use with Cordova < 4.0.0
 4. Publish taco-team-build, cordova-plugin-vs-taco-support to npm
@@ -41,12 +42,13 @@
 	3. Breakdown of builds by platform - key'd off the "platform" attribute
 	4. This is in addition to basic usage metrics we should get from VSO itself already - but we need to understand how to get data from on-prem TFS too (if possible)
 5. Update More Information "fwlink" location in all tasks in task.json
+6. Allow people to opt out of installing the support plugin
 6. Localization of task.json contents (no node localization support yet available in vso agent)
 7. Implement population of Windows related signing proprties in config.xml and expose those as optional through the VSO task
 8. P2: Only specify Android args for signing for versions of Cordova that support it (4.0.0+)
 
 ##To do: Other tasks to create
-1. P1: Ionic (CLI) Command Task
+1. P1: Ionic (CLI) Command Task - Started
 2. P2: PhoneGap (CLI) Command Task
 3. P2: Pre-cache these CLIs in VSO
 
@@ -69,4 +71,4 @@
 1. Update with the latest few versions of Cordova
 2. Update with any test npm modules we want to reccomend
 3. Refactor cache script after investigating switching taco-team-build to reuse TACO code or the newly released version-manager-cordova-software as an alternate way to acuqire and manage cordova versions instead of the custom logic in taco-team-build that pre-dated these modules.
-
+4. Cache Ionic, Taco CLIs, maybe PG

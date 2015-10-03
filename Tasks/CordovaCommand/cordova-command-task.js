@@ -24,18 +24,18 @@ callCordova()
 function callCordova(code) {
 	var cordovaConfig = {
 		projectPath: cwd,
-		loadCordovaModule: false
+		loadCordovaModule: false,
+		addSupportPlugin: false
 	};
 	var version = tl.getInput('cordovaVersion', false);
 	if(version) {
 		cordovaConfig.cordovaVersion = version;
 	}
 			
-	return ttb.setupCordova(cordovaConfig)
-		.then(function() {
-			var modulePath = ttb.getCurrentCordovaModulePath();
-			tl.debug('Cordova Module Path: ' + modulePath);
-			var cordovaCmd = process.platform == 'win32' ? 	path.resolve(modulePath, '..', '.bin','cordova.cmd') : path.resolve(modulePath, '..', '.bin','cordova.cmd')
+	return ttb.cacheModule(cordovaConfig)
+		.then(function(result) {
+			tl.debug('Cordova Module Path: ' + result.path);
+			var cordovaCmd = process.platform == 'win32' ? 	path.resolve(result.path, '..', '.bin','cordova.cmd') : path.resolve(result.path, '..', '.bin','cordova')
 			var cdv = new tl.ToolRunner(cordovaCmd, true);
 			cdv.arg(tl.getDelimitedInput('cordovaCommand', ' ', true));
 			var args = tl.getDelimitedInput('cordovaArgs', ' ', false);

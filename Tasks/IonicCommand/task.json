@@ -1,8 +1,8 @@
 {
-    "id": "61EC6339-4A6A-4A69-875E-5A6f4DB157A2",
-    "name": "CordovaCommand",
-    "friendlyName": "Cordova Command",
-    "description": "Run a Cordova CLI command",
+    "id": "E144B169-0587-4146-A3FC-D9D3432A512A",
+    "name": "IonicCommand",
+    "friendlyName": "Ionic Command",
+    "description": "Run a Ionic CLI command",
     "helpMarkDown": "[More Information](http://go.microsoft.com/fwlink/?LinkID=613730)",
     "category": "Build",
     "visibility": [
@@ -12,12 +12,12 @@
     "version": {
         "Major": 0,
         "Minor": 0,
-        "Patch": 29
+        "Patch": 20
     },
     "demands": [
         "npm"
     ],
-    "instanceNameFormat": "Cordova Command $(cordovaCommand)",
+    "instanceNameFormat": "Ionic Command $(ionicCommand)",
      "groups": [
         {
             "name":"advanced",
@@ -27,19 +27,26 @@
     ],
     "inputs": [
         { 
-            "name": "cordovaCommand", 
+            "name": "ionicCommand", 
             "type": "string", 
             "label": "Command", 
             "defaultValue":"", 
             "required":true, 
-            "helpMarkDown": "Cordova command to run. Ex: \"platform add android\""
+            "helpMarkDown": "Ionic command to run. Ex: \"platform add android\""
         },
         { 
-            "name": "cordovaArgs", 
+            "name": "ionicArgs", 
             "type": "string", 
             "label": "Arguments", 
             "required":false,
             "helpMarkDown": "Arguments that should be used for the command."
+        },
+        { 
+            "name": "ionicVersion", 
+            "type": "string", 
+            "label": "Ionic Version", 
+            "required":false, 
+            "helpMarkDown": "Version of Ionic tools to use to run the command If not specified, uses a default version."
         },
         { 
             "name": "cordovaVersion", 
@@ -60,7 +67,7 @@
     ],
     "execution": {
         "Node": {
-            "target": "cordova-command-task.js",
+            "target": "ionic-command-task.js",
             "argumentFormat": ""
         },
         "PowerShell": {
