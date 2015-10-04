@@ -23,9 +23,7 @@ callCordova()
 // Main Cordova build exec
 function callCordova(code) {
 	var cordovaConfig = {
-		projectPath: cwd,
-		loadCordovaModule: false,
-		addSupportPlugin: false
+		projectPath: cwd
 	};
 	var version = tl.getInput('cordovaVersion', false);
 	if(version) {
