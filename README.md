@@ -37,8 +37,21 @@ OpenSSL comes with the [Git for Windows](https://git-for-windows.github.io/) com
 ##Usage
 See the following articles on using these tasks in VSO/TFS:
 
-1. [Cordova Build Task Usage](./docs/cordova-build-task.md)
-2. [Decrypt File Task Usage](./docs/decrypt-file-task.md)
+1. [Draft VSO / TFS Documentation](./docs/TFS2015.md)
+2. [Cordova Build Task Usage](./docs/cordova-build-task.md)
+3. [Decrypt File Task Usage](./docs/decrypt-file-task.md) - Will be moved into vso-agent-tasks and be part of the VSO main code base
+
+No docs yet:
+
+1. Cordova CLI Command Task - Simplified task that still Caches but is geared towards arbitrary commands.
+2. Ionic CLI Command Task - Same as Cordova Command task but for the Ionic CLI. We'll still reccomend using the Cordova Build task to build due to its iOS signing features, Windows signing features, and fixes for problems like the iOS symlink problem.
+
+To be implemented:
+
+1. TACO CLI Command Task
+2. PhoneGap CLI Command Task
+
+There are gaps and known issues for most tasks. See [TODOs](./docs/TODO.md) for more information.
 
 ## Terms of Use
 By downloading and running this project, you agree to the license terms of the third party application software, Microsoft products, and components to be installed. 
