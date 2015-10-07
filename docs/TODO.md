@@ -7,6 +7,7 @@
 
 ##To dos: taco-team-build
 1. Merge in latest changes from lib to taco-team-build - Latest refactoring enables using cache w/o loading Cordova module
+1. Refactor to use latest Cordova version unless specified either explicitly or via DEFAULT_CORDOVA_VERSION env var - which is for VSO.  Allow "latest" to conver to actual lates version number.
 1. Move lib/taco-team-build/cordova-plugin-vs-taco-support/hooks/hook-execute-bit-fix.js code into taco-team-build in getCordova(). Existing logic won't fire when taco-team-build adds platforms if one already exist without execute bits. Then drop from plugin.
 1. Update default version logic to use latest in npm instead of static default version - do same for Cordova and other modules
 1. Refactor caching - Note: Needs to support Cordova, Ionic, and other CLIs!
@@ -48,7 +49,9 @@
 8. P2: Only specify Android args for signing for versions of Cordova that support it (4.0.0+)
 
 ##To do: Other tasks to create
-1. P1: Ionic (CLI) Command Task - Started
+1. P1: Ionic (CLI) Command Task - Started.
+	1. Refactor to use the latest version of Ionic unless specified.  Enable a DEFAULT_IONIC_VERSION env var like the cordova one to set a default which is useful for VSO where only certain versions will be cached.
+2. P1: TACO CLI Command Task
 2. P2: PhoneGap (CLI) Command Task
 3. P2: Pre-cache these CLIs in VSO
 
