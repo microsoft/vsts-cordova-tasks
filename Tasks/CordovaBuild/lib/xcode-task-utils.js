@@ -79,16 +79,22 @@ function determineProfile(input) {
 				.then(function(foundUuid) {
 					foundUuid = removeExecOutputNoise(foundUuid);
 					tl.debug(profilePath + ' has UUID of ' + foundUuid);
+					
+					// Esnure user's profile path exsits, set new filename using UUID
+					var userProfilesPath = path.join(process.env['HOME'], 'Library', 'MobileDevice', 'Provisioning Profiles');
+					tl.mkdirP(userProfilesPath);
+					var newProfilePath =  path.join(userProfilesPath, foundUuid + '.mobileprovision');
+					
 					// Create delete profile call if flag specified
 					var deleteCommand;
 					if(input.removeProfile) {
 						deleteCommand = new tl.ToolRunner(tl.which('rm'), true);
-						deleteCommand.arg(['-f', process.env['HOME'] + '/Library/MobileDevice/Provisioning Profiles/' + foundUuid + '.mobileprovision']);
+						deleteCommand.arg(['-f', newProfilePath]);
 					}
 					
 					// return exec of copy command
 					var copyProvProfile = new tl.ToolRunner(tl.which('cp'), true);
-					copyProvProfile.arg(['-f', profilePath, process.env['HOME'] + '/Library/MobileDevice/Provisioning Profiles/' + foundUuid + '.mobileprovision']);
+					copyProvProfile.arg(['-f', profilePath, newProfilePath]);
 					
 					var uuid;
 					if(input.provProfileUuid) {
