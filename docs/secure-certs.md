@@ -145,6 +145,8 @@ Follow these steps:
     - **KEY**: The key alias for the signing certificate you generated.
     - **KEY_PWD**: The password for the key associated with the specified alias. *Again, Be sure to click the "lock" icon.* 
     - **ENC_PWD**: The phassphrase you used to encrypt the keystore file. *Be sure to click the "lock" icon.*    
+
+	![Android build vars](media/secure-certs/secure-certs-8.png)
   
   2. Under the **Build** tab in your build definition, add a **Decrypt File (OpenSSL)** steps from the **Utility** category and move this to the top of your build definition.
   
@@ -154,6 +156,8 @@ Follow these steps:
     - **Encrypted File**: $(KEYSTORE)
     - **Passphrase**: $(ENC_PWD)
     - **Decrypted File Path**: _build.keystore
+
+	![Decrypt keystore settings](media/secure-certs/secure-certs-9.png)
     
   5. Finally, updating the actual build step to use these values you entered is simple regardless of your build system.
     
@@ -163,12 +167,16 @@ Follow these steps:
         -Pkey.store=_build.keystore -Pkey.store.password=$(KEYSTORE_PWD) -Pkey.alias=$(KEY) -Pkey.alias.password=$(KEY_PWD)
         ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+	![Gradle Build settings](media/secure-certs/secure-certs-6.png)
+
     2. If you are using the **Cordova Build** or **Android Signing** tasks, you can add the following under **Android** or **Jarsign Options** respectivley:
          
       - **Keystore File**: _build.keystore
       - **Keystore Password**: $(KEYSTORE_PWD)
       - **Key Alias**: $(KEY)
       - **KEY Password**:$(KEY_PWD)
+
+	![Cordova Android Build settings](media/secure-certs/secure-certs-7.png)
 
    You are now all set! Any build agent that is running will now be able to securly build your app without any cert managment on the build machine itself!!  
    
