@@ -1,14 +1,20 @@
-<properties pageTitle="Simple, Secure Setup for App Signing Certificates Using Visual Studio Online or Team Foundation Services 2015"
-  description="Simple, Secure Setup for App Signing Certificates Using Visual Studio Online or Team Foundation Services 2015"
+<properties pageTitle="Simple, Secure CI App Signing Using Visual Studio Online or Team Foundation Services 2015"
+  description="Simple, Secure CI App Signing Using Visual Studio Online or Team Foundation Services 2015"
   services=""
   documentationCenter=""
   authors="clantz" />
 
-# Simple, Secure Setup for App Signing Certificates Using Visual Studio Online or Team Foundation Services 2015
+# Simple, Secure CI App Signing Using Visual Studio Online or Team Foundation Services 2015
 When developing an app for iOS or Android either nativley or using a cross-platform solution like Cordova you will eventually need to tackle the problem of managing signing certificates and (in the case of iOS) [Mobile Provisiong Profiles](https://developer.apple.com/library/ios/documentation/IDEs/Conceptual/AppStoreDistributionTutorial/Introduction/Introduction.html#//apple_ref/doc/uid/TP40013839). This article will highlight some features to help you manage and secure them for your app.
 
-## iOS
-### Challenges
+This article currently covers:
+
+- [iOS native and Cordova iOS Projects](#ios)
+- [Android native and Cordova Android Projects](#android)
+
+<a name="ios"></a>
+## iOS on OSX
+### Summary of Challenges with Default iOS Project Behaviors in a CI Environment
 For iOS there are a number of challenges associated with managing certificates and profiles particularly in a CI environment.
 
 1. Generated signing certificates are *local to the machine you created them on*. Certificates generated via Xcode or via the Apple Developer portal are tied to a private key that is local to your machine.
@@ -23,7 +29,7 @@ For iOS there are a number of challenges associated with managing certificates a
 
 Combined, this results in a bit of a nightmare. 
 
-### Simplifying and Securing the Build Environment
+### Simplifying and Securing the Build Environment for iOS
 To help alleviate these problems, the Xcode Build and Cordova Build tasks include some additional features designed to streamline this process. 
 
 Here's the general process for setting things up:
@@ -104,7 +110,8 @@ Here's the general process for setting things up:
   
  You are now all set! Any build agent that is running will now be able to securly build your app without any cert managment on the build machine itself!!  Simply repeat the process of adding different certificates and provisioning profiles to your source repo to enable separate dev, beta (ad hoc), and distribution build.
 
-## Android
+<a name="android"></a>
+## Android on Windows or OSX
 Unlike iOS, managing Android signing is comparativley simple. For native builds using Ant or Gradle, the [Android documentation](http://developer.android.com/tools/publishing/app-signing.html) on the topic largely covers what you need to know to generate and use a keystore file containing your signing cert. 
 
 However, here are a few additional tips that can help you get your app up and running quickly while still keeping your signing key secure. Just as with iOS, you can take your security one step farther by encyrpting your keystore before placing it in a source code repository for use. 
@@ -139,7 +146,7 @@ Follow these steps:
     - **KEY_PWD**: The password for the key associated with the specified alias. *Again, Be sure to click the "lock" icon.* 
     - **ENC_PWD**: The phassphrase you used to encrypt the keystore file. *Be sure to click the "lock" icon.*    
   
-  2. Under the **Build** tab in your build definition, add one **Decrypt File (OpenSSL)** steps from the **Utility** category and move this to the top of your build definition.
+  2. Under the **Build** tab in your build definition, add a **Decrypt File (OpenSSL)** steps from the **Utility** category and move this to the top of your build definition.
   
   4. Now, enter the proper information using the variables we created above to decrypt the two files to a static filename.
   
@@ -156,7 +163,7 @@ Follow these steps:
         -Pkey.store=_build.keystore -Pkey.store.password=$(KEYSTORE_PWD) -Pkey.alias=$(KEY) -Pkey.alias.password=$(KEY_PWD)
         ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    2. If you are using the **Cordova Build** or **Android Signing** tasks, you can add the following under **Android* or **Jarsign Options** respectivley:
+    2. If you are using the **Cordova Build** or **Android Signing** tasks, you can add the following under **Android** or **Jarsign Options** respectivley:
          
       - **Keystore File**: _build.keystore
       - **Keystore Password**: $(KEYSTORE_PWD)
