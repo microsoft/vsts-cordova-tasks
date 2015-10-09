@@ -81,7 +81,7 @@ Here's the general process for setting things up:
 
 	![Variables](media/secure-certs/secure-certs-3.png)
   
-  2. Under the **Build** tab in your build definition, add two **Decrypt File (OpenSSL)** steps from the **Utility** category.
+  2. Under the **Build** tab in your build definition, add two **Decrypt File (OpenSSL)** steps from the **Utility** category and move these to the top of your build definition.
   
   3. Now, enter the proper information using the variables we created above to decrypt the two files to a static filename.
   
@@ -103,3 +103,65 @@ Here's the general process for setting things up:
 	![Xcode Build settings](media/secure-certs/secure-certs-5.png)
   
  You are now all set! Any build agent that is running will now be able to securly build your app without any cert managment on the build machine itself!!  Simply repeat the process of adding different certificates and provisioning profiles to your source repo to enable separate dev, beta (ad hoc), and distribution build.
+
+## Android
+Unlike iOS, managing Android signing is comparativley simple. For native builds using Ant or Gradle, the [Android documentation](http://developer.android.com/tools/publishing/app-signing.html) on the topic largely covers what you need to know to generate and use a keystore file containing your signing cert. 
+
+However, here are a few additional tips that can help you get your app up and running quickly while still keeping your signing key secure. Just as with iOS, you can take your security one step farther by encyrpting your keystore before placing it in a source code repository for use. 
+
+Follow these steps:
+
+1. **Windows only**: You may need to install openssl.exe. If you have the [Git command line tools](http://www.git-scm.com/downloads) installed, openssl may already be in your path (Ex: C:\Program Files (x86)\Git\bin). If not, install the command line tools or download a binary distribution of OpenSSL for Windows from [one of the community mirrors](http://go.microsoft.com/fwlink/?LinkID=627128) and it to your path. This will also need to be done on any Windows machines running a build agent.
+
+2. Now we'll encrypt the keystore for your app.
+
+  1. Open the Terminal app on Mac or a command prompt on Windows and go to where your keystore is located.
+
+  2. Type the following:
+
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    openssl des3 -in release.keystore -out release.keystore.enc
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  
+    ...substituting des3 for any encryption cypher you'd like to use and the appropriate input and output file names.
+  
+  3. Enter a passphrase to encrypt the certificate when prompted and note this down as we will use it later.
+
+3. Next, add the encrypted keystore to source control. This is secure particiularly if you are using a private repository since a melicious user would need access to the repository, the encryption passphrase, the keystore password, and the alias password to be able to use your information without permission.
+
+4. Finally we'll update your build definition to decrypt and use the keystore. 
+
+  1. Open up your Android or Cordova build definition and go to the **Variables** tab. Here we will enter the following:
+  
+    - **KEYSTORE**: Path to your encrypted keystore file in source control. 
+    - **KEYSTORE_PWD**: Password to the unencrypted keystore file. *Be sure to click the "lock" icon.* This will secure your password and obscure it in all logs.
+    - **KEY**: The key alias for the signing certificate you generated.
+    - **KEY_PWD**: The password for the key associated with the specified alias. *Again, Be sure to click the "lock" icon.* 
+    - **ENC_PWD**: The phassphrase you used to encrypt the keystore file. *Be sure to click the "lock" icon.*    
+  
+  2. Under the **Build** tab in your build definition, add one **Decrypt File (OpenSSL)** steps from the **Utility** category and move this to the top of your build definition.
+  
+  4. Now, enter the proper information using the variables we created above to decrypt the two files to a static filename.
+  
+    - **Cypher**: The cypher you specified while encrypting. (Ex: des3)
+    - **Encrypted File**: $(KEYSTORE)
+    - **Passphrase**: $(ENC_PWD)
+    - **Decrypted File Path**: _build.keystore
+    
+  5. Finally, updating the actual build step to use these values you entered is simple regardless of your build system.
+    
+    1. If you are using the **Gradle, Ant, or Maven** build tasks, you can add the following under **Options**: 
+   
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~
+        -Pkey.store=_build.keystore -Pkey.store.password=$(KEYSTORE_PWD) -Pkey.alias=$(KEY) -Pkey.alias.password=$(KEY_PWD)
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    2. If you are using the **Cordova Build** or **Android Signing** tasks, you can add the following under **Android* or **Jarsign Options** respectivley:
+         
+      - **Keystore File**: _build.keystore
+      - **Keystore Password**: $(KEYSTORE_PWD)
+      - **Key Alias**: $(KEY)
+      - **KEY Password**:$(KEY_PWD)
+
+   You are now all set! Any build agent that is running will now be able to securly build your app without any cert managment on the build machine itself!!  
+   
