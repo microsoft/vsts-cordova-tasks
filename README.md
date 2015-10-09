@@ -38,6 +38,7 @@ OpenSSL comes with the [Git for Windows](https://git-for-windows.github.io/) com
 See the following articles on using these tasks in VSO/TFS:
 
 1. [Draft VSO / TFS Documentation](./docs/TFS2015.md)
+	- [Draft of iOS Signing Certs Doc](./docs/secure-certs.md) - Shared between Cordova and Xcode Build
 2. [Cordova Build Task Usage](./docs/cordova-build-task.md)
 3. [Decrypt File Task Usage](./docs/decrypt-file-task.md) - Will be moved into vso-agent-tasks and be part of the VSO main code base
 
