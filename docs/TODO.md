@@ -6,18 +6,11 @@
 3. P2: Refactor taco-team-build to encapsulate singing features (Tasks/CordovaBuild/cordova-task.js iosIdentity, iosProfile, processAndroidInputs, code in execBuild + writeVsoXcconfig, writeAntProperties)
 
 ##To dos: taco-team-build
-1. Merge in latest changes from lib to taco-team-build - Latest refactoring enables using cache w/o loading Cordova module
 1. Refactor to use latest Cordova version unless specified either explicitly or via DEFAULT_CORDOVA_VERSION env var - which is for VSO.  Allow "latest" to conver to actual lates version number.
-1. Move lib/taco-team-build/cordova-plugin-vs-taco-support/hooks/hook-execute-bit-fix.js code into taco-team-build in getCordova(). Existing logic won't fire when taco-team-build adds platforms if one already exist without execute bits. Then drop from plugin.
-1. Update default version logic to use latest in npm instead of static default version - do same for Cordova and other modules
-1. Refactor caching - Note: Needs to support Cordova, Ionic, and other CLIs!
-	1. P0: Update base cache location to mirror TACO CLI location.  Accept either CORDOVA_CACHE or TACO_HOME env vars for location
-	1. P1: Investigate reusing TACO code ... 
-	2. .... or the newly released version-manager-cordova-software as an alternate way to acuqire and manage cordova versions instead of the custom logic in taco-team-build that pre-dated these modules
-2. Merge these changes along with existing edits into core Microsoft/taco-team-build and Microsoft/cordova-vs-taco-support-plugin repos. 
-3. Update sub-module in taco-team-build to latest commit.  Still need to reference this way because plugins.cordova.io is now read only so there's no way to publish the support plugin for use with Cordova < 4.0.0
+2. Move lib/taco-team-build/cordova-plugin-vs-taco-support/hooks/hook-execute-bit-fix.js code into taco-team-build in getCordova(). Existing logic won't fire when taco-team-build adds platforms if one already exist without execute bits. Then drop from plugin.
+3. Merge in latest changes from lib to taco-team-build - Latest refactoring enables using cache w/o loading Cordova module
 4. Publish taco-team-build, cordova-plugin-vs-taco-support to npm
-5. Update Tasks/CordovaBuild/package.json to reference the npm location of taco-team-build, remove /lib/taco-team-build from the vso-cordova-tasks repo
+5. Update Tasks/CordovaBuild/package.json and others to reference the npm location of taco-team-build, remove /lib/taco-team-build from the vso-cordova-tasks repo
 
 ##To dos: Cordova Build Task
 1. In-progress: Work with VSO team to deal with warning messages that appear for logging events. This appears to be a VSO Windows agent bug. Fix is in progress and the VSO team is looking to enable node scripts from the Windows agent which allows us to do away with the powershell boostrap.  TBD on timelines.
@@ -45,7 +38,7 @@
 5. Update More Information "fwlink" location in all tasks in task.json
 6. Allow people to opt out of installing the support plugin
 6. Localization of task.json contents (no node localization support yet available in vso agent)
-7. Implement population of Windows related signing proprties in config.xml and expose those as optional through the VSO task
+7. P2: Implement population of Windows related signing proprties in config.xml and expose those as optional through the VSO task
 8. P2: Only specify Android args for signing for versions of Cordova that support it (4.0.0+)
 
 ##To do: Other tasks to create
@@ -56,9 +49,7 @@
 3. P2: Pre-cache these CLIs in VSO
 
 ##To dos: Decrypt Task
-1. **Remove from repo! Getting merged into vso-agent-tasks main repo.** Left here for convienence.
-1. Localization of task.json and decrypt.ps1 messages (no node localization support yet available in vso agent)
-2. P2: Create command line utility to help encrypt certs on Windows and OSX (though OSX is pretty easy without a script)
+1. **Remove from repo! Has been merged into vso-agent-tasks main repo.** Left here for convienenc when testing.
 
 ##To dos: VSO Extension
 1. Work with the VSO team to create a VSO extension encapsulating Cordova tasks
@@ -67,7 +58,7 @@
 	2. Failing that, a possible workaround that has some risk is to update the core VSO agent with the node modules we need and then add a "npm install" step into bootstrap.ps1 that fires if and only if the node_modules folder is missing from the task. This should reslove the problem though its a bit error prone since task installs are unattended.
 
 ##To dos: Upload Script
-1. On-prem TFS will not support VSO extensions until Update 2 sometime mid-2016. As a result we'll need to maintain the update.cmd/sh scripts or on-prem deployments w/o an extension.
+1. Test more!
 2. Get rid of npm install warnings visible in upload script
 
 ##To do: Cordova VSO cache script

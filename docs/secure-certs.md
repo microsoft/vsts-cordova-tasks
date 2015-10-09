@@ -38,7 +38,7 @@ Here's the general process for setting things up:
   
 	![Xcode Export Cert](media/secure-certs/secure-certs-1.png)
 
-  Alternativley you can follow a similar process using the "Keychain Access" app on OSX and using the Apple Developer portal to download your provisioning profile. Technically you can also generate a signing certificate on Windows. Use the proceedure [described in this article](http://docs.build.phonegap.com/en_US/signing_signing-ios.md.html#_windows_users) if you would prefer to follow these methods.
+  Alternativley you can follow a similar process using the "Keychain Access" app on OSX or even generate a signing certificate on Windows. Use the proceedure [described in this article](http://docs.build.phonegap.com/en_US/signing_signing-ios.md.html#_windows_users) if you would prefer to head this direction instead.
 
 2. Next, get a copy of the provisioning profile you want to use 
   
@@ -74,10 +74,10 @@ Here's the general process for setting things up:
 
   1. Open up your Xcode or Cordova build definition and go to the **Variables** tab. Here we will enter the following:
   
-    1. **P12**: Path to your encrypted .p12 file in source control.
-    2. **P12_PWD**: Password to the unencrypted .p12 file. *Be sure to click the "lock" icon.* This will secure your password and obscure it in all logs.
-    3. **MOB_PROV**: Path to your encrypted mobile provisioning profile.
-    4. **ENC_PWD**: The phassphrase you used to encrypt the .p12 and .mobileprovision files. If you used two different passwords you'll need two variables.  Again, *Be sure to click the "lock" icon.*
+    - **P12**: Path to your encrypted .p12 file in source control.
+    - **P12_PWD**: Password to the unencrypted .p12 file. *Be sure to click the "lock" icon.* This will secure your password and obscure it in all logs.
+    - **MOB_PROV**: Path to your encrypted mobile provisioning profile.
+    - **ENC_PWD**: The phassphrase you used to encrypt the .p12 and .mobileprovision files. If you used two different passwords you'll need two variables.  Again, *Be sure to click the "lock" icon.*
 
 	![Variables](media/secure-certs/secure-certs-3.png)
   
@@ -85,20 +85,20 @@ Here's the general process for setting things up:
   
   3. Now, enter the proper information using the variables we created above to decrypt the two files to a static filename.
   
-    1. **Cypher**: The cypher you specified while encrypting. (Ex: des3)
-    2. **Encrypted File**: $(P12) for one step and $(MOB_PROV) for the other
-    3. **Passphrase**: $(ENC_PWD)
-    4. **Decrypted File Path**: _build.p12 for one step and _build.mobileprovision for the other
+    - **Cypher**: The cypher you specified while encrypting. (Ex: des3)
+    - **Encrypted File**: $(P12) for one step and $(MOB_PROV) for the other
+    - **Passphrase**: $(ENC_PWD)
+    - **Decrypted File Path**: _build.p12 for one step and _build.mobileprovision for the other
 
 	![Decrypt File settings](media/secure-certs/secure-certs-4.png)
   
   4. Finally, we'll update our Xcode Build or Cordova Build step with references to these two files. The build step will automatically determine the correct "signing identity" based on the contents of the .p12, create a temporary keychain with the .p12 in it and use that exclusivley for this build, install the mobile provisioning profile, determine the correct UUID based on the contents of the .mobileprovision profile, and then clean everything up afterwards. Enterthe values under the **Signing & Provisioning** category for the Xcode Build task or the **iOS** category in the Cordova Build task. 
   
-    1. **Override Using**: File Contents
-    2. **P12 Certificate File**: _build.p12
-    3. **P12 Password**: $(P12_PWD)
-    4. **Provisioning Profile File**: _build.mobileprovision
-    5. **Remove Profile After Build**: Checked if you want the mobileprovision profile to be removed from the system after the build. Only check this if you will have one agent on the system running this build as it is installed in a global location.
+    - **Override Using**: File Contents
+    - **P12 Certificate File**: _build.p12
+    - **P12 Password**: $(P12_PWD)
+    - **Provisioning Profile File**: _build.mobileprovision
+    - **Remove Profile After Build**: Checked if you want the mobileprovision profile to be removed from the system after the build. Only check this if you will have one agent on the system running this build as it is installed in a global location.
 
 	![Xcode Build settings](media/secure-certs/secure-certs-5.png)
   
