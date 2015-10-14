@@ -16,10 +16,11 @@
 1. In-progress: Work with VSO team to deal with warning messages that appear for logging events. This appears to be a VSO Windows agent bug. Fix is in progress and the VSO team is looking to enable node scripts from the Windows agent which allows us to do away with the powershell boostrap.  TBD on timelines.
 2. Test, test, test, test, test
 	1. Cordova 3.5.0 - Version of cordova that requires the "cordova" lib instead of cordova-lib since numbering differed
-	2. Cordova 4.3.1 - Ant based build
-	3. Cordova 5.1.1 - Default version in TACO 1.0 and first solid Gradle based build version along with Win 10
-	4. Cordova 5.3.3 - Most recent
-	5. Variations:
+	2. Cordova 3.6.3 - Last supported version in VS 2013
+	3. Cordova 4.3.1 - Last Ant based build version
+	4. Cordova 5.1.1 - Default version in TACO 1.0 and first solid Gradle based build version along with Win 10
+	5. Cordova 5.3.3 - Most recent
+	6. Variations:
 		1. iOS specifying p12 and mobile prov
 		2. iOS when running vsoagent as daemon: 
 			1. iOS specifying signing identity and uuid, unlock keychain
@@ -39,7 +40,8 @@
 6. Allow people to opt out of installing the support plugin
 6. Localization of task.json contents (no node localization support yet available in vso agent)
 7. P2: Implement population of Windows related signing proprties in config.xml and expose those as optional through the VSO task
-8. P2: Only specify Android args for signing for versions of Cordova that support it (4.0.0+)
+8. P2: Implement JDK selection capabilities for Android similar to the Gradle task
+9. P2: Only specify Android args for signing for versions of Cordova that support it (4.0.0+)
 
 ##To do: Other tasks to create
 1. P1: Ionic (CLI) Command Task - Started.
