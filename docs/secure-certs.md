@@ -137,6 +137,10 @@ You can add an extra layer of security by to your project by encrypting your .p1
   
  You are now all set! Any build agent that is running will now be able to securely build your app without any cert management on the build machine itself!!  Simply repeat the process of adding different certificates and provisioning profiles to your source repo to enable separate dev, beta (ad hoc), and distribution build.
 
+#### Using Already Installed Signing Identities and Mobile Provisioning Profiles
+
+**TODO: fill in info here **
+
 <a name="android"></a>
 ## Android on Windows or OSX
 Unlike iOS, managing Android signing is comparatively simple. For native builds using Ant or Gradle, the [Android documentation](http://developer.android.com/tools/publishing/app-signing.html) on the topic largely covers what you need to know to generate and use a keystore file containing your signing cert. 
