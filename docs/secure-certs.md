@@ -10,6 +10,8 @@ When developing an app for iOS or Android either natively or using a cross-platf
 This article currently covers:
 
 - [iOS native and Cordova iOS Projects](#ios)
+  - [Option 1 - Using a Certificate and Mobile Provisioning File in Your Build](#iosfile)
+  - [Option 2 - Using Installed Signing Identities and Mobile Provisioning Profiles](#iosinstall)
 - [Android native and Cordova Android Projects](#android)
 
 <a name="ios"></a>
@@ -32,11 +34,12 @@ Combined, this results in a bit of a nightmare.
 ### Simplifying and Securing the Build Environment for iOS
 To help alleviate these problems, the Xcode Build and Cordova Build tasks include some additional features designed to streamline this process. 
 
-#### Using a Certificate and Mobile Provisioning File in Your Build
+<a name="iosfile"></a>
+#### Option 1 - Using a Certificate and Mobile Provisioning File in Your Build
 
 1. After creating your development and/or distribution signing certificate, export it to a .p12 file using either Keychain Access or Xcode
   
-  1. To export using Xcode, first go to Xcode > Preferences... > Accounts and select your Apple Developer account
+  1. To export using Xcode, first go to Xcode &gt; Preferences... &gt; Accounts and select your Apple Developer account
   
   2. Click "View Details..." and then right click on the Signing Identity you wish to export, and click "Export..."
   
@@ -137,10 +140,53 @@ You can add an extra layer of security by to your project by encrypting your .p1
   
  You are now all set! Any build agent that is running will now be able to securely build your app without any cert management on the build machine itself!!  Simply repeat the process of adding different certificates and provisioning profiles to your source repo to enable separate dev, beta (ad hoc), and distribution build.
 
-#### Using Already Installed Signing Identities and Mobile Provisioning Profiles
+<a name="iosinstalled"></a>
+#### Option 2 - Using Installed Signing Identities and Mobile Provisioning Profiles
+If you would prefer to simply use a signing identitry and provisioning profile you have installed on your Mac, you may do this as well and there are some features that can help deal with common pitfalls.
 
-**TODO: fill in info here **
+While you can just allow the build to attempt to auto-match or use identities and profiles in your Xcode project, you can follow these steps to override the project get very specific about the exact identity you want to use.
 
+Follow these steps:
+
+1. Determine the full name of the identity and the UUID of the Mobile Provisioning Profile you wish to use.
+  1. Find the full name of your signing identity by opening the Terminal app and type the following:
+
+    ~~~~~~~~~~~~~~~~~~~~~~
+    security find-identity -v -p codesigning
+    ~~~~~~~~~~~~~~~~~~~~~~
+    
+    ...and you will see a list of signing identities in the form "iPhone Developer/Distribution: Developer Name (ID)". If the identity is invalid you will see something like (CSSMERR_TP_CERT_REVOKED) after the identity.
+  
+  2. Take note of the identity you want to use including the ID as this string is truely unique.
+      
+  3. Next, find the UUID for the Mobile Provisioning Profile you want to use by following these steps. 
+
+    1. Open Xcode and go to Xcode &gt; Preferences... &gt; Accounts and select your Apple Developer account
+  
+    2. Click "View Details..." and right click the provisioning profile you want and select "Show in Finder"
+
+  	![Xcode Show in Finder](media/secure-certs/secure-certs-2.png)
+  
+  4. The name of the file that is highlighted is the UUID of your provisioning profile.
+
+2. Now we'll update our Xcode Build or Cordova Build step with references to these two identifiers. Enter the following values under the **Signing & Provisioning** category for the Xcode Build task or the **iOS** category in the Cordova Build task:
+  
+    - **Override Using**: Identifiers
+    - **Signing Identntiy**: Full signing identity you found using the security command above
+    - **Provisioning Profile UUID**: UUID of the provisioning profile from the filename above
+
+3. Next, if you are running the cross-platform agent as a daemon or launch agent, you will need to set up the build to unlock the default keychain.
+
+  1. Go to the **Variables** tab and enter the following:
+  
+    - **KEYCHAIN_PWD**: Password to your default keychain. This is normally the password for the user that is starting the cross-platform agent. *Be sure to click the "lock" icon.*
+
+  2. Update the Xcode Build step to unlock the keychain entering the following values under the **Signing & Provisioning** category for the Xcode Build task or the **iOS** category in the Cordova Build task:
+  
+    - **Unlock Default Keychain**: Checked
+    - **Default Keychain Password**: $(KEYCHAIN_PWD)
+ 
+ 
 <a name="android"></a>
 ## Android on Windows or OSX
 Unlike iOS, managing Android signing is comparatively simple. For native builds using Ant or Gradle, the [Android documentation](http://developer.android.com/tools/publishing/app-signing.html) on the topic largely covers what you need to know to generate and use a keystore file containing your signing cert. 
