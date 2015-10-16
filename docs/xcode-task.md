@@ -1,15 +1,19 @@
-<properties pageTitle="Use the Visual Studio Tools for Apache Cordova with Visual Studio Online or Team Foundation Services 2015"
-  description="Use the Visual Studio Tools for Apache Cordova with Visual Studio Online or Team Foundation Services 2015"
+<properties pageTitle="Build Xcode Projects with Visual Studio Online or Team Foundation Services 2015"
+  description="Build Xcode Projects with Visual Studio Online or Team Foundation Services 2015"
   services=""
   documentationCenter=""
-  authors="bursteg, clantz" />
+  authors="clantz" />
 
 # Build Xcode Projects with Visual Studio Online or Team Foundation Services 2015
+The new Visual Studio Online (VSO) / Team Foundation Services (TFS) [cross-platform build agent](http://go.microsoft.com/fwlink/?LinkID=533789) can run on both OSX and Linux and thus is ideal for building Xcode projects. The agent is a Node.js based service that uses a HTTPS connection to your TFS 2015 server to fetch work. As a result, your OSX machine only needs to have HTTP access to your TFS instance but not the other way around. This makes setup and configuration quite simple. The agent is for use with TFS 2015 and Visual Studio Online's [next generation build system](http://go.microsoft.com/fwlink/?LinkID=533772), not the legacy XAML/MSBuild based system.
 
-<a name="vso"></a>
-## Visual Studio Online
+The pre-requisites in this case are simple: Your Mac needs to have Node.js, Xcode, and [xctool](https://github.com/facebook/xctool) (for testing) installed. Simply open the OSX Terminal app and follow these [setup instructions](http://go.microsoft.com/fwlink/?LinkID=533789). On startup the agent will automatically register itself with VSO / TFS when you start up the agent for the first time.
 
-## Project Setup & Build Definitions
+Because of its design, you can also easily use an **on-premise Mac or a cloud provider like [MacInCloud](http://www.macincloud.com) with Visual Studio Online.** The OSX machine simply needs to have HTTP access to your VSO domain URI. You do not need a VPN connection and VSO does not need access to the OSX machine. Simply enter the your VSO project's domain URI when prompted during agent setup (Ex: "https://myvsodomain.visualstudio.com"). All other setup instructions apply directly.
+
+The Xcode Build task used here supports features to simplify configuration of code signing. See **[Simple, Secure CI App Signing](./secure-certs.md)** for details.
+
+## Project Setup
 For the purposes of this tutorial we will assume you are trying to build an iOS app but the concepts described here essentially translate to other Xcode builds.
 
 There is really only one step required for configuring an Xcode project for a CI environment that is not done by default when you create an Xcode project. Xcode has the concept of schemes and you'll need to set one of these as "Shared" and add it to source control so it can be used during your CI builds.  Follow these steps:
@@ -22,7 +26,7 @@ There is really only one step required for configuring an Xcode project for a CI
 
 3. Now add the new files and folders in your .xcodeproj folder (specifically the xcsharedata folder to source control).
 
-### Creating Your Build Definition
+## Creating Your Build Definition
 Detailed instructions on creating build definitions in TFS 2015 can be found in [its documentation](http://go.microsoft.com/fwlink/?LinkID=533772), but here are the specific settings you will need to use to configure a build.
 
 While there is an Xcode Build Definition Template, we'll use "Empty" so you get a feel for why things are configured the way they are.
@@ -40,8 +44,8 @@ While there is an Xcode Build Definition Template, we'll use "Empty" so you get 
 		- **Scheme**: Set this to the name of the Scheme you shared in your project
 		- **Create App Pacakge**: Checked. This will automatically generate an app package (ipa) for your project once the build has completed.
 	3.  There are a few other options worth noting:
-		- The **Signing & Provisioning** category provides a number of options for making signing less difficult. Signing setup can be painful, so see **[Simple, Secure CI App Signing](./secure-certs.md)** for details.
-		- **Advanced &gt; Use xctool** will cause the build to use Facebook's xctool for the build instead of xcodebuild. We'll cover this more when we add in a test.
+		- The **Signing & Provisioning** category provides a number of options for making signing less complicated. See **[Simple, Secure CI App Signing](./secure-certs.md)** for details.
+		- **Advanced &gt; Use xctool** will cause the build to use Facebook's [xctool](https://github.com/facebook/xctool) for the build instead of xcodebuild. We'll cover this more when we add in a test.
 		- **Advanced &gt; Xcode Developer Path** allows you to specify the path of a different version of Xcode than is installed by default.  Ex: */Applications/Xcode6.4.app/Contents/Developer*
 
     ![Xcode Task](media/xcode/xcode-2.png)
@@ -63,7 +67,7 @@ While there is an Xcode Build Definition Template, we'll use "Empty" so you get 
 
 5.  Save and click "Queue Build..." to test it out!
 
-### Adding In Tests
+## Adding In Tests
 If you've created unit or UI tests in your Xcode project, you can run these and publish the results to VSO using **[xctool](https://github.com/facebook/xctool)**. Note you will need to have xctool installed on the OSX machine the cross-platform build agent is on as this is not part of Xcode itself.
 
 > **Troubleshooting Tip**: If you are using Xcode 6.4 or earlier or are not on the latest version of xctool, you will not be able to run your tests if the VSO cross-platform agent is setup as a daemon or launch agent. **Xcode 7 and the latest xctool eliminate this limitation.** Once installed, you can even run Xcode 6.4 projects using xctool.
