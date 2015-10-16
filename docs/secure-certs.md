@@ -31,11 +31,10 @@ For iOS there are a number of challenges associated with managing certificates a
 
 Combined, this results in a bit of a nightmare. 
 
-### Simplifying and Securing the Build Environment for iOS
 To help alleviate these problems, the Xcode Build and Cordova Build tasks include some additional features designed to streamline this process. 
 
 <a name="iosfile"></a>
-#### Option 1 - Using a Certificate and Mobile Provisioning File in Your Build
+### iOS Option 1 - Using a Certificate and Mobile Provisioning File in Your Build
 
 1. After creating your development and/or distribution signing certificate, export it to a .p12 file using either Keychain Access or Xcode
   
@@ -140,8 +139,8 @@ You can add an extra layer of security by to your project by encrypting your .p1
   
  You are now all set! Any build agent that is running will now be able to securely build your app without any cert management on the build machine itself!!  Simply repeat the process of adding different certificates and provisioning profiles to your source repo to enable separate dev, beta (ad hoc), and distribution build.
 
-<a name="iosinstalled"></a>
-#### Option 2 - Using Installed Signing Identities and Mobile Provisioning Profiles
+<a name="iosinstall"></a>
+### iOS Option 2 - Using Installed Signing Identities and Mobile Provisioning Profiles
 If you would prefer to simply use a signing identitry and provisioning profile you have installed on your Mac, you may do this as well and there are some features that can help deal with common pitfalls.
 
 While you can just allow the build to attempt to auto-match or use identities and profiles in your Xcode project, you can follow these steps to override the project get very specific about the exact identity you want to use.
@@ -185,7 +184,6 @@ Follow these steps:
   
     - **Unlock Default Keychain**: Checked
     - **Default Keychain Password**: $(KEYCHAIN_PWD)
- 
  
 <a name="android"></a>
 ## Android on Windows or OSX
