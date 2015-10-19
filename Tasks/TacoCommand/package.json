@@ -5,8 +5,10 @@
   "author": "Microsoft",
   "license": "MIT",
   "dependencies": {
-    "vso-task-lib": "^0.4.5",
     "minimatch": "^2.0.10",
-    "taco-team-build": "../../lib/taco-team-build"
-    }
+    "taco-cli": "^1.0.0",
+    "taco-kits": "^1.0.1",
+    "taco-team-build": "../../lib/taco-team-build",
+    "vso-task-lib": "^0.4.5"
+  }
 }
