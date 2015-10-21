@@ -15,7 +15,7 @@
     "version": {
         "Major": "0",
         "Minor": "1",
-        "Patch": "4"
+        "Patch": "6"
     },
     "minimumAgentVersion": "1.83.0",
     "instanceNameFormat": "TacoCommand $(message)",
@@ -42,6 +42,13 @@
             "label": "Arguments",
             "required": false,
             "helpMarkDown": "Arguments that should be used for the command."
+        },
+        {
+            "name": "tacoVersion",
+            "type": "string",
+            "label": "Version",
+            "required": false,
+            "helpMarkDown": "Version of taco-cli to run command against."
         }
     ],
     "execution": {
