@@ -17,7 +17,7 @@ var outFile = tl.getPathInput('outFile', false);
 if(fs.existsSync(outFile) && fs.lstatSync(outFile).isDirectory()) {
 	tr.arg(inFile + '.out');
 } else {
-	tr.arg(outFile)	
+	tr.arg(outFile);
 }
 
 tr.arg(['-pass','pass:' + tl.getInput('passphrase')])
