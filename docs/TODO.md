@@ -6,9 +6,9 @@
 3. P2: Refactor taco-team-build to encapsulate singing features (Tasks/CordovaBuild/cordova-task.js iosIdentity, iosProfile, processAndroidInputs, code in execBuild + writeVsoXcconfig, writeAntProperties)
 
 ##To dos: taco-team-build
-1. Refactor to use globally installed Cordova version unless specified either explicitly or via DEFAULT_CORDOVA_VERSION env var - which is for VSO.  Allow "latest" to convert to actual latest version number.
+1. Refactor to use globally installed Cordova version unless specified either explicitly or via DEFAULT_CORDOVA_VERSION env var - which is for VSO.  Allow "latest" to convert to actual latest version number. (Empty version number currently defaults to latest. Expected behvaiour will need to be discussed).
 2. Move lib/taco-team-build/cordova-plugin-vs-taco-support/hooks/hook-execute-bit-fix.js code into taco-team-build in getCordova(). Existing logic won't fire when taco-team-build adds platforms if one already exist without execute bits. Then drop from plugin.
-3. Merge in latest changes from lib to taco-team-build - Latest refactoring enables using cache w/o loading Cordova module
+3. Merge in latest changes from lib to taco-team-build - Latest refactoring enables using cache w/o loading Cordova module - DONE
 4. Publish taco-team-build, cordova-plugin-vs-taco-support to npm
 5. Update Tasks/CordovaBuild/package.json and others to reference the npm location of taco-team-build, remove /lib/taco-team-build from the vso-cordova-tasks repo
 
@@ -46,7 +46,7 @@
 ##To do: Other tasks to create
 1. P1: Ionic (CLI) Command Task - Started.
 	1. Refactor to use the latest version of Ionic unless specified.  Enable a DEFAULT_IONIC_VERSION env var like the cordova one to set a default which is useful for VSO where only certain versions will be cached.
-2. P1: TACO CLI Command Task
+2. P1: TACO CLI Command Task - Started. Automatically uses latest TACO Cli version if not specified.
 2. P2: PhoneGap (CLI) Command Task
 3. P2: Pre-cache these CLIs in VSO
 
