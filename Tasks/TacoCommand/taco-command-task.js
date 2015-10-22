@@ -18,7 +18,7 @@ function callTaco(code) {
     return ttb.cacheModule({
         projectPath: cwd,
         cordovaPackageName: "taco-cli",
-        cordovaVersion: tl.getInput("ionicVersion", false) || ""
+        cordovaVersion: tl.getInput("tacoVersion", false) || ""
     })
         .then(function (result) {
         process.env.PATH = path.resolve(result.path, "..", ".bin") + path.delimiter + process.env.PATH;
