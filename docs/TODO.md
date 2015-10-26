@@ -6,7 +6,7 @@
 3. P2: Refactor taco-team-build to encapsulate singing features (Tasks/CordovaBuild/cordova-task.js iosIdentity, iosProfile, processAndroidInputs, code in execBuild + writeVsoXcconfig, writeAntProperties)
 
 ##To dos: taco-team-build
-1. Refactor to use edge Cordova version unless specified either explicitly or via DEFAULT_CORDOVA_VERSION env var - which is for VSO.  Allow "latest" to convert to actual latest version number. (Empty version number currently defaults to latest. Expected behvaiour will need to be discussed).
+1. Refactor to use edge Cordova version unless specified either explicitly or via DEFAULT_CORDOVA_VERSION env var - which is for VSO.  Allow "latest" to convert to actual latest version number.
 2. Move lib/taco-team-build/cordova-plugin-vs-taco-support/hooks/hook-execute-bit-fix.js code into taco-team-build in getCordova(). Existing logic won't fire when taco-team-build adds platforms if one already exist without execute bits. Then drop from plugin.
 3. Merge in latest changes from lib to taco-team-build - Latest refactoring enables using cache w/o loading Cordova module - DONE
 4. Publish taco-team-build, cordova-plugin-vs-taco-support to npm
