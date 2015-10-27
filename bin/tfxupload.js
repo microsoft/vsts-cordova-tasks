@@ -21,7 +21,7 @@ function installTasks() {
 
 function npmInstall() {
 	console.log("Installing npm dependencies for task...");
-	return exec('npm install').then(logExecReturn);
+	return exec('npm install --only=prod').then(logExecReturn);
 }
 
 function tfxUpload() {
