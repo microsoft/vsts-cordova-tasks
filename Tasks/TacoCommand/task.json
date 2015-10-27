@@ -1,11 +1,11 @@
 {
     "id": "357dac60-72af-11e5-b4ae-29f3a0528042",
-    "name": "TacoCommand",
-    "friendlyName": "TACO Command",
-    "description": "Run a TACO Cli Command",
+    "name": "TacoCliCommand",
+    "friendlyName": "TACO CLI Command",
+    "description": "Run a TACO CLI Command",
     "author": "ryuyu",
     "helpMarkDown": "Replace with markdown to show in help",
-    "category": " Build",
+    "category": "Build",
     "visibility": [
         "Build"
     ],
@@ -15,7 +15,7 @@
     "version": {
         "Major": "0",
         "Minor": "1",
-        "Patch": "4"
+        "Patch": "6"
     },
     "minimumAgentVersion": "1.83.0",
     "instanceNameFormat": "TacoCommand $(message)",
@@ -42,6 +42,13 @@
             "label": "Arguments",
             "required": false,
             "helpMarkDown": "Arguments that should be used for the command."
+        },
+        {
+            "name": "tacoVersion",
+            "type": "string",
+            "label": "Version",
+            "required": false,
+            "helpMarkDown": "Version of taco-cli to run command against."
         }
     ],
     "execution": {
