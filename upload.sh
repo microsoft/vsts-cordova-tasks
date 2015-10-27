@@ -29,7 +29,7 @@ if ! type "tfx" > /dev/null; then
 fi
 
 echo Installing dependencies...
-npm install
+npm install --only=prod
 if [ $? -ne 0 ]
 then
   echo "Failed to install dependencies."
