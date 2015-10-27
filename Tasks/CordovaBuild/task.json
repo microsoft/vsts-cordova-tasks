@@ -12,7 +12,7 @@
     "version": {
         "Major": 0,
         "Minor": 0,
-        "Patch": 204
+        "Patch": 205
     },
     "demands": [
         "npm"
@@ -20,19 +20,19 @@
     "instanceNameFormat": "Cordova Build $(platform)",
      "groups": [
         {
-          "name":"android",
-          "displayName": "Android",
-          "isExpanded": false
+            "name":"android",
+            "displayName": "Android",
+            "isExpanded": false
         },
         {
             "name":"ios",
             "displayName":"iOS",
-            "isExpanded":false            
+            "isExpanded":false
         },
         {
             "name":"windows",
             "displayName":"Windows",
-            "isExpanded":false            
+            "isExpanded":false
         },
         {
             "name":"advanced",
