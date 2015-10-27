@@ -15,7 +15,6 @@ callTaco()
 });
 
 function callTaco(code) {
-    // taco requires the Cordova CLI in the path		
     return ttb.cacheModule({
         projectPath: cwd,
         nodePackageName: "taco-cli",
