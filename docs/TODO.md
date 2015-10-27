@@ -13,8 +13,7 @@
 5. Update Tasks/CordovaBuild/package.json and others to reference the npm location of taco-team-build, remove /lib/taco-team-build from the vso-cordova-tasks repo
 
 ##To dos: Cordova Build Task
-1. In-progress: Work with VSO team to deal with warning messages that appear for logging events. This appears to be a VSO Windows agent bug. Fix is in progress and the VSO team is looking to enable node scripts from the Windows agent which allows us to do away with the powershell boostrap.  TBD on timelines.
-2. Test, test, test, test, test
+1. Test, test, test, test, test
 	1. Cordova 3.5.0 - Version of cordova that requires the "cordova" lib instead of cordova-lib since numbering differed
 	2. Cordova 3.6.3 - Last supported version in VS 2013
 	3. Cordova 4.3.1 - Last Ant based build version
@@ -30,26 +29,23 @@
 		6. Windows features after signing features added:
 			1. Windows with no arguments specified, no contents in config.xml
 			2. Windows with no arguments specified, contents in config.xml from VS
-			3. Windows with signing args specified in task
-4. Telemetry for some key information:
+			3. Windows with signing args specified in task to get data from on-prem TFS too (if possible)
+3. Update More Information "fwlink" location in all tasks in task.json
+4. P2 for Nov: Additional telemetry for some key information:
 	1. Cordova versions used - pulled either from the VSO task or taco.json. Likely should be added to taco-team-build
 	2. Which signing approach is being used for iOS. Likely can key off the radio button on the task.
 	3. Breakdown of builds by platform - key'd off the "platform" attribute
-	4. This is in addition to basic usage metrics we should get from VSO itself already - but we need to understand how to get data from on-prem TFS too (if possible)
-5. Update More Information "fwlink" location in all tasks in task.json
-6. Localization of task.json contents (no node localization support yet available in vso agent)
-7. Update cached CLI versions, plugins in VSO
-9. P2: Allow people to opt out of installing the support plugin
-0. P2: Implement population of Windows related signing proprties in config.xml and expose those as optional through the VSO task
-10. P2: Implement JDK selection capabilities for Android similar to the Gradle task
-11. P2: Only specify Android args for signing for versions of Cordova that support it (4.0.0+)
+	4. This is in addition to basic usage metrics we should get from VSO itself already - but we need to understand how 5. P2 unless tenet requires it: Localization of task.json contents (no node localization support yet available in vso agent)
+6. P2: Implement population of Windows related signing proprties in config.xml and expose those as optional through the VSO task
+7. P2: Allow people to opt out of installing the support plugin
+8. P2: Implement JDK selection capabilities for Android similar to the Gradle task
+9. P2: Only specify Android args for signing for versions of Cordova that support it (4.0.0+)
 
 ##To do: Other tasks to create
 1. P1: Ionic (CLI) Command Task - Started.
 	1. Refactor to use the latest version of Ionic unless specified.  Enable a DEFAULT_IONIC_VERSION env var like the cordova one to set a default which is useful for VSO where only certain versions will be cached.
-2. P1: TACO CLI Command Task - Started. Automatically uses latest TACO Cli version if not specified.
+2. P2: TACO CLI Command Task - Started. Automatically uses latest TACO Cli version if not specified.
 2. P2: PhoneGap (CLI) Command Task
-3. P2: Pre-cache these CLIs in VSO
 
 ##To dos: Decrypt Task
 1. **Remove from repo! Has been merged into vso-agent-tasks main repo.** Left here for convienenc when testing.
@@ -62,7 +58,7 @@
 
 ##To dos: Upload Script
 1. Test more!
-2. Get rid of npm install warnings visible in upload script
+2. P2: Get rid of npm install warnings visible in upload script
 
 ##To do: Cordova VSO cache script
 1. Update with the latest few versions of Cordova

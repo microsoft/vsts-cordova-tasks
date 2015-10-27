@@ -5,6 +5,17 @@ REM  Licensed under the MIT license. See LICENSE file in the project root for fu
 REM
 ECHO vso-cordova-tasks upload
 ECHO Copyright Microsoft Corporation
+ECHO.
+ECHO This script will acquire and install some dependant node modules. Each package 
+ECHO is licensed to you by its owner. Microsoft is not responsible for, nor does it 
+ECHO grant any licenses to, third-party packages. Some packages may include 
+ECHO dependencies which are governed by additional licenses. Follow the package 
+ECHO source URL (http://github.com/Microsoft/vso-cordova-tasks) to determine any 
+ECHO dependencies.
+ECHO.
+SET /p YN="Continue [Y/n]? "
+IF /I '%YN%'=='n' EXIT /B 1
+ECHO.
 
 CALL npm --version > NUL
 IF NOT ERRORLEVEL==0 GOTO INSTALLFAILED
@@ -14,7 +25,7 @@ IF NOT ERRORLEVEL==0 GOTO TFXINSTALL
 
 :NPMINSTALL
 ECHO Installing dependencies...
-CALL npm install
+CALL npm install --only=prod
 IF NOT ERRORLEVEL==0 GOTO INSTALLFAILED
 
 :EXEC

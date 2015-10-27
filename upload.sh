@@ -5,6 +5,20 @@
 
 echo "vso-cordova-tasks upload"
 echo "Copyright Microsoft Corporation"
+echo
+echo "This script will acquire and install some dependant node modules. Each package"
+echo "is licensed to you by its owner. Microsoft is not responsible for, nor does it" 
+echo "grant any licenses to, third-party packages. Some packages may include" 
+echo "dependencies which are governed by additional licenses. Follow the package" 
+echo "source URL (http://github.com/Microsoft/vso-cordova-tasks) to determine any" 
+echo "dependencies."
+echo
+read -p "Continue [Y/n]? " yn
+if [ -z "$yn" ]; then yn='y'; fi
+if [ $yn = 'n' ] || [ $yn = 'N' ]
+then
+  exit 1
+fi
 
 if ! type "npm" > /dev/null; then
   echo Could not find npm. Be sure node.js is installed and both node and npm are in your path.
@@ -29,7 +43,7 @@ if ! type "tfx" > /dev/null; then
 fi
 
 echo Installing dependencies...
-npm install
+npm install --only=prod
 if [ $? -ne 0 ]
 then
   echo "Failed to install dependencies."
