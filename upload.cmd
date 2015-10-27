@@ -14,7 +14,7 @@ IF NOT ERRORLEVEL==0 GOTO TFXINSTALL
 
 :NPMINSTALL
 ECHO Installing dependencies...
-CALL npm install
+CALL npm install --only=prod
 IF NOT ERRORLEVEL==0 GOTO INSTALLFAILED
 
 :EXEC
