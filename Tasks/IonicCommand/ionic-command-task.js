@@ -4,41 +4,41 @@
 */
 
 var path = require('path'),
-    tl = require('./lib/vso-task-lib-proxy.js'),
-    ttb = require('taco-team-build');
+    taskLibrary = require('./lib/vso-task-lib-proxy.js'),
+    buildUtilities = require('taco-team-build');
 
 
-var buildSourceDirectory = tl.getVariable('build.sourceDirectory') || tl.getVariable('build.sourcesDirectory');
+var buildSourceDirectory = taskLibrary.getVariable('build.sourceDirectory') || taskLibrary.getVariable('build.sourcesDirectory');
 //Process working directory
-var cwd = tl.getInput('cwd', /*required*/ false) || buildSourceDirectory;
-tl.cd(cwd);
+var workingDirectory = taskLibrary.getInput('cwd', /*required*/ false) || buildSourceDirectory;
+taskLibrary.cd(workingDirectory);
 
 callCordova().fail(function (err) {
     console.error(err.message);
-    tl.debug('taskRunner fail');
-    tl.exit(1);
+    taskLibrary.debug('taskRunner fail');
+    taskLibrary.exit(1);
 });
 
 // Main Cordova build exec
 function callCordova(code) {
     // Ionic requires the Cordova CLI in the path		
-    return ttb.cacheModule({
-        projectPath: cwd,
+    return buildUtilities.cacheModule({
+        projectPath: workingDirectory,
         nodePackageName: 'cordova',
-        moduleVersion: tl.getInput('cordovaVersion', /*required*/ false)
+        moduleVersion: taskLibrary.getInput('cordovaVersion', /*required*/ false)
     }).then(function (result) {
         // Add Cordova to path, then get Ionic
         process.env.PATH = path.resolve(result.path, '..', '.bin') + path.delimiter + process.env.PATH;
-        return ttb.cacheModule({
-            projectPath: cwd,
+        return buildUtilities.cacheModule({
+            projectPath: workingDirectory,
             nodePackageName: 'ionic',
-            moduleVersion: tl.getInput('ionicVersion', /*required*/ false) || ''  //Empty string will attempt to use latest
+            moduleVersion: taskLibrary.getInput('ionicVersion', /*required*/ false)
         });
     }).then(function (result) {
-        var ionicPath = process.platform == 'win32' ? path.resolve(result.path, '..', '.bin', 'ionic.cmd') : path.resolve(result.path, '..', '.bin', 'ionic')
-        var commandRunner = new tl.ToolRunner(ionicPath, true);
-        commandRunner.arg(tl.getDelimitedInput('ionicCommand', /*delim*/ ' ', /*required*/ true));
-        var args = tl.getDelimitedInput('ionicArgs', /*delim*/ ' ', /*required*/ false);
+        var ionicPath = path.resolve(result.path, '..', '.bin', 'ionic');
+        var commandRunner = new taskLibrary.ToolRunner(ionicPath, true);
+        commandRunner.arg(taskLibrary.getDelimitedInput('ionicCommand', /*delim*/ ' ', /*required*/ true));
+        var args = taskLibrary.getDelimitedInput('ionicArgs', /*delim*/ ' ', /*required*/ false);
         if (args) {
             commandRunner.arg(args);
         }
