@@ -184,7 +184,7 @@ function iosProfile(code) {
 
 // Process VSO task inputs specific to Android
 function processAndroidInputs() {
-    if (tl.getInput('forceAnt', /* required */ false) == 'true') {
+    if (tl.getInput('antBuild', /* required */ false) == 'true') {
         buildArgs.push('--ant');
     } else {
         buildArgs.push('--gradleArg=--no-daemon');  // Gradle daemon will hang the agent - need to turn it off
@@ -248,7 +248,7 @@ function copyToOutputFolder(code) {
     function makeSource(directory, fileSpec) {
         return {
             directory: path.join(cwd, directory),
-            fullSource: path.join(cwd, directory + fileSpec),
+            fullSource: path.join(cwd, directory + (fileSpec || '')),
         };
     };
 
@@ -308,7 +308,7 @@ function execBuild(code) {
 
     var version = tl.getInput('cordovaVersion', /* required */ false);
     if (version) {
-        cordovaConfig.cordovaVersion = version;
+        cordovaConfig.moduleVersion = version;
     }
 
     var updateXcconfig = (iosXcConfig != '')
