@@ -184,7 +184,7 @@ function iosProfile(code) {
 
 // Process VSO task inputs specific to Android
 function processAndroidInputs() {
-    if (tl.getInput('forceAnt', /* required */ false) == 'true') {
+    if (tl.getInput('antBuild', /* required */ false) == 'true') {
         buildArgs.push('--ant');
     } else {
         buildArgs.push('--gradleArg=--no-daemon');  // Gradle daemon will hang the agent - need to turn it off
