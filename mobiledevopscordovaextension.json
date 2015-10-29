@@ -1,0 +1,66 @@
+﻿{
+    "manifestVersion": 1.0,
+    "extensionId": "mobiledevops-cordova-extension",
+    "name": "Cordova Build Tasks",
+    "version": "0.0.1",
+    "publisher": "mobiledevops",
+    "public": false,
+    "description": "An extension that contains tasks to build Cordova-based projects in VSO",
+    "categories": [
+        "Build and release"
+    ],
+    "galleryFlags": [
+    ],
+    "icons": {
+        "default": "mobiledevopscordovaextension_default.png",
+        "wide": "mobiledevopscordovaextension_wide.png"
+    },
+    "files": [
+        {
+            "path": "Tasks/CordovaBuild"
+        },
+        {
+            "path": "Tasks/CordovaCommand"
+        },
+        {
+            "path": "Tasks/IonicCommand"
+        },
+        {
+            "path": "Tasks/TacoCommand"
+        }
+    ],
+    "contributions": [
+        {
+            "id": "cordovabuildtask",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [ "ms.vss-distributed-task.tasks" ],
+            "properties": {
+                "name": "Tasks/CordovaBuild"
+            }
+        },
+        {
+            "id": "cordovacommandtask",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [ "ms.vss-distributed-task.tasks" ],
+            "properties": {
+                "name": "Tasks/CordovaCommand"
+            }
+        },
+        {
+            "id": "ioniccommandtask",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [ "ms.vss-distributed-task.tasks" ],
+            "properties": {
+                "name": "Tasks/IonicCommand"
+            }
+        },
+        {
+            "id": "tacocommandtask",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [ "ms.vss-distributed-task.tasks" ],
+            "properties": {
+                "name": "Tasks/TacoCommand"
+            }
+        }
+    ]
+}
