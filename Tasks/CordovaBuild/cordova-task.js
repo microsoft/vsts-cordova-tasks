@@ -248,7 +248,7 @@ function copyToOutputFolder(code) {
     function makeSource(directory, fileSpec) {
         return {
             directory: path.join(cwd, directory),
-            fullSource: path.join(cwd, directory + fileSpec),
+            fullSource: path.join(cwd, directory + (fileSpec || '')),
         };
     };
 
@@ -308,7 +308,7 @@ function execBuild(code) {
 
     var version = tl.getInput('cordovaVersion', /* required */ false);
     if (version) {
-        cordovaConfig.cordovaVersion = version;
+        cordovaConfig.moduleVersion = version;
     }
 
     var updateXcconfig = (iosXcConfig != '')
