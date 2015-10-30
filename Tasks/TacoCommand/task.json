@@ -3,8 +3,8 @@
     "name": "TacoCliCommand",
     "friendlyName": "TACO CLI Command",
     "description": "Run a TACO CLI Command",
-    "author": "ryuyu",
-    "helpMarkDown": "Replace with markdown to show in help",
+    "author": "Microsoft Corporation",
+    "helpMarkDown": "[More Information](http://go.microsoft.com/fwlink/?LinkID=692095)",
     "category": "Build",
     "visibility": [
         "Build"
