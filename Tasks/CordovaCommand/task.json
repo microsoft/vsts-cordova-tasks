@@ -3,7 +3,7 @@
     "name": "CordovaCommand",
     "friendlyName": "Cordova Command",
     "description": "Run a Cordova CLI command",
-    "helpMarkDown": "[More Information](http://go.microsoft.com/fwlink/?LinkID=613730)",
+    "helpMarkDown": "[More Information](http://go.microsoft.com/fwlink/?LinkID=692058)",
     "category": "Build",
     "visibility": [
                 "Build"

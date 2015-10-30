@@ -59,7 +59,6 @@ By downloading and running this project, you agree to the license terms of the t
 The third party software and products are provided to you by third parties. You are responsible for reading and accepting the relevant license terms for all software that will be installed. Microsoft grants you no rights to third party software.
 
 ## License
-Unless otherwise mentioned, the code samples are released under the MIT license.
 
 ```
 The MIT License (MIT)

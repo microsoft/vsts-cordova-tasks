@@ -3,7 +3,7 @@
     "name": "CordovaBuild",
     "friendlyName": "Cordova Build",
     "description": "Build a hybrid app project based on the Cordova CLI, Ionic CLI, and/or Tools for Apache Cordova ",
-    "helpMarkDown": "[More Information](http://go.microsoft.com/fwlink/?LinkID=613730)",
+    "helpMarkDown": "[More Information](http://go.microsoft.com/fwlink/?LinkID=691186)",
     "category": "Build",
     "visibility": [
                 "Build"

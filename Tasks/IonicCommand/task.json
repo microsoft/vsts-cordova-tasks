@@ -3,7 +3,7 @@
     "name": "IonicCommand",
     "friendlyName": "Ionic Command",
     "description": "Run an Ionic CLI command",
-    "helpMarkDown": "[More Information](http://go.microsoft.com/fwlink/?LinkID=613730)",
+    "helpMarkDown": "[More Information](http://go.microsoft.com/fwlink/?LinkID=692057)",
     "category": "Build",
     "visibility": [
                 "Build"
