@@ -1,9 +1,20 @@
 # vso-cordova-tasks
-Visual Studio Online / TFS build tasks for Cordova app development.  See [TODOs](./docs/TODO.md) for known issues and things that still need to be done.
+Visual Studio Online (VSO) and Team Foundation Services (TFS) 2015 can both be used for building and testing Cordova apps in a Continuous Integration (CI) environment thanks to a new [cross-platform agent](http://go.microsoft.com/fwlink/?LinkID=533789) that enables VSO or TFS to build directly on Windows or OSX. Further, [Tools for Apache Cordova](http://go.microsoft.com/fwlink/?LinkID=536496) is designed to work with a number of different CI systems since the projects it creates are standard [Apache Cordova Command Line interface](http://go.microsoft.com/fwlink/?LinkID=533773) (CLI) projects. The end result is you can use VSO or TFS to build projects created using Tools for Apache Cordova or any Cordova compliant CLI project like Ionic or the TACO CLI.
+
+<div style="text-align:center"><img src="./docs/media/misc/taco-800.png" /></div>
+
+This repository contains a set of VSO "tasks" (or "build steps") wrapped in a VSO Extension that can be used to streamline setup when building Cordova based applications in a CI environment. These tasks can also be used with a TFS 2015 on prem server and are intended to work with any Cordova based project not just Tools for Apache Cordova. The tasks are designed to automatically acquire the specified version of Cordova or related CLI based on the contents of taco.json or input options and cache the CLI to speed up subsequent builds. The Cordova Build task is designed to work with Cordova and Cordova-like toolsets like Ionic and provides some convenient signing related features.
 
 ##Installation
 
-1. Download the source repo locally 
+### Visual Studio Online
+1. Install the [VSO Cordova Extension](http://go.microsoft.com/fwlink/?LinkID=691188)
+
+2. You will now find a series of Cordova related tasks in the "Build" category 
+
+### TFS 2015 Update 1 or Earlier
+
+1. Download the [latest release](http://go.microsoft.com/fwlink/?LinkID=691191) of the tasks locally and unzip
 
 2. If you have the tfx-cli installed on your machine, login using the following command. Otherwise skip to step 4.
 
@@ -27,25 +38,13 @@ Visual Studio Online / TFS build tasks for Cordova app development.  See [TODOs]
 
 5. Profit!
 
-##Decrypt File Task Setup for Windows
-**Note: The decrypt task will ultimatley be merged into the primary [vso-agent-tasks](http://github.com/Microsoft/vso-agent-tasks) repo. It's presence here is temporary.**
-
-The decrypt task uses OpenSSL to decrypt which is available at the command line on OSX but may not be available on Windows. 
-
-OpenSSL comes with the [Git for Windows](https://git-for-windows.github.io/) command line tools for Windows so if the "bin" folder in the installation directory (Ex: C:\Program Files (x86)\Git\bin) is in your path you should already have openssl as an available command in the command prompt.  If not, either install the Git command line tools and add them to your path or download a binary distribution of OpenSSL for Windows from [one of the community mirrors](http://go.microsoft.com/fwlink/?LinkID=627128) and it to your path.
-
 ##Usage
 See the following articles on using these tasks in VSO/TFS:
 
-1. [Draft VSO / TFS Documentation](./docs/TFS2015.md)
-	- [Draft of iOS Signing Certs Doc](./docs/secure-certs.md) - Shared between Cordova and Xcode Build
-2. [Cordova Build Task Usage](./docs/cordova-build-task.md)
-3. [Decrypt File Task Usage](./docs/decrypt-file-task.md) - Will be moved into vso-agent-tasks and be part of the VSO main code base
-
-No docs yet:
-
-1. Cordova CLI Command Task - Simplified task that still Caches but is geared towards arbitrary commands.
-2. Ionic CLI Command Task - Same as Cordova Command task but for the Ionic CLI. We'll still reccomend using the Cordova Build task to build due to its iOS signing features, Windows signing features, and fixes for problems like the iOS symlink problem.
+1. [Cordova Build Task](http://go.microsoft.com/fwlink/?LinkID=691186)
+	- [Securing Signing Certs](http://go.microsoft.com/fwlink/?LinkID=691933)
+2. [Cordova Command Task](http://go.microsoft.com/fwlink/?LinkID=692058)
+3. [Ionic Command Task](http://go.microsoft.com/fwlink/?LinkID=692057)
 
 To be implemented:
 
