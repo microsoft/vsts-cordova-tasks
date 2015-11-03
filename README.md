@@ -8,7 +8,7 @@ This repository contains a set of VSO "tasks" (or "build steps") wrapped in a VS
 ##Installation
 
 ### Visual Studio Online
-1. Install the [VSO Cordova Extension](http://go.microsoft.com/fwlink/?LinkID=691188)
+1. Install the [Cordova Extension for Visual Studio Online](http://go.microsoft.com/fwlink/?LinkID=691188)
 
 2. You will now find a series of Cordova related tasks in the "Build" category 
 
