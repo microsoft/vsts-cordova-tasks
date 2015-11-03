@@ -5,11 +5,14 @@
   authors="bursteg, clantz" />
 
 # The Cordova/Ionic Command Tasks for Visual Studio Online and Team Foundation Services 2015
-Visual Studio Online (VSO) and Team Foundation Services (TFS) 2015 can both be used for building and testing Cordova apps in a Continuous Integration (CI) environment thanks to a new [cross-platform agent](http://go.microsoft.com/fwlink/?LinkID=533789) that enables VSO or TFS to build directly on Windows or OSX. Further, [Tools for Apache Cordova](http://go.microsoft.com/fwlink/?LinkID=536496) is designed to work with a number of different CI systems since the projects it creates are standard [Apache Cordova Command Line interface](http://go.microsoft.com/fwlink/?LinkID=533773) (CLI) projects. The end result is you can use VSO or TFS to build projects created using Tools for Apache Cordova or any Cordova compliant CLI project like Ionic or the TACO CLI.
+Visual Studio Online (VSO) and Team Foundation Services (TFS) 2015 can both be used for building and testing Cordova apps in a Continuous Integration (CI) environment thanks to a new [cross-platform agent](http://go.microsoft.com/fwlink/?LinkID=533789)that can build directly on Windows, Linux, or OSX. The end result is you can use VSO or TFS to build projects created using [Tools for Apache Cordova]([Tools for Apache Cordova](http://go.microsoft.com/fwlink/?LinkID=536496) or *any Cordova compliant CLI project like Ionic or the TACO CLI*. 
 
-To streamline CI for Cordova-based projects, we have created a series of build tasks (or steps) that you can use: **[Cordova Build](http://go.microsoft.com/fwlink/?LinkID=691186), [Cordova Command](http://go.microsoft.com/fwlink/?LinkID=692058), [Ionic Command](http://go.microsoft.com/fwlink/?LinkID=692057)**.
+> If you need to use the legacy XAML/MSBuild based build system, see the [TFS 2013](http://go.microsoft.com/fwlink/?LinkID=533770) tutorial in Tools for Apache Cordova documentation for details.
 
-Generally you should only need to use the **[Cordova Build](http://go.microsoft.com/fwlink/?LinkID=691186)** task even when building something like an Ionic project (and it has some useful features in this specific area). However, if you want to run a non-build CLI related command, use the Cordova and Ionic Command tasks. This article will specifically focus the Command tasks. See the [Cordova Build](http://go.microsoft.com/fwlink/?LinkID=691186) tutorial for details on building.
+To streamline CI for Cordova-based projects, we have created a series of build tasks (or steps) that you can use: **[Cordova Build](http://go.microsoft.com/fwlink/?LinkID=691186), [Cordova Command](http://go.microsoft.com/fwlink/?LinkID=692058),** and **[Ionic Command](http://go.microsoft.com/fwlink/?LinkID=692057)**. 
+
+Generally you should only need to use the **[Cordova Build](http://go.microsoft.com/fwlink/?LinkID=691186)** task even when building something like an Ionic project (and it has some useful features in this specific area). However, if you want to run a non-build CLI related command, use the Cordova and Ionic Command tasks. This article will specifically focus the Command tasks. See the [Cordova Build](http://go.microsoft.com/fwlink/?LinkID=691186) tutorial for details on building and testing along with information on setting up your own build agent.
+
 
 ## Project Setup & Build Definitions
 
@@ -34,7 +37,7 @@ First, create a new build definition by selecting the "Build" tab for your VSO/T
   Available Settings:
     - **Command**: The CLI command.  For example "plugin".
     - **Arguments**: Additional arguments for the command.  Ex: "add cordova-plugin-camera"
-    - **Cordova Version**: If you're using Tools for Apache Cordova you can leave this blank and the correct version will be used based on the contents of taco.json. Otherwise, if not specified, uses the version specified by the DEFAULT_CORDOVA_VERSION environment variable (like in VSO) or the latest if no environment variable is set.
+    - **Cordova Version**: If you're using Tools for Apache Cordova you can leave this blank and the correct version will be used based on the contents of taco.json. Otherwise, if not specified, uses the version specified by the CORDOVA_DEFAULT_VERSION environment variable (like in VSO) or the latest if no environment variable is set.
     - **Advanced &gt; Working Directory**: Location of the Cordova project itself inside your solution (not the solution root).
 
 2.  Next, given the task is cross-platform, if you want to be sure this build definition only runs on Windows or OSX, you will need to add a demand that "Cmd" exists for Windows...
@@ -51,12 +54,12 @@ The Ionic Command task is similar to the Cordova one. Add the Cordova Command ta
 Available Settings:
   - **Command**: The CLI command.  For example "state".
   - **Arguments**: Additional arguments for the command.  Ex: "restore"
-  - **Ionic Version**: If not specified, uses the version specified by the DEFAULT_IONIC_VERSION environment variable (like in VSO) or the latest if no environment variable is set.
-  - **Cordova Version**: The Ionic CLI also expects the Cordova CLI to be availabe.  If you're using Tools for Apache Cordova you can leave this blank and the correct version will be used based on the contents of taco.json. Otherwise, if not specified, uses the version specified by the DEFAULT_CORDOVA_VERSION environment variable (like in VSO) or the latest if no environment variable is set.
+  - **Ionic Version**: If not specified, uses the version specified by the IONIC_DEFAULT_VERSION environment variable (like in VSO) or the latest if no environment variable is set.
+  - **Cordova Version**: The Ionic CLI also expects the Cordova CLI to be availabe.  If you're using Tools for Apache Cordova you can leave this blank and the correct version will be used based on the contents of taco.json. Otherwise, if not specified, uses the version specified by the IONIC_DEFAULT_VERSION environment variable (like in VSO) or the latest if no environment variable is set.
   - **Advanced &gt; Working Directory**: Location of the Cordova project itself inside your solution (not the solution root).
 
 ## More Information
-* [Learn about the Cordova Build task](http://go.microsoft.com/fwlink/?LinkID=691186)
+* [Learn about the Cordova Build task and setting up your own agent](http://go.microsoft.com/fwlink/?LinkID=691186)
 * [Check out the source code](http://go.microsoft.com/fwlink/?LinkID=691187)
 * [Learn about Tools for Apache Cordova](http://go.microsoft.com/fwlink/?LinkID=618473)
 * [Read tutorials and learn about tips, tricks, and known issues for Cordova](http://go.microsoft.com/fwlink/?LinkID=618471)
