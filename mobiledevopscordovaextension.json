@@ -24,9 +24,6 @@
         },
         {
             "path": "Tasks/IonicCommand"
-        },
-        {
-            "path": "Tasks/TacoCommand"
         }
     ],
     "contributions": [
@@ -52,14 +49,6 @@
             "targets": [ "ms.vss-distributed-task.tasks" ],
             "properties": {
                 "name": "Tasks/IonicCommand"
-            }
-        },
-        {
-            "id": "tacocommandtask",
-            "type": "ms.vss-distributed-task.task",
-            "targets": [ "ms.vss-distributed-task.tasks" ],
-            "properties": {
-                "name": "Tasks/TacoCommand"
             }
         }
     ]
