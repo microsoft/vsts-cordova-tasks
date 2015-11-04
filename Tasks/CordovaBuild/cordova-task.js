@@ -6,6 +6,7 @@
 var path = require('path'),
     fs = require('fs'),
     Q = require('q'),
+    semver = require('semver'),
     glob = require('glob'),
     xcutils = require('./lib/xcode-task-utils.js'),
     tl = require('./lib/vso-task-lib-proxy.js'),
@@ -77,6 +78,7 @@ function processInputs() {
         buildArgs.push('--archs="' + archs + '"')
     }
 
+    platform = tl.getInput('platform', /* required */ true).toLowerCase();
     targetEmulator = tl.getInput('targetEmulator', /* required */ false) == 'true';
     if (targetEmulator) {
         buildArgs.push('--emulator');
@@ -84,7 +86,6 @@ function processInputs() {
         buildArgs.push('--device')
     }
 
-    platform = tl.getInput('platform', /* required */ true).toLowerCase();
     switch (platform) {
         case 'android':
             if (process.platform == 'darwin') {
@@ -293,8 +294,9 @@ function copyToOutputFolder(code) {
 // Main Cordova build exec
 function execBuild(code) {
     var cordovaConfig = {
-        projectPath: cwd
-    }
+        projectPath: cwd,
+        nodePackageName: 'cordova'
+    };
 
     // Add optional additional args
     var args = tl.getDelimitedInput('cordovaArgs', ' ', /* required */ false);
@@ -319,24 +321,48 @@ function execBuild(code) {
                 tl.debug('Adding Xcconfig update hook')
                 cordova.on('before_compile', writeVsoXcconfig)
             }
-            if (antProperties.override) {
-                console.log('WARN: Cordova versions < 5.0.0 may see build option warnings when specifying Android signing options. These can be safely ignored and do not affect signing when building with Ant.');
-                tl.debug('Adding ant.properties update hook')
-                cordova.on('before_compile', writeAntProperties)
-            }
-            return ttb.buildProject(platform, buildArgs)
-                .fin(function () {
-                    // Remove xcconfig hook
-                    if (updateXcconfig) {
-                        tl.debug('Removing Xcconfig update hook')
-                        cordova.off('before_compile', writeVsoXcconfig)
+            
+            return ttb.getNpmVersionFromConfig(cordovaConfig).then(function (cordovaVersion) {
+                if (antProperties.override) {
+                    if (semver.valid(cordovaVersion) && semver.lt(cordovaVersion, '5.0.0')) {
+                        console.log('WARN: Cordova versions < 5.0.0 may see build option warnings when specifying Android signing options. These can be safely ignored and do not affect signing when building with Ant.');
                     }
-                    if (antProperties.override) {
-                        tl.debug('Removing ant.properties update hook')
-                        cordova.off('before_compile', writeAntProperties)
-                    }
-                });
+                    
+                    tl.debug('Adding ant.properties update hook')
+                    cordova.on('before_compile', writeAntProperties)
+                }
+                
+                // Special case: android on cordova versions earlier than v4.0.0 will
+                // actively fail the build if it encounters unexpected options
+                if (platform === 'android' && semver.valid(cordovaVersion) && semver.lt(cordovaVersion, '4.0.0')) {
+                    tl.debug('Stripping inapplicable arguments for android on cordova ' + cordovaVersion);
+                    buildArgs = stripNewerAndroidArgs(buildArgs);
+                }
+                
+                return Q();
+            }).then(function() {                
+                return ttb.buildProject(platform, buildArgs)
+            }).fin(function () {
+                // Remove xcconfig hook
+                if (updateXcconfig) {
+                    tl.debug('Removing Xcconfig update hook')
+                    cordova.off('before_compile', writeVsoXcconfig)
+                }
+                if (antProperties.override) {
+                    tl.debug('Removing ant.properties update hook')
+                    cordova.off('before_compile', writeAntProperties)
+                }
+            });
         });
+}
+
+function stripNewerAndroidArgs(args) {
+    // For versions of cordova earlier than 4.0.0, the android build will reject all args except:
+    // --debug, --release, --ant, --gradle, and --nobuild
+    var acceptableArgs = ['--debug', '--release', '--ant', '--gradle', '--nobuild'];
+    return args.filter(function(arg) {
+        return acceptableArgs.indexOf(arg) != -1;
+    });
 }
 
 // Event handler for before_compile that adds xcconfig file - done before_compile so res/native doesn't overwrite xcconfig file we need to mod
