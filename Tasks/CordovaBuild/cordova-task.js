@@ -198,8 +198,8 @@ function processAndroidInputs() {
         // we don't want to fail the build in that case.
         if (fs.lstatSync(keystoreFile).isFile()) {
             antProperties['key.store'] = keystoreFile;
-            antProperties.override = true;
-            buildArgs.push('--keystore="' + keystoreFile + '"');
+            antProperties.override = true;                       
+            buildArgs.push('--keystore=' + keystoreFile);
         }
     } catch (e) {
         console.warn('WARN: Specified keystoreFile is not valid');
@@ -209,21 +209,21 @@ function processAndroidInputs() {
     if (keystorePass) {
         antProperties['key.store.password'] = keystorePass;
         antProperties.override = true;
-        buildArgs.push('--storePassword="' + keystorePass + '"');
+        buildArgs.push('--storePassword=' + keystorePass);
     }
 
     var keystoreAlias = tl.getInput('keystoreAlias', /* required */ false);
     if (keystoreAlias) {
         antProperties['key.alias'] = keystoreAlias;
         antProperties.override = true;
-        buildArgs.push('--alias="' + keystoreAlias + '"');
+        buildArgs.push('--alias=' + keystoreAlias);
     }
 
     var keyPass = tl.getInput('keyPass', /* required */ false);
     if (keyPass) {
         antProperties['key.alias.password'] = keyPass;
         antProperties.override = true;
-        buildArgs.push('--password="' + keyPass + '"');
+        buildArgs.push('--password=' + keyPass);
     }
     return Q(0);
 }
