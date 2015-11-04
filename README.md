@@ -1,6 +1,6 @@
 # Cordova Extension for Visual Studio Online and TFS (vso-cordova-tasks)
-Visual Studio Online (VSO) and Team Foundation Services (TFS) 2015 can both be used for building and testing Cordova apps in a Continuous Integration (CI) environment thanks to a new [cross-platform agent](http://go.microsoft.com/fwlink/?LinkID=533789)that can build directly on Windows, Linux, or OSX. The end result is you can use VSO or TFS to build projects created using [Tools for Apache Cordova]([Tools for Apache Cordova](http://go.microsoft.com/fwlink/?LinkID=536496) or *any Cordova compliant CLI project like Ionic or the TACO CLI*. 
-
+Visual Studio Online (VSO) and Team Foundation Services (TFS) 2015 can be used for building and testing Cordova apps in a Continuous Integration (CI) environment thanks to a new [cross-platform agent](http://go.microsoft.com/fwlink/?LinkID=533789) that supports OSX. The end result is you can use VSO or TFS to build projects created using [Tools for Apache Cordova](http://go.microsoft.com/fwlink/?LinkID=536496) or *any Cordova compliant CLI project like Ionic or the TACO CLI*. 
+	
 This repository contains a set of VSO "tasks" (or "build steps") wrapped in a VSO Extension that can be used to streamline setup when building Cordova based applications in a CI environment. These tasks can also be used with a TFS 2015 on prem server and are intended to work with any Cordova based project not just Tools for Apache Cordova. The tasks:
 
 - Are designed to work with Cordova and Cordova-like toolsets like Ionic
