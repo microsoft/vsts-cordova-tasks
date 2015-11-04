@@ -5,7 +5,7 @@
     "version": "0.0.1",
     "publisher": "mobiledevops",
     "public": false,
-    "description": "An extension that contains tasks to build Cordova-based projects in VSO",
+    "description": "An extension that contains tasks to build Cordova-based projects in VSO. See http://aka.ms/vsocordova for more details.",
     "categories": [
         "Build and release"
     ],
