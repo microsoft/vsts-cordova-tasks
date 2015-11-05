@@ -332,11 +332,24 @@ function execBuild(code) {
                     cordova.on('before_compile', writeAntProperties)
                 }
                 
-                // Special case: android on cordova versions earlier than v4.0.0 will
-                // actively fail the build if it encounters unexpected options
-                if (platform === 'android' && semver.valid(cordovaVersion) && semver.lt(cordovaVersion, '4.0.0')) {
-                    tl.debug('Stripping inapplicable arguments for android on cordova ' + cordovaVersion);
-                    buildArgs = stripNewerAndroidArgs(buildArgs);
+                if (platform === 'android') {
+                    if (semver.valid(cordovaVersion) && semver.lt(cordovaVersion, '4.0.0')) {
+                        // Special case: android on cordova versions earlier than v4.0.0 will
+                        // actively fail the build if it encounters unexpected options
+                        tl.debug('Stripping inapplicable arguments for android on cordova ' + cordovaVersion);
+                        buildArgs = stripNewerAndroidArgs(buildArgs);
+                    }
+                    
+                    if (semver.valid(cordovaVersion) && semver.lte(cordovaVersion, '3.5.0-0.2.7')) {
+                        // Special case: android on cordova versions 3.5.0-0.2.7 need
+                        // "android" to be on the path, so make sure it is there
+                        var currentPath = process.env['PATH'];
+                        var androidHome = process.env['ANDROID_HOME'];
+                        if (currentPath && androidHome && currentPath.indexOf(androidHome) === -1) {
+                            tl.debug('Appending ANDROID_HOME to the current PATH');
+                            process.env['PATH'] = currentPath + ';' + path.join(androidHome, 'tools');
+                        }
+                    }
                 }
                 
                 return Q();
