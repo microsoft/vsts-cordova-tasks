@@ -352,6 +352,12 @@ function execBuild(code) {
                     }
                 }
                 
+                // For cordova 3.5.0-0.2.7 or lower, we should always remove the --device
+                // and --emulator flag, since those arguments were not available until 3.6
+                if (semver.valid(cordovaVersion) && semver.lt(cordovaVersion, '3.6.0')) {
+                    buildArgs = buildArgs.filter(function(arg) { return arg !== '--device' && arg !== '--emulator'; })
+                }
+                
                 return Q();
             }).then(function() {                
                 return ttb.buildProject(platform, buildArgs)
