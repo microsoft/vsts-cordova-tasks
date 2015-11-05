@@ -1,12 +1,15 @@
 ﻿{
     "manifestVersion": 1.0,
     "extensionId": "mobiledevops-cordova-extension",
-    "name": "Cordova Build Tasks",
+    "name": "Cordova Extension for Visual Studio Online",
     "version": "0.0.1",
-    "publisher": "mobiledevops",
+    "publisher": "microsoft",
     "public": false,
-    "description": "An extension that contains tasks to build Cordova-based projects in VSO. See http://aka.ms/vsocordova for more details.",
+    "description": "An extension that contains tasks to build Cordova-based projects with Visual Studio Online. See http://aka.ms/vsocordova for more details.",
     "categories": [
+        "Build and release"
+    ],
+    "visibility": [
         "Build and release"
     ],
     "galleryFlags": [
