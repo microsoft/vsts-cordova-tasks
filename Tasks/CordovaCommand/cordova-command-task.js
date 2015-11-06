@@ -19,8 +19,8 @@ callCordova().fail(function (err) {
     taskLibrary.exit(1);
 });
 
-// Main Cordova build exec
-function callCordova(code) {
+// Main Cordova command exec
+function callCordova() {
     var cordovaConfig = {
         nodePackageName: 'cordova',
         projectPath: workingDirectory
@@ -34,7 +34,7 @@ function callCordova(code) {
     return buildUtilities.cacheModule(cordovaConfig).then(function (result) {
         taskLibrary.debug('Cordova Module Path: ' + result.path);
         var cordovaCmd = path.resolve(result.path, '..', '.bin', 'cordova');
-        var commandRunner = new taskLibrary.ToolRunner(cordovaCmd, true);
+        var commandRunner = new taskLibrary.ToolRunner(cordovaCmd);
         commandRunner.arg(taskLibrary.getDelimitedInput('cordovaCommand', /*delim*/ ' ', /*required*/ true));
         var args = taskLibrary.getDelimitedInput('cordovaArgs', /*delim*/ ' ', /*required*/ false);
         if (args) {
