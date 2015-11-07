@@ -27,6 +27,8 @@ function callIonic() {
         nodePackageName: 'cordova',
         moduleVersion: taskLibrary.getInput('cordovaVersion', /*required*/ false)
     }).then(function (cordovaModule) {
+        taskLibrary.debug('Cordova Module Path: ' + cordovaModule.path);
+
         // Add Cordova to path, then get Ionic
         process.env.PATH = path.resolve(cordovaModule.path, '..', '.bin') + path.delimiter + process.env.PATH;
         return buildUtilities.cacheModule({
@@ -35,8 +37,12 @@ function callIonic() {
             moduleVersion: taskLibrary.getInput('ionicVersion', /*required*/ false)
         });
     }).then(function (ionicModule) {
-        var ionicPath = path.resolve(ionicModule.path, '..', '.bin', 'ionic');
-        var commandRunner = new taskLibrary.ToolRunner(ionicPath);
+        taskLibrary.debug('Ionic Module Path: ' + ionicModule.path);
+        
+        var ionicExecutable = process.platform == 'win32' ? 'ionic.cmd' : 'ionic';
+        var ionicCmd = path.resolve(ionicModule.path, '..', '.bin', ionicExecutable);
+        var commandRunner = new taskLibrary.ToolRunner(ionicCmd);
+        
         commandRunner.arg(taskLibrary.getDelimitedInput('ionicCommand', /*delim*/ ' ', /*required*/ true));
         var args = taskLibrary.getDelimitedInput('ionicArgs', /*delim*/ ' ', /*required*/ false);
         if (args) {
