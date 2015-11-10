@@ -1,7 +1,18 @@
 # Cordova Extension for Visual Studio Online and TFS (vso-cordova-tasks)
-<table style="background-color: #5C2D91; color: white; width: 100%; vertical-align: middle"><tr>
-<td style="width: 140px; text-align: center;"><img src="docs/media/misc/cordova_logo_white_icon.png" /></td>
-<td><strong  style="font-size: 1.25em;">Cordova Extension for Visual Studio Online</strong><br />
+<style>
+.cordova-hero {
+	background-color: #5C2D91; color: white; vertical-align: middle;
+}
+table.cordova-hero   {
+	width: 100%;
+}
+.cordova-logo {
+	width: 140px; text-align: center;
+}
+</style>
+<table class="cordova-hero"><tr>
+<td class="cordova-logo"><img src="docs/media/misc/cordova_logo_white_icon.png" /></td>
+<td><strong>Cordova Extension for Visual Studio Online</strong><br />
 Streamline CI setup for your Apache Cordova, PhoneGap, Ionic, or Cordova CLI compatible app using a set of useful pre-defined build steps.</td>
 </tr></table>
 
