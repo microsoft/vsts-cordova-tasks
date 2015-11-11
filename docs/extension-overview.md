@@ -25,11 +25,6 @@ See the following articles on using these tasks in VSO/TFS:
 2. [Cordova Command](http://go.microsoft.com/fwlink/?LinkID=692058)
 3. [Ionic Command](http://go.microsoft.com/fwlink/?LinkID=692057)
 
-To be implemented:
-
-1. TACO CLI Command Task
-2. PhoneGap CLI Command Task
-
 ##Installation for TFS 2015 Update 1 or Earlier
 
 1. Download the [latest release](http://go.microsoft.com/fwlink/?LinkID=691191) of the tasks locally and unzip
