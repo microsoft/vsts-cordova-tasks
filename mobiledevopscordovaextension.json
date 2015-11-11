@@ -1,23 +1,55 @@
 ﻿{
     "manifestVersion": 1.0,
     "extensionId": "mobiledevops-cordova-extension",
-    "name": "Cordova Extension for Visual Studio Online",
-    "version": "0.0.1",
+    "name": "Visual Studio Team Services Extension for Cordova",
+    "version": "1.0.0",
     "publisher": "ms-vsclient",
     "public": false,
-    "description": "An extension that contains tasks to build Cordova-based projects with Visual Studio Online. See http://aka.ms/vsocordova for more details.",
+    "description": "Streamline CI setup for your Apache Cordova, PhoneGap, Ionic, or Cordova CLI compatible app using a set of useful pre-defined build steps.",
     "categories": [
         "Build and release"
     ],
     "visibility": [
         "Build and release"
     ],
-    "galleryFlags": [
+    "tags": [
+        "Cordova", "Phonegap", "Ionic", "Tools for Apache Cordova", "TACO", "Build", "Continuous Integration", "Android", "iOS", "Windows", "Windows Phone"
     ],
+    "links": {
+        "learn": {
+            "uri": "http://go.microsoft.com/fwlink/?LinkID=691186"
+        },
+        "issues": {
+            "uri": "http://go.microsoft.com/fwlink/?LinkID=699450"  
+        },
+        "support": {
+            "uri": "http://go.microsoft.com/fwlink/?LinkID=699448"
+        },
+        "repository": {
+            "uri": "http://go.microsoft.com/fwlink/?LinkID=691187"
+        }
+    },
     "icons": {
-        "default": "mobiledevopscordovaextension_default.png",
+        "default": "docs/media/misc/cordova_logo_white_purple.png",
         "wide": "mobiledevopscordovaextension_wide.png"
     },
+    "branding": {
+        "color": "#5C2D91",
+        "theme": "dark"
+    },
+    "content":{
+        "details": {
+            "path": "docs/extension-overview.md"
+        }
+    },
+    "screenshots": [
+      {
+          "path": "docs/media/misc/screenshot-1.png"
+      },
+      {
+          "path": "docs/media/misc/screenshot-2.png"
+      }
+    ],
     "files": [
         {
             "path": "Tasks/CordovaBuild"

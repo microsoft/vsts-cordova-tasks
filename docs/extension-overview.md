@@ -56,5 +56,5 @@ See the following articles on using these tasks in VSO/TFS:
 
 ## Contact Us
 * [Follow us on Twitter](http://go.microsoft.com/fwlink/?LinkID=699449)
-* [Email us your questions](mailto:/vscordovatools@microsoft.com)
+* [Email us your questions](mailto:vscordovatools@microsoft.com)
 * [Ask for help on StackOverflow](http://go.microsoft.com/fwlink/?LinkID=699448)
