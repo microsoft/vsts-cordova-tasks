@@ -27,17 +27,20 @@ See the following articles on using these tasks in VSO/TFS:
 
 ##Installation for TFS 2015 Update 1 or Earlier
 
-1. Download the [latest release](http://go.microsoft.com/fwlink/?LinkID=691191) of the tasks locally and unzip
+1. [Enable basic auth](http://go.microsoft.com/fwlink/?LinkID=699518) in your TFS instance
 
-2. If you have the tfx-cli installed on your machine, login using the following command. Otherwise skip to step 4.
+2. Install the tfx-cli and login
 
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	tfx login
+	npm install -g tfx-cli
+	tfx login --authType basic 
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-3. Enter your VSO collection URL (Ex: https://my-vso-instance.visualsutdio.com/DefaultCollection) and an auth token. 
+3. Enter your collection URL (Ex: https://localhost:8080/tfs/DefaultCollection) and user name and password 
 
-4. Type the following from the root of the repo from Windows:
+4. Download the [latest release](http://go.microsoft.com/fwlink/?LinkID=691191) of the Cordova tasks locally and unzip
+
+5. Type the following from the root of the repo from Windows:
 
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	upload

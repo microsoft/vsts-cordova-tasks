@@ -20,11 +20,7 @@ Generally you should only need to use the **[Cordova Build](http://go.microsoft.
 To use the Command tasks with a Cordova based project in Visual Studio Online or TFS 2015, you will need to first install it in your collection.
 
 - **Visual Studio Online**: For Visual Studio Online, this is easy to do. Simply install the [Visual Studio Online Extension for Cordova](http://go.microsoft.com/fwlink/?LinkID=691835). 
-
-- **TFS 2015 Update 1 and Earlier**: TFS 2015 Update 1 and below does not support installing VSO Extensions. Fortunately, the installation of the Cordova task is still relatively easy to do by following these simple steps:
-  1. Download the latest release of [vso-cordova-tasks](http://go.microsoft.com/fwlink/?LinkID=691191) and unzip it locally
-  2. Navigate to the unzipped folder from the command prompt
-  3. Simply type "upload" and follow the instructions that appear. You can also update the task following these same steps.
+- **TFS 2015 Update 1 and Earlier**: TFS 2015 Update 1 and below does not support installing VSO Extensions. Follow the instructions in the [vso-cordova-tasks](http://go.microsoft.com/fwlink/?LinkID=691187) repository to install.
 
 ### Creating Your Build Definitions
 Detailed instructions on creating build definitions in TFS 2015 can be found in [its documentation](http://go.microsoft.com/fwlink/?LinkID=533772), but here are the specific settings you will need to use to configure a build. 

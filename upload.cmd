@@ -38,7 +38,7 @@ ECHO Installing tfx-cli...
 CALL npm install -g tfx-cli
 IF NOT %ERRORLEVEL%==0 GOTO INSTALLFAILED
 ECHO Log in to the VSO/TFS collection you wish to deploy the tasks.
-CALL tfx login
+CALL tfx login --authType basic
 IF NOT %ERRORLEVEL%==0 GOTO LOGINFAILED
 GOTO NPMINSTALL
 
