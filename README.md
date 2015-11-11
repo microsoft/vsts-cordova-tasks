@@ -1,14 +1,14 @@
 <table style="width: 100%; border-style: none;"><tr>
 <td style="width: 140px; text-align: center;"><img src="docs/media/misc/cordova_logo_white_purple.png" /></td>
-<td><strong>Visual Studio Online Extension for Cordova</strong><br />
+<td><strong>Visual Studio Team Services Extension for Cordova</strong><br />
 <i>Streamline CI setup for your Apache Cordova, PhoneGap, Ionic, or Cordova CLI compatible app using a set of useful pre-defined build steps.</i><br />
 <a href="http://go.microsoft.com/fwlink/?LinkID=691188">Install now!</a>
 </td>
 </tr></table>
-# Visual Studio Online Extension for Cordova
-Visual Studio Online (VSO) and Team Foundation Services (TFS) 2015 can be used for building and testing Cordova apps in a Continuous Integration (CI) environment thanks to a new [cross-platform agent](http://go.microsoft.com/fwlink/?LinkID=533789) that supports OSX. This new agent enables you to use VSO or TFS to build projects targeting Android, iOS, or Windows created using [Tools for Apache Cordova](http://go.microsoft.com/fwlink/?LinkID=536496) or *any Cordova compliant CLI project like Ionic or the TACO CLI.* 
+# Visual Studio Team Services Extension for Cordova
+Visual Studio Team Services (formerly Visual Studio Online)and Team Foundation Services (TFS) 2015 can be used for building and testing Cordova apps in a Continuous Integration (CI) environment thanks to a new [cross-platform agent](http://go.microsoft.com/fwlink/?LinkID=533789) that supports OSX. This new agent enables you to use Visual Studio Team Services (VSTS) or TFS to build projects targeting Android, iOS, or Windows created using [Tools for Apache Cordova](http://go.microsoft.com/fwlink/?LinkID=536496) or *any Cordova compliant CLI project like Ionic or the TACO CLI.* 
 
-This repository contains a set of VSO "tasks" (or "build steps") that streamline setup when building Cordova based applications in a CI environment. These tasks can be used with either VSO or TFS 2015 on-prem server (see below for installation details) and are intended to work with any Cordova based project not just Tools for Apache Cordova. The tasks:
+This repository contains a set of VSTS "tasks" (or "build steps") that streamline setup when building Cordova based applications in a CI environment. These tasks can be used with either VSTS or TFS 2015 on-prem server (see below for installation details) and are intended to work with any Cordova based project not just Tools for Apache Cordova. The tasks:
 
 - Are designed to work with Cordova and Cordova-like toolsets like Ionic
 - Automatically acquire and cache the appropriate version of Cordova or related CLI (ex: Ionic) based on task settings or the contents of taco.json
@@ -18,7 +18,7 @@ This repository contains a set of VSO "tasks" (or "build steps") that streamline
 	
 ## 5 Step Quick Start
 
-1. After installing the extension, upload your project to Visual Studio Online, TFS, or GitHub.
+1. After installing the extension, upload your project to VSTS, TFS, or GitHub.
 
 2. Go to your Visual Studio Online or TFS project, click on the **Build** tab, and create a new build definition (the "+" icon).
 
@@ -29,7 +29,7 @@ This repository contains a set of VSO "tasks" (or "build steps") that streamline
 5. Add a **Demand** under the **General** tab of **xcode** to force the build to run on OSX or **cmd** to force it to run on Windows as appropriate
 
 ## Usage and Tutorials
-See the following articles on using these tasks in VSO/TFS:
+See the following articles on using these tasks in VSTS/TFS:
 
 1. [Cordova Build Task](http://go.microsoft.com/fwlink/?LinkID=691186)
 	- [Securing Signing Certs](http://go.microsoft.com/fwlink/?LinkID=691933)
@@ -45,8 +45,8 @@ There are gaps and known issues for most tasks. See [TODOs](./docs/TODO.md) for 
 
 ##Installation
 
-### Visual Studio Online
-1. Install the [Visual Studio Online Extension for Cordova](http://go.microsoft.com/fwlink/?LinkID=691188)
+### Visual Studio Team Services / Visual Studio Online
+1. Install the [Visual Studio Team Services Extension for Cordova](http://go.microsoft.com/fwlink/?LinkID=691188)
 
 2. You will now find a series of Cordova related tasks in the "Build" category 
 

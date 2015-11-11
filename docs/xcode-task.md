@@ -1,15 +1,15 @@
-<properties pageTitle="Build Xcode Projects with Visual Studio Online or Team Foundation Services 2015"
-  description="Build Xcode Projects with Visual Studio Online or Team Foundation Services 2015"
+<properties pageTitle="Build Xcode Projects with Visual Studio Team Services or Team Foundation Services 2015"
+  description="Build Xcode Projects with Visual Studio Team Services or Team Foundation Services 2015"
   services=""
   documentationCenter=""
   authors="clantz" />
 
-# Build Xcode Projects with Visual Studio Online or Team Foundation Services 2015
-The new Visual Studio Online (VSO) / Team Foundation Services (TFS) [cross-platform build agent](http://go.microsoft.com/fwlink/?LinkID=533789) can run on both OSX and Linux and thus is ideal for building Xcode projects. The agent is a Node.js based service that uses a HTTPS connection to your TFS 2015 server to fetch work. As a result, your OSX machine only needs to have HTTP access to your TFS instance but not the other way around. This makes setup and configuration quite simple. The agent is for use with TFS 2015 and Visual Studio Online's [next generation build system](http://go.microsoft.com/fwlink/?LinkID=533772), not the legacy XAML/MSBuild based system.
+# Build Xcode Projects with Visual Studio Team Services or Team Foundation Services 2015
+The new Visual Studio Team Services (formerly Visual Studio Online) / Team Foundation Services (TFS) [cross-platform build agent](http://go.microsoft.com/fwlink/?LinkID=533789) can run on both OSX and Linux and thus is ideal for building Xcode projects. The agent is a Node.js based service that uses a HTTPS connection to your TFS 2015 server to fetch work. As a result, your OSX machine only needs to have HTTP access to your TFS instance but not the other way around. This makes setup and configuration quite simple. The agent is for use with TFS 2015 and Visual Studio Team Services's [next generation build system](http://go.microsoft.com/fwlink/?LinkID=533772), not the legacy XAML/MSBuild based system.
 
-The pre-requisites in this case are simple: Your Mac needs to have Node.js, Xcode, and [xctool](https://github.com/facebook/xctool) (for testing) installed. Simply open the OSX Terminal app and follow these [setup instructions](http://go.microsoft.com/fwlink/?LinkID=533789). On startup the agent will automatically register itself with VSO / TFS when you start up the agent for the first time.
+The pre-requisites in this case are simple: Your Mac needs to have Node.js, Xcode, and [xctool](https://github.com/facebook/xctool) (for testing) installed. Simply open the OSX Terminal app and follow these [setup instructions](http://go.microsoft.com/fwlink/?LinkID=533789). On startup the agent will automatically register itself with VSTS / TFS when you start up the agent for the first time.
 
-Because of its design, you can also easily use an **on-premise Mac or a cloud provider like [MacInCloud](http://www.macincloud.com) with Visual Studio Online.** The OSX machine simply needs to have HTTP access to your VSO domain URI. You do not need a VPN connection and VSO does not need access to the OSX machine. Simply enter the your VSO project's domain URI when prompted during agent setup (Ex: "https://myvsodomain.visualstudio.com"). All other setup instructions apply directly.
+Because of its design, you can also easily use an **on-premise Mac or a cloud provider like [MacInCloud](http://www.macincloud.com) with Visual Studio Team Services.** The OSX machine simply needs to have HTTP access to your VSTS domain URI. You do not need a VPN connection and VSTS does not need access to the OSX machine. Simply enter the your VSTS project's domain URI when prompted during agent setup (Ex: "https://myvstsdomain.visualstudio.com"). All other setup instructions apply directly.
 
 The Xcode Build task used here supports features to simplify configuration of code signing. See **[Simple, Secure CI App Signing](./secure-certs.md)** for details.
 
@@ -31,7 +31,7 @@ Detailed instructions on creating build definitions in TFS 2015 can be found in 
 
 While there is an Xcode Build Definition Template, we'll use "Empty" so you get a feel for why things are configured the way they are.
 
-1.  Create a new build definition by selecting the "Build" tab for your VSO/TFS project, clicking the "+" icon, and selecting "Empty" as the template. 
+1.  Create a new build definition by selecting the "Build" tab for your VSTS/TFS project, clicking the "+" icon, and selecting "Empty" as the template. 
 
 2.  Now we will add a Xcode Build task.
 
@@ -56,7 +56,7 @@ While there is an Xcode Build Definition Template, we'll use "Empty" so you get 
 
   ![Xcode Variables](media/xcode/xcode-3.png)
 
-4.  As an optional step, you can configure your build to upload the resulting build artifacts to your TFS or VSO instance for easy access.
+4.  As an optional step, you can configure your build to upload the resulting build artifacts to your TFS or VSTS instance for easy access.
 
   1. Under the "Build" tab, add a new build step and select **Publish Artifact** from the **Build** category.
   2. Use the following settings:
@@ -68,9 +68,9 @@ While there is an Xcode Build Definition Template, we'll use "Empty" so you get 
 5.  Save and click "Queue Build..." to test it out!
 
 ## Adding In Tests
-If you've created unit or UI tests in your Xcode project, you can run these and publish the results to VSO using **[xctool](https://github.com/facebook/xctool)**. Note you will need to have xctool installed on the OSX machine the cross-platform build agent is on as this is not part of Xcode itself.
+If you've created unit or UI tests in your Xcode project, you can run these and publish the results to VSTS using **[xctool](https://github.com/facebook/xctool)**. Note you will need to have xctool installed on the OSX machine the cross-platform build agent is on as this is not part of Xcode itself.
 
-> **Troubleshooting Tip**: If you are using Xcode 6.4 or earlier or are not on the latest version of xctool, you will not be able to run your tests if the VSO cross-platform agent is setup as a daemon or launch agent. **Xcode 7 and the latest xctool eliminate this limitation.** Once installed, you can even run Xcode 6.4 projects using xctool.
+> **Troubleshooting Tip**: If you are using Xcode 6.4 or earlier or are not on the latest version of xctool, you will not be able to run your tests if the VSTS cross-platform agent is setup as a daemon or launch agent. **Xcode 7 and the latest xctool eliminate this limitation.** Once installed, you can even run Xcode 6.4 projects using xctool.
 
 1. First, add another "Xcode Build" task with some slightly different settings. We'll configure these tests to run in the iOS Simulator.
 
@@ -92,7 +92,7 @@ If you've created unit or UI tests in your Xcode project, you can run these and 
 
 2. Next, click on the **Variables** tab and add **Test_SDK** as a variable set to **iphonesimulator** 
 
-3. Next, we will configure the definition to publish your test results to VSO.
+3. Next, we will configure the definition to publish your test results to VSTS.
 
   1. Under the "Build" tab, add a new build step and select **Publish Test Results** from the **Test** category. 
   2. Move this to right after your test step.
