@@ -1,5 +1,5 @@
 <table style="width: 100%; border-style: none;"><tr>
-<td style="width: 140px; text-align: center;"><img src="docs/media/misc/cordova_128.png" /></td>
+<td style="width: 140px; text-align: center;"><img src="docs/media/misc/cordova_logo_white_purple.png" /></td>
 <td><strong>Cordova Extension for Visual Studio Online</strong><br />
 <i>Streamline CI setup for your Apache Cordova, PhoneGap, Ionic, or Cordova CLI compatible app using a set of useful pre-defined build steps.</i><br />
 <a href="http://go.microsoft.com/fwlink/?LinkID=691188">Install now!</a>
@@ -77,9 +77,9 @@ There are gaps and known issues for most tasks. See [TODOs](./docs/TODO.md) for 
 5. Profit!
 
 ## Contact Us
-* [Follow us on Twitter](https://twitter.com/VSCordovaTools)
+* [Follow us on Twitter](http://go.microsoft.com/fwlink/?LinkID=699449)
 * [Email us your questions](mailto:/vscordovatools@microsoft.com)
-* [Ask for help on StackOverflow](http://stackoverflow.com/questions/tagged/visual-studio-cordova)
+* [Ask for help on StackOverflow](http://go.microsoft.com/fwlink/?LinkID=699448)
 
 ## Terms of Use
 By downloading and running this project, you agree to the license terms of the third party application software, Microsoft products, and components to be installed. 
