@@ -3,7 +3,7 @@
     "extensionId": "mobiledevops-cordova-extension",
     "name": "Cordova Extension for Visual Studio Online",
     "version": "0.0.1",
-    "publisher": "microsoft",
+    "publisher": "ms-vsclient",
     "public": false,
     "description": "An extension that contains tasks to build Cordova-based projects with Visual Studio Online. See http://aka.ms/vsocordova for more details.",
     "categories": [
