@@ -2,7 +2,7 @@
     "id": "70E94267-15DC-434D-8973-023D766825D7",
     "name": "CordovaBuild",
     "friendlyName": "Cordova Build",
-    "description": "Build a hybrid app project based on the Cordova CLI, Ionic CLI, and/or Tools for Apache Cordova ",
+    "description": "Build a hybrid app project based on the Cordova CLI, Ionic CLI, TACO CLI, or other Cordova-compliant CLI",
     "helpMarkDown": "[More Information](http://go.microsoft.com/fwlink/?LinkID=691186)",
     "category": "Build",
     "visibility": [
@@ -10,9 +10,9 @@
                   ],
     "author": "Microsoft Corporation",
     "version": {
-        "Major": 0,
+        "Major": 1,
         "Minor": 0,
-        "Patch": 210
+        "Patch": 0
     },
     "demands": [
         "npm"

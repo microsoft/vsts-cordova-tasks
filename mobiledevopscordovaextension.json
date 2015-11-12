@@ -1,7 +1,7 @@
 ﻿{
     "manifestVersion": 1.0,
     "id": "cordova-extension",
-    "name": "Visual Studio Team Services Extension for Cordova",
+    "name": "Cordova Build",
     "version": "1.0.0",
     "publisher": "ms-vsclient",
     "public": false,

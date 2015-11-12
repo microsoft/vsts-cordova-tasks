@@ -10,9 +10,9 @@
                   ],
     "author": "Microsoft Corporation",
     "version": {
-        "Major": 0,
+        "Major": 1,
         "Minor": 0,
-        "Patch": 49
+        "Patch": 0
     },
     "demands": [
         "npm"
