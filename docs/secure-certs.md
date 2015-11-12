@@ -1,10 +1,10 @@
-<properties pageTitle="Simple, Secure CI App Signing Using Visual Studio Online or Team Foundation Services 2015"
-  description="Simple, Secure CI App Signing Using Visual Studio Online or Team Foundation Services 2015"
+<properties pageTitle="Simple, Secure CI App Signing Using Visual Studio Team Services or Team Foundation Services 2015"
+  description="Simple, Secure CI App Signing Using Visual Studio Team Services or Team Foundation Services 2015"
   services=""
   documentationCenter=""
   authors="clantz" />
 
-# Simple, Secure CI App Signing Using Visual Studio Online or Team Foundation Services 2015
+# Simple, Secure CI App Signing Using Visual Studio Team Services or Team Foundation Services 2015
 When developing an app for iOS or Android either natively or using a cross-platform solution like Cordova you will eventually need to tackle the problem of managing signing certificates and (in the case of iOS) [Mobile Provisioning Profiles](https://developer.apple.com/library/ios/documentation/IDEs/Conceptual/AppStoreDistributionTutorial/Introduction/Introduction.html#//apple_ref/doc/uid/TP40013839). This article will highlight some features to help you manage and secure them for your app.
 
 This article currently covers:
@@ -25,7 +25,7 @@ For iOS there are a number of challenges associated with managing certificates a
 4. "Ad hoc" provisioning profiles typically used for beta distribution tie to the same "iPhone Distribution" certificate used for actual app store distribution. As a result, auto-matching using a "signing identity" does not work well when you need the same machine to generate an ipa of both types.
 5. While you can reference a specific provisioning profile in Xcode itself, specifying the exact provisioning profile requires referencing a UUID contained within the file that is difficult to access. This limits your ability to have your CI configuration independent of the contents of your project.
 6. There is no offical command to install a provisioning profile from the command line
-7. The "default keychain" is typically locked when a process is not running interactively. As a result, if you VSO agent is running as a daemon or launch agent you will be unable to use signing certificates installed on your machine. You can add a "Command Line" build step calling the appropriate "security" command to unlock the keychain but this requires you to specify the password in your build definition and prevents you from having different passwords on different servers.
+7. The "default keychain" is typically locked when a process is not running interactively. As a result, if you VSTS agent is running as a daemon or launch agent you will be unable to use signing certificates installed on your machine. You can add a "Command Line" build step calling the appropriate "security" command to unlock the keychain but this requires you to specify the password in your build definition and prevents you from having different passwords on different servers.
 8. Installing certificates in the default keychain makes them available to anyone with access to create build definitions by executing a "security" command after unlocking the keychain
 9. A commonly used trick to generate versions multiple signed versions of your app in the past has been to leverage the "PackageApplicaiton" script and pass in signing and provisioning profile embedding arguments. However, this script fails as of Xcode 6 (and still fails in 7.1 beta) unless you add something called a ResourceRule to your project. The issue is that this concept is deprecated and Apple has stated they will reject apps that use it that are published to the store.
 
@@ -62,7 +62,7 @@ To help alleviate these problems, the Xcode Build and Cordova Build tasks includ
 
 3. At this point you can opt to add these two files directly to source control or add an extra layer of security by encrypting them first. **See the next section for details on this step.**
 
-4. Next, go to VSO / TFS and open up your Xcode or Cordova build definition and go to the **Variables** tab. Here we will enter password for the .p12 file:
+4. Next, go to VSTS / TFS and open up your Xcode or Cordova build definition and go to the **Variables** tab. Here we will enter password for the .p12 file:
 
     - **P12_PWD**: Password to the unencrypted .p12 file. *Be sure to click the "lock" icon.* This will secure your password and obscure it in all logs.
 
