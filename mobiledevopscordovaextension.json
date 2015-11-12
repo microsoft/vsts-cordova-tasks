@@ -1,6 +1,6 @@
 ﻿{
     "manifestVersion": 1.0,
-    "extensionId": "cordova-extension",
+    "id": "cordova-extension",
     "name": "Visual Studio Team Services Extension for Cordova",
     "version": "1.0.0",
     "publisher": "ms-vsclient",
@@ -31,7 +31,7 @@
     },
     "icons": {
         "default": "docs/media/misc/cordova_logo_white_purple.png",
-        "wide": "mobiledevopscordovaextension_wide.png"
+        "large": "docs/media/misc/cordova_logo_white_purple_large.png"
     },
     "branding": {
         "color": "#5C2D91",
