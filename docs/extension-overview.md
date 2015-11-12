@@ -18,43 +18,20 @@ These tasks can be used with either VSTS or TFS 2015 on-prem server (see below f
 5. Add a **Demand** under the **General** tab of **xcode** to force the build to run on OSX or **cmd** to force it to run on Windows as appropriate
 
 ## Usage and Tutorials
-See the following articles on using these tasks in VSTS/TFS:
+See the following articles for details on using these tasks in VSTS/TFS:
 
 1. [Cordova Build](http://go.microsoft.com/fwlink/?LinkID=691186)
 	- [Securing Signing Certs](http://go.microsoft.com/fwlink/?LinkID=691933)
 2. [Cordova Command](http://go.microsoft.com/fwlink/?LinkID=692058)
 3. [Ionic Command](http://go.microsoft.com/fwlink/?LinkID=692057)
 
-##Installation for TFS 2015 Update 1 or Earlier
+## Installation for TFS 2015 Update 1 or Earlier
 
-1. [Enable basic auth](http://go.microsoft.com/fwlink/?LinkID=699518) in your TFS instance
-
-2. Install the tfx-cli and login
-
-	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	npm install -g tfx-cli
-	tfx login --authType basic 
-	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-3. Enter your collection URL (Ex: https://localhost:8080/tfs/DefaultCollection) and user name and password 
-
-4. Download the [latest release](http://go.microsoft.com/fwlink/?LinkID=691191) of the Cordova tasks locally and unzip
-
-5. Type the following from the root of the repo from Windows:
-
-	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	upload
-	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-	Or from a Mac:
-
-	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	sh upload.sh
-	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-5. Profit!
+See the [source code repository](http://go.microsoft.com/fwlink/?LinkID=691187) for instructions on installing these tasks on TFS 2015 Update 1 or earlier.
 
 ## Contact Us
 * [Follow us on Twitter](http://go.microsoft.com/fwlink/?LinkID=699449)
 * [Email us your questions](mailto:vscordovatools@microsoft.com)
 * [Ask for help on StackOverflow](http://go.microsoft.com/fwlink/?LinkID=699448)
+* [File an issue on GitHub](http://go.microsoft.com/fwlink/?LinkID=699450)
+* [View or contriubte to the source code](http://go.microsoft.com/fwlink/?LinkID=691187)
