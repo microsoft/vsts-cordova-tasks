@@ -1,8 +1,8 @@
-Visual Studio Team Services (formerly Visual Studio Online) and Team Foundation Services (TFS) 2015 can be used for building and testing Cordova apps in a Continuous Integration (CI) environment thanks to a new [cross-platform agent](http://go.microsoft.com/fwlink/?LinkID=533789) agent that supports OSX. This new agent enables you to use Visual Studio Team Services (VSTS) or TFS to build projects targeting Android, iOS, or Windows created using [Tools for Apache Cordova](http://go.microsoft.com/fwlink/?LinkID=536496) or *any Cordova compliant CLI project like Ionic, PhoneGap (local), or the TACO CLI.* 
+Visual Studio Team Services (formerly Visual Studio Online) and Team Foundation Services (TFS) 2015 can be used for building and testing Cordova apps in a Continuous Integration (CI) environment thanks to a new [cross-platform agent](http://go.microsoft.com/fwlink/?LinkID=533789) that supports OSX. This new agent enables you to use Visual Studio Team Services (VSTS) or TFS to build projects targeting Android, iOS, or Windows created using [Tools for Apache Cordova](http://go.microsoft.com/fwlink/?LinkID=536496) or *any Cordova compliant CLI project like Ionic, PhoneGap (local), or the TACO CLI.* 
 
 ## Visual Studio Team Services Extension for Cordova
 
-This extension contains a set of VSTS "tasks" (or "build steps") that streamline setup when building Cordova based applications in a CI environment. These tasks can be used with either VSTS or TFS 2015 on-prem servers (see below) and are intended to work with any Cordova based project including, but not limited to, those created using Tools for Apache Cordova. The tasks:
+This extension contains a set of VS Team Services "tasks" (or "build steps") that streamline setup when building Cordova based applications in a CI environment. These tasks can be used with either VSTS or TFS 2015 on-prem servers (see below) and are intended to work with any Cordova based project including, but not limited to, those created using Tools for Apache Cordova. The tasks:
 - Are designed to work with Cordova and Cordova-like toolsets like Ionic
 - Automatically acquire and cache the appropriate version of Cordova or related CLI (ex: Ionic) based on task settings or the contents of taco.json
 - Enable simplified signing, certificate management, and packaging particularly for iOS
@@ -34,4 +34,4 @@ See the [source code repository](http://go.microsoft.com/fwlink/?LinkID=691187) 
 * [Email us your questions](mailto:vscordovatools@microsoft.com)
 * [Ask for help on StackOverflow](http://go.microsoft.com/fwlink/?LinkID=699448)
 * [File an issue on GitHub](http://go.microsoft.com/fwlink/?LinkID=699450)
-* [View or contriubte to the source code](http://go.microsoft.com/fwlink/?LinkID=691187)
+* [View or contribute to the source code](http://go.microsoft.com/fwlink/?LinkID=691187)

@@ -46,14 +46,14 @@
             "type": "string", 
             "label": "Ionic Version", 
             "required":false, 
-            "helpMarkDown": "Version of Ionic tools to use to run the command If not specified, uses a default version."
+            "helpMarkDown": "Version of Ionic tools to use to run the command If not specified, uses a version specified in the IONIC_DEFAULT_VERSION env var and falls back to the latest version."
         },
         { 
             "name": "cordovaVersion", 
             "type": "string", 
             "label": "Cordova Version", 
             "required":false, 
-            "helpMarkDown": "Version of Cordova tools to use to run the command If not specified, looks at taco.json to determine the version and falls back on a default if no taco.json is found."
+            "helpMarkDown": "Version of Cordova tools to use to run the command. If not specified, looks at taco.json, the CORDOVA_DEFAULT_VERSION env var, and finally falls back to the latest version."
         },
         { 
             "name": "cwd", 

@@ -69,14 +69,14 @@
             "type": "string", 
             "label": "Cordova Version", 
             "required":false, 
-            "helpMarkDown": "Version of Cordova tools to use to build. If not specified, looks at taco.json to determine the version and falls back on a default if no taco.json is found."
+            "helpMarkDown": "Version of Cordova tools to use to build. If not specified, looks at taco.json, the CORDOVA_DEFAULT_VERSION env var, and finally falls back to the latest version."
         },
         {
             "name": "antBuild",
             "type": "boolean",
             "label": "Force Ant Build",
             "required": false,
-            "helpMarkDown": "Forces Cordova to use Apache Ant to build instead of Gradle on version of Cordova 5.0.0 / Cordova Android 4.0.0 and up.",
+            "helpMarkDown": "Forces Cordova to use Apache Ant to build instead of Gradle to build versions of Cordova 5.0.0+ / Cordova Android 4.0.0+.",
             "groupName":"android"   
         },
         {
@@ -203,7 +203,7 @@
             "type": "string", 
             "label": "Xcode Developer Path", 
             "required":false,
-            "helpMarkDown": "Optional path to Xcode Developer folder if not the system default. For use when multiple versions of Xcode are installed on a system. Ex: /Applications/Xcode 7.app/Contents/Developer",
+            "helpMarkDown": "Optional path to Xcode Developer folder if not the system default. For use when multiple versions of Xcode are installed on a system. Ex: /Applications/Xcode6.4.app/Contents/Developer",
             "groupName":"ios"
         },
         {
@@ -211,7 +211,7 @@
             "type": "string", 
             "label": "Windows APPX Target", 
             "required":false,
-            "helpMarkDown": "Overrides type of APPX generated (Windows/Phone 8.1, 10). Valid values include: 8.1-win, 8.1-phone, uap (aka Windows/Phone 10) on Cordova 5.0.0 (Cordova Windows 4.0.0) and up.",
+            "helpMarkDown": "Overrides type of APPX generated (Windows/Phone 8.1, 10). Valid values include: 8.1-win, 8.1-phone, uap (aka Windows/Phone 10) on Cordova 5.0.0+ / Cordova Windows 4.0.0+ and up.",
             "groupName":"windows"
         },
         {
