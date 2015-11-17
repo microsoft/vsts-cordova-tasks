@@ -4,7 +4,7 @@
     "name": "Cordova Build",
     "version": "1.0.0",
     "publisher": "ms-vsclient",
-    "public": false,
+    "public": true,
     "description": "Streamline CI setup for your Apache Cordova, PhoneGap, Ionic, or Cordova CLI compatible app using a set of useful pre-defined build steps.",
     "categories": [
         "Build and release"
@@ -40,16 +40,11 @@
     "content":{
         "details": {
             "path": "docs/extension-overview.md"
+        },
+        "thirdpartynotice": {
+            "path": "thirdpartynotices.txt"
         }
     },
-    "screenshots": [
-      {
-          "path": "docs/media/misc/screenshot-1.png"
-      },
-      {
-          "path": "docs/media/misc/screenshot-2.png"
-      }
-    ],
     "files": [
         {
             "path": "Tasks/CordovaBuild"
