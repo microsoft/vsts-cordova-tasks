@@ -28,6 +28,8 @@ This extension contains a set of VS Team Services "tasks" (or "build steps") tha
 
 5. Add a **Demand** under the **General** tab of **xcode** to force the build to run on OSX or **cmd** to force it to run on Windows as appropriate
 
+*Note: Be sure you are running version 0.3.10 or higher of the cross-platform agent and the latest Windows agent as these are required for VS Team Services extension to function. The VSTS hosted agent and [MacinCloud](http://go.microsoft.com/fwlink/?LinkID=691834) agents will already be on this version.*
+
 ## Usage and Tutorials
 See the following articles on using these tasks in VSTS/TFS:
 
