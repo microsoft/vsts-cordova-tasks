@@ -54,7 +54,7 @@
             "type": "string", 
             "label": "Configuration", 
             "defaultValue":"$(Configuration)", 
-            "helpMarkDown": "Debug or Release",
+            "helpMarkDown": "Debug (default) or Release",
             "required":true 
         },
         { 
