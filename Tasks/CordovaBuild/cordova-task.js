@@ -73,7 +73,7 @@ function processInputs() {
     configuration = tasklibrary.getInput('configuration', /* required */ true).toLowerCase();
     // if configuration is a strange/empty value, assume release
     if (configuration !== "release" && configuration !== "debug") {
-        configuration = "release";
+        configuration = "debug";
     }
 
     buildArgs.push('--' + configuration);
