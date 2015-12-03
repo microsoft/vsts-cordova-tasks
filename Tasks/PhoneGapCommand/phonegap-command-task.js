@@ -13,14 +13,14 @@ var buildSourceDirectory = taskLibrary.getVariable('build.sourceDirectory') || t
 var workingDirectory = taskLibrary.getInput('cwd', /*required*/ false) || buildSourceDirectory;
 taskLibrary.cd(workingDirectory);
 
-callCordova().fail(function (err) {
+callPhoneGap().fail(function (err) {
     console.error(err.message);
     taskLibrary.debug('taskRunner fail');
     taskLibrary.exit(1);
 });
 
-// Main Cordova command exec
-function callCordova() {
+// Main PhoneGap command exec
+function callPhoneGap() {
     var phonegapConfig = {
         nodePackageName: 'phonegap',
         projectPath: workingDirectory
