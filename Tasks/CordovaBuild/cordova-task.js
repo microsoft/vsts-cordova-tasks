@@ -9,7 +9,7 @@ var path = require('path'),
     semver = require('semver'),
     glob = require('glob'),
     xcutils = require('./lib/xcode-task-utils.js'),
-    tasklibrary = require('./lib/vso-task-lib-proxy.js'),
+    taskLibrary = require('./lib/vso-task-lib-proxy.js'),
     teambuild = require('taco-team-build');
 
 
@@ -36,7 +36,7 @@ processInputs()															// Process inputs to task
     })
     .then(copyToOutputFolder)
     .then(function (code) {												// On success, exit
-        tasklibrary.exit(code);
+        taskLibrary.exit(code);
     })
     .fin(function (code) {
         process.env['DEVELOPER_DIR'] = origXcodeDeveloperDir;			// Return to original developer dir if set
@@ -50,27 +50,27 @@ processInputs()															// Process inputs to task
     })
     .fail(function (err) {
         console.error(err.message);
-        tasklibrary.debug('taskRunner fail');
-        tasklibrary.exit(1);
+        taskLibrary.debug('taskRunner fail');
+        taskLibrary.exit(1);
     });
 
 // Process VSO task inputs and get ready to build
 function processInputs() {
-    buildSourceDirectory = tasklibrary.getVariable('build.sourceDirectory') || tasklibrary.getVariable('build.sourcesDirectory');
+    buildSourceDirectory = taskLibrary.getVariable('build.sourceDirectory') || taskLibrary.getVariable('build.sourcesDirectory');
 
     //Process working directory
-    cwd = tasklibrary.getInput('cwd', /* required */ false) || buildSourceDirectory;
-    tasklibrary.cd(cwd);
+    cwd = taskLibrary.getInput('cwd', /* required */ false) || buildSourceDirectory;
+    taskLibrary.cd(cwd);
 
     // Set the path to the developer tools for this process call if not the default
-    var xcodeDeveloperDir = tasklibrary.getInput('xcodeDeveloperDir', /* required */ false);
+    var xcodeDeveloperDir = taskLibrary.getInput('xcodeDeveloperDir', /* required */ false);
     if (xcodeDeveloperDir) {
-        tasklibrary.debug('DEVELOPER_DIR was ' + origXcodeDeveloperDir)
-        tasklibrary.debug('DEVELOPER_DIR for build set to ' + xcodeDeveloperDir);
+        taskLibrary.debug('DEVELOPER_DIR was ' + origXcodeDeveloperDir)
+        taskLibrary.debug('DEVELOPER_DIR for build set to ' + xcodeDeveloperDir);
         process.env['DEVELOPER_DIR'] = xcodeDeveloperDir;
     }
 
-    configuration = tasklibrary.getInput('configuration', /* required */ true).toLowerCase();
+    configuration = taskLibrary.getInput('configuration', /* required */ true).toLowerCase();
     // if configuration is a strange/empty value, assume release
     if (configuration !== "release" && configuration !== "debug") {
         configuration = "debug";
@@ -78,13 +78,13 @@ function processInputs() {
 
     buildArgs.push('--' + configuration);
 
-    var archs = tasklibrary.getInput('archs', /* required */ false);
+    var archs = taskLibrary.getInput('archs', /* required */ false);
     if (archs) {
         buildArgs.push('--archs="' + archs + '"')
     }
 
-    platform = tasklibrary.getInput('platform', /* required */ true).toLowerCase();
-    targetEmulator = tasklibrary.getInput('targetEmulator', /* required */ false) == 'true';
+    platform = taskLibrary.getInput('platform', /* required */ true).toLowerCase();
+    targetEmulator = taskLibrary.getInput('targetEmulator', /* required */ false) == 'true';
     if (targetEmulator) {
         buildArgs.push('--emulator');
     } else {
@@ -100,19 +100,19 @@ function processInputs() {
         case 'ios':
             if (process.platform != 'darwin') {
                 console.error('Unable to build ios on ' + process.platform + '. Add "Xcode" as a "Demand" under "General" to your build definition to cause the build to always route to a OSX agent.');
-                tasklibrary.exit(1);
+                taskLibrary.exit(1);
             }
             return iosIdentity().then(iosProfile);
         case 'windows':
             if (process.platform == 'darwin' || process.platform == 'linux') {
                 console.error('Unable to build windows on ' + process.platform + '. Add "cmd" as a "Demand" under "General" to your build definition to cause the build to always route to a Windows agent.');
-                tasklibrary.exit(1);
+                taskLibrary.exit(1);
             }
             return processWindowsInputs();
         case 'wp8':
             if (process.platform == 'darwin' || process.platform == 'linux') {
                 console.error('Unable to build wp8 on ' + process.platform + '. Add "cmd" as a "Demand" under "General" to your build definition to cause the build to always route to a Windows agent.');
-                tasklibrary.exit(1);
+                taskLibrary.exit(1);
             }
             return Q(0);
         default:
@@ -122,13 +122,13 @@ function processInputs() {
 
 // Process VSO task inputs specific to Windows
 function processWindowsInputs() {
-    var appx = tasklibrary.getInput('windowsAppx', /* required */ false);
+    var appx = taskLibrary.getInput('windowsAppx', /* required */ false);
     if (appx) {
         buildArgs.push('--appx=' + appx);
     }
 
-    var windowsOnly = tasklibrary.getInput('windowsOnly', /* required */ false) == 'true';
-    var windowsPhoneOnly = tasklibrary.getInput('windowsPhoneOnly', /* required */ false) == 'true';
+    var windowsOnly = taskLibrary.getInput('windowsOnly', /* required */ false) == 'true';
+    var windowsPhoneOnly = taskLibrary.getInput('windowsPhoneOnly', /* required */ false) == 'true';
     if (windowsOnly) {
         if (!windowsPhoneOnly) {
             buildArgs.push('--win');
@@ -146,21 +146,21 @@ function processWindowsInputs() {
 function iosIdentity(code) {
     var input = {
         cwd: cwd,
-        unlockDefaultKeychain: tasklibrary.getInput('unlockDefaultKeychain', /* required */ false) == 'true',
-        defaultKeychainPassword: tasklibrary.getInput('defaultKeychainPassword', /* required */ false),
-        p12: tasklibrary.getInput('p12', /* required */ false),
-        p12pwd: tasklibrary.getInput('p12pwd', /* required */ false),
-        iosSigningIdentity: tasklibrary.getInput('iosSigningIdentity', /* required */ false)
+        unlockDefaultKeychain: taskLibrary.getInput('unlockDefaultKeychain', /* required */ false) == 'true',
+        defaultKeychainPassword: taskLibrary.getInput('defaultKeychainPassword', /* required */ false),
+        p12: taskLibrary.getInput('p12', /* required */ false),
+        p12pwd: taskLibrary.getInput('p12pwd', /* required */ false),
+        iosSigningIdentity: taskLibrary.getInput('iosSigningIdentity', /* required */ false)
     };
 
     return xcutils.determineIdentity(input)
         .then(function (result) {
-            tasklibrary.debug('determineIdentity result ' + JSON.stringify(result));
+            taskLibrary.debug('determineIdentity result ' + JSON.stringify(result));
             if (result.identity) {
                 iosXcConfig += 'CODE_SIGN_IDENTITY=' + result.identity + '\n';
                 iosXcConfig += 'CODE_SIGN_IDENTITY[sdk=iphoneos*]=' + result.identity + '\n';
             } else {
-                tasklibrary.debug('No explicit signing identity specified in task.')
+                taskLibrary.debug('No explicit signing identity specified in task.')
             }
             if (result.keychain) {
                 iosXcConfig += 'OTHER_CODE_SIGN_FLAGS=--keychain=' + result.keychain + '\n';
@@ -173,14 +173,14 @@ function iosIdentity(code) {
 function iosProfile(code) {
     var input = {
         cwd: cwd,
-        provProfileUuid: tasklibrary.getInput('provProfileUuid', /* required */ false),
-        provProfilePath: tasklibrary.getInput('provProfile', /* required */ false),
-        removeProfile: tasklibrary.getInput('removeProfile', /* required */ false) == 'true'
+        provProfileUuid: taskLibrary.getInput('provProfileUuid', /* required */ false),
+        provProfilePath: taskLibrary.getInput('provProfile', /* required */ false),
+        removeProfile: taskLibrary.getInput('removeProfile', /* required */ false) == 'true'
     }
 
     return xcutils.determineProfile(input)
         .then(function (result) {
-            tasklibrary.debug('determineProfile result ' + JSON.stringify(result));
+            taskLibrary.debug('determineProfile result ' + JSON.stringify(result));
             if (result.uuid) {
                 iosXcConfig += 'PROVISIONING_PROFILE=' + result.uuid + '\n';
             }
@@ -190,7 +190,7 @@ function iosProfile(code) {
 
 // Process VSO task inputs specific to Android
 function processAndroidInputs() {
-    if (tasklibrary.getInput('antBuild', /* required */ false) == 'true') {
+    if (taskLibrary.getInput('antBuild', /* required */ false) == 'true') {
         buildArgs.push('--ant');
     } else {
         buildArgs.push('--gradleArg=--no-daemon');  // Gradle daemon will hang the agent - need to turn it off
@@ -198,7 +198,7 @@ function processAndroidInputs() {
 
     // Pass in args for Android 4.0.0+, modify ant.properties before_compile for < 4.0.0 (event handler added at exec time)
     // Override gradle args
-    var keystoreFile = tasklibrary.getInput('keystoreFile', /* required */ false);
+    var keystoreFile = taskLibrary.getInput('keystoreFile', /* required */ false);
     try {
         // lstatSync will throw if the path does not exist, but
         // we don't want to fail the build in that case.
@@ -211,21 +211,21 @@ function processAndroidInputs() {
         console.warn('WARN: Specified keystoreFile is not valid');
     }
 
-    var keystorePass = tasklibrary.getInput('keystorePass', /* required */ false);
+    var keystorePass = taskLibrary.getInput('keystorePass', /* required */ false);
     if (keystorePass) {
         antProperties['key.store.password'] = keystorePass;
         antProperties.override = true;
         buildArgs.push('--storePassword=' + keystorePass);
     }
 
-    var keystoreAlias = tasklibrary.getInput('keystoreAlias', /* required */ false);
+    var keystoreAlias = taskLibrary.getInput('keystoreAlias', /* required */ false);
     if (keystoreAlias) {
         antProperties['key.alias'] = keystoreAlias;
         antProperties.override = true;
         buildArgs.push('--alias=' + keystoreAlias);
     }
 
-    var keyPass = tasklibrary.getInput('keyPass', /* required */ false);
+    var keyPass = taskLibrary.getInput('keyPass', /* required */ false);
     if (keyPass) {
         antProperties['key.alias.password'] = keyPass;
         antProperties.override = true;
@@ -236,20 +236,20 @@ function processAndroidInputs() {
 
 // Utility function to copy outputs to appropriate folder if specified in the VSO task
 function copyToOutputFolder(code) {
-    var outputDirectory = path.resolve(buildSourceDirectory, tasklibrary.getInput('outputPattern', /* required */ true));
+    var outputDirectory = path.resolve(buildSourceDirectory, taskLibrary.getInput('outputPattern', /* required */ true));
     if (outputDirectory == buildSourceDirectory) {
-        tasklibrary.debug('No output folder specified. Skipping copy.');
+        taskLibrary.debug('No output folder specified. Skipping copy.');
         return (0);
     }
 
     // Create output directory if not present
-    tasklibrary.mkdirP(outputDirectory);
-    tasklibrary.mkdirP(path.join(outputDirectory, platform));
+    taskLibrary.mkdirP(outputDirectory);
+    taskLibrary.mkdirP(path.join(outputDirectory, platform));
 
     // Create the platform/config-specific output directory if not present
     var configOutputDirectory = path.join(outputDirectory, platform, configuration);
-    tasklibrary.rmRF(configOutputDirectory);	// Clean folder out if it was there before - incremental build scenario
-    tasklibrary.mkdirP(configOutputDirectory);
+    taskLibrary.rmRF(configOutputDirectory);	// Clean folder out if it was there before - incremental build scenario
+    taskLibrary.mkdirP(configOutputDirectory);
 
     function makeSource(directory, fileSpec) {
         return {
@@ -288,8 +288,8 @@ function copyToOutputFolder(code) {
 
     sources.forEach(function (source) {
         if (fileExistsSync(source.directory)) {
-            tasklibrary.debug('Copying ' + source.fullSource + ' to ' + configOutputDirectory);
-            tasklibrary.cp('-Rf', source.fullSource, configOutputDirectory);
+            taskLibrary.debug('Copying ' + source.fullSource + ' to ' + configOutputDirectory);
+            taskLibrary.cp('-Rf', source.fullSource, configOutputDirectory);
         }
     });
 
@@ -304,7 +304,8 @@ function execBuild(code) {
     };
 
     // Add optional additional args
-    var args = tasklibrary.getDelimitedInput('cordovaArgs', ' ', /* required */ false);
+    var rawArgs = taskLibrary.getInput('cordovaArgs', /* required */ false);
+    var args = taskLibrary.args(rawArgs);
     if (args) {
         args.forEach(function (arg) {
             if (arg != '--') {  		// Double-double dash syntax not required when invoking cordova-lib directly
@@ -313,7 +314,7 @@ function execBuild(code) {
         });
     }
 
-    var version = tasklibrary.getInput('cordovaVersion', /* required */ false);
+    var version = taskLibrary.getInput('cordovaVersion', /* required */ false);
     if (version) {
         cordovaConfig.moduleVersion = version;
     }
@@ -323,7 +324,7 @@ function execBuild(code) {
         .then(function (cordova) {
             // Add update Xcconfig hook if needed
             if (updateXcconfig) {
-                tasklibrary.debug('Adding Xcconfig update hook')
+                taskLibrary.debug('Adding Xcconfig update hook')
                 cordova.on('before_compile', writeVsoXcconfig)
             }
             
@@ -333,7 +334,7 @@ function execBuild(code) {
                         console.log('WARN: Cordova versions < 5.0.0 may see build option warnings when specifying Android signing options. These can be safely ignored and do not affect signing when building with Ant.');
                     }
                     
-                    tasklibrary.debug('Adding ant.properties update hook')
+                    taskLibrary.debug('Adding ant.properties update hook')
                     cordova.on('before_compile', writeAntProperties)
                 }
                 
@@ -341,7 +342,7 @@ function execBuild(code) {
                     if (semver.valid(cordovaVersion) && semver.lt(cordovaVersion, '4.0.0')) {
                         // Special case: android on cordova versions earlier than v4.0.0 will
                         // actively fail the build if it encounters unexpected options
-                        tasklibrary.debug('Stripping inapplicable arguments for android on cordova ' + cordovaVersion);
+                        taskLibrary.debug('Stripping inapplicable arguments for android on cordova ' + cordovaVersion);
                         buildArgs = stripNewerAndroidArgs(buildArgs);
                     }
                     
@@ -351,7 +352,7 @@ function execBuild(code) {
                         var currentPath = process.env['PATH'];
                         var androidHome = process.env['ANDROID_HOME'];
                         if (currentPath && androidHome && currentPath.indexOf(androidHome) === -1) {
-                            tasklibrary.debug('Appending ANDROID_HOME to the current PATH');
+                            taskLibrary.debug('Appending ANDROID_HOME to the current PATH');
                             process.env['PATH'] = currentPath + ';' + path.join(androidHome, 'tools');
                         }
                     }
@@ -371,11 +372,11 @@ function execBuild(code) {
             }).fin(function () {
                 // Remove xcconfig hook
                 if (updateXcconfig) {
-                    tasklibrary.debug('Removing Xcconfig update hook')
+                    taskLibrary.debug('Removing Xcconfig update hook')
                     cordova.off('before_compile', writeVsoXcconfig)
                 }
                 if (antProperties.override) {
-                    tasklibrary.debug('Removing ant.properties update hook')
+                    taskLibrary.debug('Removing ant.properties update hook')
                     cordova.off('before_compile', writeAntProperties)
                 }
             });
@@ -393,7 +394,7 @@ function stripNewerAndroidArgs(args) {
 
 // Event handler for before_compile that adds xcconfig file - done before_compile so res/native doesn't overwrite xcconfig file we need to mod
 function writeVsoXcconfig(data) {
-    tasklibrary.debug('before_compile fired hook  writeVsoXcconfig');
+    taskLibrary.debug('before_compile fired hook  writeVsoXcconfig');
     var includeText = '\n#include "build-vso.xcconfig"';
     var buildVsoXcconfig = path.join(cwd, 'platforms', 'ios', 'cordova', 'build-vso.xcconfig');
     var buildXcconfig;
@@ -404,16 +405,16 @@ function writeVsoXcconfig(data) {
     } else {
         buildXcconfig = [path.join(cwd, 'platforms', 'ios', 'cordova', 'build.xcconfig')];
     }
-    tasklibrary.debug('xcconfig files to add include to: ' + JSON.stringify(buildXcconfig));
+    taskLibrary.debug('xcconfig files to add include to: ' + JSON.stringify(buildXcconfig));
 
     // Append build-vso.xcconfig include if needed
     buildXcconfig.forEach(function (xcconfig) {
         var origContents = fs.readFileSync(xcconfig) + '';
         if (origContents.indexOf(includeText) < 0) {
             fs.appendFileSync(xcconfig, includeText);
-            tasklibrary.debug('Appended build-vso.xcconfig include to ' + xcconfig);
+            taskLibrary.debug('Appended build-vso.xcconfig include to ' + xcconfig);
         } else {
-            tasklibrary.debug('build-vso.xcconfig include already present in ' + xcconfig);
+            taskLibrary.debug('build-vso.xcconfig include already present in ' + xcconfig);
         }
     });
     // Delete existing build-vso.xcconfig if present
@@ -421,13 +422,13 @@ function writeVsoXcconfig(data) {
         fs.unlinkSync(buildVsoXcconfig);
     }
     // Write out build-vso.xcconfig
-    tasklibrary.debug('Writing config to ' + buildVsoXcconfig + '. Contents:\n' + iosXcConfig);
+    taskLibrary.debug('Writing config to ' + buildVsoXcconfig + '. Contents:\n' + iosXcConfig);
     fs.writeFileSync(buildVsoXcconfig, iosXcConfig);
 }
 
 // Event handler for before_compile that adds ant.properties file - done before_compile so res/native doesn't overwrite ant.properties file we need to mod
 function writeAntProperties(data) {
-    tasklibrary.debug('before_compile fired hook writeAntProperties');
+    taskLibrary.debug('before_compile fired hook writeAntProperties');
     var antFile = path.join(cwd, 'platforms', 'android', 'ant.properties');
     var contents = '\n';
     for (var prop in antProperties) {
@@ -436,7 +437,7 @@ function writeAntProperties(data) {
             contents += prop + '=' + escapedValue + '\n';
 
             var valueString = !isPasswordAntProperty(prop) ? ', with value: ' + escapedValue : '';
-            tasklibrary.debug('Writing property ' + prop + ' to ant.properties' + valueString);
+            taskLibrary.debug('Writing property ' + prop + ' to ant.properties' + valueString);
         }
     }
     if (fs.existsSync(antFile)) {
@@ -451,7 +452,7 @@ function writeAntProperties(data) {
         contents = origContents + contents;
         fs.unlinkSync(antFile);
     }
-    tasklibrary.debug('Writing out config to ' + antFile + '.');
+    taskLibrary.debug('Writing out config to ' + antFile + '.');
     fs.writeFileSync(antFile, contents, 'ascii');
 }
 
