@@ -46,7 +46,7 @@
             "type": "string", 
             "label": "PhoneGap Version", 
             "required":false, 
-            "helpMarkDown": "Version of PhoneGap tools to use to run the command. If not specified, looks at taco.json, the CORDOVA_DEFAULT_VERSION env var, and finally falls back to the latest version."
+            "helpMarkDown": "Version of PhoneGap tools to use to run the command. If not specified, looks at the PHONEGAP_DEFAULT_VERSION env var, and falls back to the latest version."
         },
         { 
             "name": "cwd", 
