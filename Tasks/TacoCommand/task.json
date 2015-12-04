@@ -1,0 +1,72 @@
+{
+    "id": "61EC6339-4A6A-4A69-875E-5A6f4DB157A2",
+    "name": "TACOCommand",
+    "friendlyName": "TACO Command",
+    "description": "Run a TACO CLI command",
+    "helpMarkDown": "[More Information](http://go.microsoft.com/fwlink/?LinkID=692058)",
+    "category": "Build",
+    "visibility": [
+                "Build"
+                  ],
+    "author": "Microsoft Corporation",
+    "version": {
+        "Major": 1,
+        "Minor": 0,
+        "Patch": 1
+    },
+    "demands": [
+        "npm"
+    ],
+    "instanceNameFormat": "TACO Command $(tacoCommand)",
+     "groups": [
+        {
+            "name":"advanced",
+            "displayName":"Advanced",
+            "isExpanded":false
+        }
+    ],
+    "inputs": [
+        { 
+            "name": "tacoCommand", 
+            "type": "string", 
+            "label": "Command", 
+            "defaultValue":"", 
+            "required":true, 
+            "helpMarkDown": "TACO command to run. Ex: \"platform add android\""
+        },
+        { 
+            "name": "tacoArgs", 
+            "type": "string", 
+            "label": "Arguments", 
+            "required":false,
+            "helpMarkDown": "Arguments that should be used for the command."
+        },
+        { 
+            "name": "tacoVersion", 
+            "type": "string", 
+            "label": "TACO Version", 
+            "required":false, 
+            "helpMarkDown": "Version of TACO tools to use to run the command. If not specified, looks at the TACO_DEFAULT_VERSION env var, and falls back to the latest version."
+        },
+        { 
+            "name": "cwd", 
+            "type": "filePath", 
+            "label": "Working Directory", 
+            "defaultValue":"", 
+            "required":false,
+            "helpMarkDown": "Working directory for command runs. Defaults to the root of the repository.",
+            "groupName":"advanced"
+        }
+    ],
+    "execution": {
+        "Node": {
+            "target": "taco-command-task.js",
+            "argumentFormat": ""
+        },
+        "PowerShell": {
+            "target": "$(currentDirectory)\\bootstrapper.ps1",
+            "argumentFormat": "",
+            "workingDirectory": "$(currentDirectory)"
+        }        
+    }    
+}

@@ -1,0 +1,12 @@
+{
+  "name": "vso-task-taco-command",
+  "version": "1.0.0",
+  "description": "A VSO build task for running TACO CLI commands.",
+  "author": "Microsoft",
+  "license": "MIT",
+  "dependencies": {
+    "vso-task-lib": "^0.4.5",
+    "minimatch": "^2.0.10",
+    "taco-team-build": "../../lib/taco-team-build"
+    }
+}
