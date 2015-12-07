@@ -43,8 +43,11 @@ function callIonic() {
         var ionicCmd = path.resolve(ionicModule.path, '..', '.bin', ionicExecutable);
         var commandRunner = new taskLibrary.ToolRunner(ionicCmd);
         
-        commandRunner.arg(taskLibrary.getDelimitedInput('ionicCommand', /*delim*/ ' ', /*required*/ true));
-        var args = taskLibrary.getDelimitedInput('ionicArgs', /*delim*/ ' ', /*required*/ false);
+        var rawCmd = taskLibrary.getInput('ionicCommand', /* required */ false);
+        var cmd = taskLibrary.args(rawCmd);
+        commandRunner.arg(cmd);
+        var rawArgs = taskLibrary.getInput('ionicArgs', /* required */ false);
+        var args = taskLibrary.args(rawArgs);
         if (args) {
             commandRunner.arg(args);
         }
