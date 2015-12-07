@@ -38,8 +38,12 @@ function callPhoneGap() {
         var phonegapCmd = path.resolve(phonegapModule.path, '..', '.bin', phonegapExecutable);
         var commandRunner = new taskLibrary.ToolRunner(phonegapCmd);
 
-        commandRunner.arg(taskLibrary.getDelimitedInput('phonegapCommand', /*delim*/ ' ', /*required*/ true));
-        var args = taskLibrary.getDelimitedInput('phonegapArgs', /*delim*/ ' ', /*required*/ false);
+        var rawCmd = taskLibrary.getInput('phonegapCommand', /* required */ true);
+        var cmd = taskLibrary.args(rawCmd);
+        commandRunner.arg(cmd);
+        
+        var rawArgs = taskLibrary.getInput('phonegapArgs', /* required */ false);
+        var args = taskLibrary.args(rawArgs);
         if (args) {
             commandRunner.arg(args);
         }
