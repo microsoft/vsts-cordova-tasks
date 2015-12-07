@@ -33,13 +33,18 @@ function callCordova() {
 
     return buildUtilities.cacheModule(cordovaConfig).then(function (cordovaModule) {
         taskLibrary.debug('Cordova Module Path: ' + cordovaModule.path);
-         
+
         var cordovaExecutable = process.platform == 'win32' ? 'cordova.cmd' : 'cordova';
         var cordovaCmd = path.resolve(cordovaModule.path, '..', '.bin', cordovaExecutable);
         var commandRunner = new taskLibrary.ToolRunner(cordovaCmd);
 
-        commandRunner.arg(taskLibrary.getDelimitedInput('cordovaCommand', /*delim*/ ' ', /*required*/ true));
-        var args = taskLibrary.getDelimitedInput('cordovaArgs', /*delim*/ ' ', /*required*/ false);
+
+        var rawCmd = taskLibrary.getInput('cordovaCommand', /* required */ true);
+        var cmd = taskLibrary.args(rawCmd);
+        commandRunner.arg(cmd);
+        
+        var rawArgs = taskLibrary.getInput('cordovaArgs', /* required */ false);
+        var args = taskLibrary.args(rawArgs);
         if (args) {
             commandRunner.arg(args);
         }
