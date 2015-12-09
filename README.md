@@ -56,7 +56,7 @@ There are gaps and known issues for most tasks. See [TODOs](./docs/TODO.md) for 
 
 1. [Enable basic auth](http://go.microsoft.com/fwlink/?LinkID=699518) in your TFS instance
 
-2. Install the tfx-cli and login
+2. Install the tfx-cli and login. If you already have the tfx-cli installed, be sure it is **0.3.6 or higher.**
 
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	npm install -g tfx-cli
