@@ -1,7 +1,7 @@
 {
-  "name": "vso-cordova-tasks",
-  "version": "1.0.0",
-  "description": "A set of VSO task for building Cordova apps.",
+  "name": "vsts-cordova-tasks",
+  "version": "1.0.1",
+  "description": "A set of VSTS task for building Cordova apps.",
   "author": "Microsoft",
   "license": "MIT",
   "dependencies": {

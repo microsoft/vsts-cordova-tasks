@@ -1,7 +1,7 @@
 {
-  "name": "vso-task-cordova-command",
-  "version": "1.0.0",
-  "description": "A VSO build task for running Cordova commands.",
+  "name": "vsts-task-cordova-command",
+  "version": "1.0.1",
+  "description": "A VSTS build task for running Cordova commands.",
   "author": "Microsoft",
   "license": "MIT",
   "dependencies": {

@@ -1,7 +1,7 @@
 {
-  "name": "vso-task-ionic-command",
-  "version": "1.0.0",
-  "description": "A VSO build task for running Ionic commands.",
+  "name": "vsts-task-ionic-command",
+  "version": "1.0.1",
+  "description": "A VSTS build task for running Ionic commands.",
   "author": "Microsoft",
   "license": "MIT",
   "dependencies": {

@@ -2,7 +2,7 @@
     "manifestVersion": 1.0,
     "id": "cordova-extension",
     "name": "Cordova Build",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "publisher": "ms-vsclient",
     "public": true,
     "description": "Streamline CI setup for your Apache Cordova, PhoneGap, Ionic, or Cordova CLI compatible app using a set of useful pre-defined build steps.",
