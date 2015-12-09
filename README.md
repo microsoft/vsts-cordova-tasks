@@ -60,7 +60,7 @@ There are gaps and known issues for most tasks. See [TODOs](./docs/TODO.md) for 
 
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	npm install -g tfx-cli
-	tfx login --authType basic 
+	tfx login --auth-type basic 
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 3. Enter your collection URL (Ex: https://localhost:8080/tfs/DefaultCollection) and user name and password. Do not include a slash (/) at the end of the collection URL.
