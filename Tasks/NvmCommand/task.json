@@ -1,0 +1,72 @@
+{
+    "id": "61EC6339-4A6A-4A69-875E-5A6f4DB157A2",
+    "name": "NvmCommand",
+    "friendlyName": "Nvm Command",
+    "description": "Run a Nvm CLI command",
+    "helpMarkDown": "[More Information](http://go.microsoft.com/fwlink/?LinkID=692058)",
+    "category": "Build",
+    "visibility": [
+                "Build"
+                  ],
+    "author": "Microsoft Corporation",
+    "version": {
+        "Major": 1,
+        "Minor": 0,
+        "Patch": 0
+    },
+    "demands": [
+        "npm"
+    ],
+    "instanceNameFormat": "Nvm Command $(nvmCommand)",
+     "groups": [
+        {
+            "name":"advanced",
+            "displayName":"Advanced",
+            "isExpanded":false
+        }
+    ],
+    "inputs": [
+        { 
+            "name": "nvmCommand", 
+            "type": "string", 
+            "label": "Command", 
+            "defaultValue":"", 
+            "required":true, 
+            "helpMarkDown": "Nvm command to run. Ex: \"platform add android\""
+        },
+        { 
+            "name": "nvmArgs", 
+            "type": "string", 
+            "label": "Arguments", 
+            "required":false,
+            "helpMarkDown": "Arguments that should be used for the command."
+        },
+        { 
+            "name": "nvmVersion", 
+            "type": "string", 
+            "label": "Nvm Version", 
+            "required":false, 
+            "helpMarkDown": "Version of Nvm tools to use to run the command. If not specified, looks at taco.json, the NVM_DEFAULT_VERSION env var, and finally falls back to the latest version."
+        },
+        { 
+            "name": "cwd", 
+            "type": "filePath", 
+            "label": "Working Directory", 
+            "defaultValue":"", 
+            "required":false,
+            "helpMarkDown": "Working directory for command runs. Defaults to the root of the repository.",
+            "groupName":"advanced"
+        }
+    ],
+    "execution": {
+        "Nvm": {
+            "target": "nvm-command-task.js",
+            "argumentFormat": ""
+        },
+        "PowerShell": {
+            "target": "$(currentDirectory)\\bootstrapper.ps1",
+            "argumentFormat": "",
+            "workingDirectory": "$(currentDirectory)"
+        }        
+    }    
+}
