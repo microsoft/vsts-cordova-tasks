@@ -44,12 +44,10 @@ function callIonic() {
         var commandRunner = new taskLibrary.ToolRunner(ionicCmd);
         
         var rawCmd = taskLibrary.getInput('ionicCommand', /* required */ false);
-        var cmd = taskLibrary.args(rawCmd);
-        commandRunner.arg(cmd);
+        commandRunner.arg(rawCmd);
         var rawArgs = taskLibrary.getInput('ionicArgs', /* required */ false);
-        var args = taskLibrary.args(rawArgs);
-        if (args) {
-            commandRunner.arg(args);
+        if (rawArgs) {
+            commandRunner.arg(rawArgs);
         }
 
         return commandRunner.exec();
