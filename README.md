@@ -63,7 +63,7 @@ There are gaps and known issues for most tasks. See [TODOs](./docs/TODO.md) for 
 	tfx login --authType basic 
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-3. Enter your collection URL (Ex: https://localhost:8080/tfs/DefaultCollection) and user name and password 
+3. Enter your collection URL (Ex: https://localhost:8080/tfs/DefaultCollection) and user name and password. Do not include a slash (/) at the end of the collection URL.
 
 4. Download the [latest release](http://go.microsoft.com/fwlink/?LinkID=691191) of the Cordova tasks locally and unzip
 
