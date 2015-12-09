@@ -31,7 +31,7 @@ function npmInstall() {
 
 function tfxUpload() {
 	console.log('Transferring...')
-	return exec('tfx build tasks upload . --overwrite true').then(logExecReturn);
+	return exec('tfx build tasks upload --task-path . --overwrite true').then(logExecReturn);
 }
 
 function logExecReturn(result) {
