@@ -305,7 +305,12 @@ function execBuild(code) {
 
     // Add optional additional args
     var rawArgs = taskLibrary.getInput('cordovaArgs', /* required */ false);
-    var args = taskLibrary.args(rawArgs);
+    var args = rawArgs.match(/([^" ]*("[^"]*")[^" ]*)|[^" ]+/g);
+    //remove double quotes from each string in args as child_process.spawn() cannot handle literla quotes as part of arguments
+    for (var i = 0; i < args.length; i++) {
+        args[i] = args[i].replace(/"/g, "");
+    }
+    
     if (args) {
         args.forEach(function (arg) {
             if (arg != '--') {  		// Double-double dash syntax not required when invoking cordova-lib directly
