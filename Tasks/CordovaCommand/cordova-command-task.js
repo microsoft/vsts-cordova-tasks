@@ -40,13 +40,11 @@ function callCordova() {
 
 
         var rawCmd = taskLibrary.getInput('cordovaCommand', /* required */ true);
-        var cmd = taskLibrary.args(rawCmd);
-        commandRunner.arg(cmd);
+        commandRunner.arg(rawCmd);
         
         var rawArgs = taskLibrary.getInput('cordovaArgs', /* required */ false);
-        var args = taskLibrary.args(rawArgs);
-        if (args) {
-            commandRunner.arg(args);
+        if (rawArgs) {
+            commandRunner.arg(rawArgs);
         }
 
         return commandRunner.exec();
