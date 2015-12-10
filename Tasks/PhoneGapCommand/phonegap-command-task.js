@@ -39,13 +39,11 @@ function callPhoneGap() {
         var commandRunner = new taskLibrary.ToolRunner(phonegapCmd);
 
         var rawCmd = taskLibrary.getInput('phonegapCommand', /* required */ true);
-        var cmd = taskLibrary.args(rawCmd);
-        commandRunner.arg(cmd);
+        commandRunner.arg(rawCmd);
         
         var rawArgs = taskLibrary.getInput('phonegapArgs', /* required */ false);
-        var args = taskLibrary.args(rawArgs);
-        if (args) {
-            commandRunner.arg(args);
+        if (rawArgs) {
+            commandRunner.arg(rawArgs);
         }
 
         return commandRunner.exec();
