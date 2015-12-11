@@ -13,36 +13,35 @@ var buildSourceDirectory = taskLibrary.getVariable('build.sourceDirectory') || t
 var workingDirectory = taskLibrary.getInput('cwd', /*required*/ false) || buildSourceDirectory;
 taskLibrary.cd(workingDirectory);
 
-callCordova().fail(function (err) {
+callPhoneGap().fail(function (err) {
     console.error(err.message);
     taskLibrary.debug('taskRunner fail');
     taskLibrary.exit(1);
 });
 
-// Main Cordova command exec
-function callCordova() {
-    var cordovaConfig = {
-        nodePackageName: 'cordova',
+// Main PhoneGap command exec
+function callPhoneGap() {
+    var phonegapConfig = {
+        nodePackageName: 'phonegap',
         projectPath: workingDirectory
     };
 
-    var version = taskLibrary.getInput('cordovaVersion', /*required*/ false);
+    var version = taskLibrary.getInput('phonegapVersion', /*required*/ false);
     if (version) {
-        cordovaConfig.moduleVersion = version;
+        phonegapConfig.moduleVersion = version;
     }
 
-    return buildUtilities.cacheModule(cordovaConfig).then(function (cordovaModule) {
-        taskLibrary.debug('Cordova Module Path: ' + cordovaModule.path);
+    return buildUtilities.cacheModule(phonegapConfig).then(function (phonegapModule) {
+        taskLibrary.debug('PhoneGap Module Path: ' + phonegapModule.path);
+         
+        var phonegapExecutable = process.platform == 'win32' ? 'phonegap.cmd' : 'phonegap';
+        var phonegapCmd = path.resolve(phonegapModule.path, '..', '.bin', phonegapExecutable);
+        var commandRunner = new taskLibrary.ToolRunner(phonegapCmd);
 
-        var cordovaExecutable = process.platform == 'win32' ? 'cordova.cmd' : 'cordova';
-        var cordovaCmd = path.resolve(cordovaModule.path, '..', '.bin', cordovaExecutable);
-        var commandRunner = new taskLibrary.ToolRunner(cordovaCmd);
-
-
-        var rawCmd = taskLibrary.getInput('cordovaCommand', /* required */ true);
+        var rawCmd = taskLibrary.getInput('phonegapCommand', /* required */ true);
         commandRunner.arg(rawCmd);
         
-        var rawArgs = taskLibrary.getInput('cordovaArgs', /* required */ false);
+        var rawArgs = taskLibrary.getInput('phonegapArgs', /* required */ false);
         if (rawArgs) {
             commandRunner.arg(rawArgs);
         }

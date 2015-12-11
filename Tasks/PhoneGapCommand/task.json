@@ -1,9 +1,9 @@
 {
-    "id": "E144B169-0587-4146-A3FC-D9D3432A512A",
-    "name": "IonicCommand",
-    "friendlyName": "Ionic Command",
-    "description": "Run an Ionic CLI command",
-    "helpMarkDown": "[More Information](http://go.microsoft.com/fwlink/?LinkID=692057)",
+    "id": "5d36155d-bdb2-4d7b-b2a6-f9244e164c3e",
+    "name": "PhoneGapCommand",
+    "friendlyName": "PhoneGap Command",
+    "description": "Run a PhoneGap CLI command",
+    "helpMarkDown": "[More Information](http://go.microsoft.com/fwlink/?LinkID=692058)",
     "category": "Build",
     "visibility": [
                 "Build"
@@ -12,12 +12,12 @@
     "version": {
         "Major": 1,
         "Minor": 0,
-        "Patch": 2
+        "Patch": 0
     },
     "demands": [
         "npm"
     ],
-    "instanceNameFormat": "Ionic Command $(ionicCommand)",
+    "instanceNameFormat": "PhoneGap Command $(phonegapCommand)",
      "groups": [
         {
             "name":"advanced",
@@ -27,33 +27,26 @@
     ],
     "inputs": [
         { 
-            "name": "ionicCommand", 
+            "name": "phonegapCommand", 
             "type": "string", 
             "label": "Command", 
             "defaultValue":"", 
             "required":true, 
-            "helpMarkDown": "Ionic command to run. Ex: \"platform add android\""
+            "helpMarkDown": "PhoneGap command to run. Ex: \"platform add android\""
         },
         { 
-            "name": "ionicArgs", 
+            "name": "phonegapArgs", 
             "type": "string", 
             "label": "Arguments", 
             "required":false,
             "helpMarkDown": "Arguments that should be used for the command."
         },
         { 
-            "name": "ionicVersion", 
+            "name": "phonegapVersion", 
             "type": "string", 
-            "label": "Ionic Version", 
+            "label": "PhoneGap Version", 
             "required":false, 
-            "helpMarkDown": "Version of Ionic tools to use to run the command If not specified, uses a version specified in the IONIC_DEFAULT_VERSION env var and falls back to the latest version."
-        },
-        { 
-            "name": "cordovaVersion", 
-            "type": "string", 
-            "label": "Cordova Version", 
-            "required":false, 
-            "helpMarkDown": "Version of Cordova tools to use to run the command. If not specified, looks at taco.json, the CORDOVA_DEFAULT_VERSION env var, and finally falls back to the latest version."
+            "helpMarkDown": "Version of PhoneGap tools to use to run the command. If not specified, looks at the PHONEGAP_DEFAULT_VERSION env var, and falls back to the latest version."
         },
         { 
             "name": "cwd", 
@@ -67,7 +60,7 @@
     ],
     "execution": {
         "Node": {
-            "target": "ionic-command-task.js",
+            "target": "phonegap-command-task.js",
             "argumentFormat": ""
         },
         "PowerShell": {

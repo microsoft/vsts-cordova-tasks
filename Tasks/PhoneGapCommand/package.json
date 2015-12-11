@@ -1,7 +1,7 @@
 {
-  "name": "vsts-task-cordova-command",
-  "version": "1.0.2",
-  "description": "A VSTS build task for running Cordova commands.",
+  "name": "vso-task-phonegap-command",
+  "version": "1.0.0",
+  "description": "A VSO build task for running PhoneGap CLI commands.",
   "author": "Microsoft",
   "license": "MIT",
   "dependencies": {
