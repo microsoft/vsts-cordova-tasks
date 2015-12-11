@@ -1,8 +1,8 @@
 ﻿{
-    "manifestVersion": 1.0,
+    "manifestVersion": 1.1,
     "id": "cordova-extension",
     "name": "Cordova Build",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "publisher": "ms-vsclient",
     "public": true,
     "description": "Streamline CI setup for your Apache Cordova, PhoneGap, Ionic, or Cordova CLI compatible app using a set of useful pre-defined build steps.",
@@ -54,6 +54,9 @@
         },
         {
             "path": "Tasks/IonicCommand"
+        },
+        {
+            "path": "Tasks/PhoneGapCommand"
         }
     ],
     "contributions": [
@@ -79,6 +82,14 @@
             "targets": [ "ms.vss-distributed-task.tasks" ],
             "properties": {
                 "name": "Tasks/IonicCommand"
+            }
+        },
+        {
+            "id": "phonegapcommandtask",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [ "ms.vss-distributed-task.tasks" ],
+            "properties": {
+                "name": "Tasks/PhoneGapCommand"
             }
         }
     ]
