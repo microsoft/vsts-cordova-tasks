@@ -3,14 +3,14 @@
 #  Licensed under the MIT license. See LICENSE file in the project root for full license information.
 #
 
-echo "vso-cordova-tasks upload"
+echo "vsts-cordova-tasks upload"
 echo "Copyright Microsoft Corporation"
 echo
 echo "This script will acquire and install some dependant node modules. Each package"
 echo "is licensed to you by its owner. Microsoft is not responsible for, nor does it" 
 echo "grant any licenses to, third-party packages. Some packages may include" 
 echo "dependencies which are governed by additional licenses. Follow the package" 
-echo "source URL (http://github.com/Microsoft/vso-cordova-tasks) to determine any" 
+echo "source URL (http://github.com/Microsoft/vsts-cordova-tasks) to determine any" 
 echo "dependencies."
 echo
 read -p "Continue [Y/n]? " yn
@@ -33,8 +33,8 @@ if ! type "tfx" > /dev/null; then
     echo "Failed to install tfx-cli."
     exit 1
   fi
-  echo Log in to the VSO/TFS collection you wish to deploy the tasks.
-  tfx login --authType basic
+  echo Log in to the VSTS/TFS collection you wish to deploy the tasks.
+  tfx login --auth-type basic
   if [ $? -ne 0 ]
   then
     echo "Login failed. Type 'tfx login' to log in and then run this script again."
