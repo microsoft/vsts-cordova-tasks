@@ -34,7 +34,7 @@ if ! type "tfx" > /dev/null; then
     exit 1
   fi
   echo Log in to the VSTS/TFS collection you wish to deploy the tasks.
-  tfx login --authType basic
+  tfx login --auth-type basic
   if [ $? -ne 0 ]
   then
     echo "Login failed. Type 'tfx login' to log in and then run this script again."
