@@ -1,0 +1,72 @@
+{
+    "id": "5d36155d-bdb2-4d7b-b2a6-f9244e164c3e",
+    "name": "PhoneGapCommand",
+    "friendlyName": "PhoneGap Command",
+    "description": "Run a PhoneGap CLI command",
+    "helpMarkDown": "[More Information](http://go.microsoft.com/fwlink/?LinkID=692058)",
+    "category": "Build",
+    "visibility": [
+                "Build"
+                  ],
+    "author": "Microsoft Corporation",
+    "version": {
+        "Major": 1,
+        "Minor": 0,
+        "Patch": 0
+    },
+    "demands": [
+        "npm"
+    ],
+    "instanceNameFormat": "PhoneGap Command $(phonegapCommand)",
+     "groups": [
+        {
+            "name":"advanced",
+            "displayName":"Advanced",
+            "isExpanded":false
+        }
+    ],
+    "inputs": [
+        { 
+            "name": "phonegapCommand", 
+            "type": "string", 
+            "label": "Command", 
+            "defaultValue":"", 
+            "required":true, 
+            "helpMarkDown": "PhoneGap command to run. Ex: \"platform add android\""
+        },
+        { 
+            "name": "phonegapArgs", 
+            "type": "string", 
+            "label": "Arguments", 
+            "required":false,
+            "helpMarkDown": "Arguments that should be used for the command."
+        },
+        { 
+            "name": "phonegapVersion", 
+            "type": "string", 
+            "label": "PhoneGap Version", 
+            "required":false, 
+            "helpMarkDown": "Version of PhoneGap tools to use to run the command. If not specified, looks at the PHONEGAP_DEFAULT_VERSION env var, and falls back to the latest version."
+        },
+        { 
+            "name": "cwd", 
+            "type": "filePath", 
+            "label": "Working Directory", 
+            "defaultValue":"", 
+            "required":false,
+            "helpMarkDown": "Working directory for command runs. Defaults to the root of the repository.",
+            "groupName":"advanced"
+        }
+    ],
+    "execution": {
+        "Node": {
+            "target": "phonegap-command-task.js",
+            "argumentFormat": ""
+        },
+        "PowerShell": {
+            "target": "$(currentDirectory)\\bootstrapper.ps1",
+            "argumentFormat": "",
+            "workingDirectory": "$(currentDirectory)"
+        }        
+    }    
+}
