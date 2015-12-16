@@ -16,11 +16,9 @@
 6. P2: Implement population of Windows related signing proprties in config.xml and expose those as optional through the VSO task
 7. P2: Allow people to opt out of installing the support plugin
 8. P2: Implement JDK selection capabilities for Android similar to the Gradle task
-9. P2: Only specify Android args for signing for versions of Cordova that support it (4.0.0+)
 
 ##To do: Other tasks to create
 1. P2: TACO CLI Command Task - Started. Automatically uses latest TACO Cli version if not specified. Blocked on bug currently.
-2. P2: PhoneGap (CLI) Command Task
 
 ##To dos: Upload Script
 1. P2: Get rid of npm install warnings visible in upload script
