@@ -1,4 +1,4 @@
-Visual Studio Team Services (formerly Visual Studio Online) and Team Foundation Services (TFS) 2015 can be used for building and testing Cordova apps in a Continuous Integration (CI) environment thanks to a new [cross-platform agent](http://go.microsoft.com/fwlink/?LinkID=533789) that supports OSX. This new agent enables you to use Visual Studio Team Services (VSTS) or TFS to build projects targeting Android, iOS, or Windows created using [Tools for Apache Cordova](http://go.microsoft.com/fwlink/?LinkID=536496) or *any Cordova compliant CLI like the Ionic, PhoneGap (local), or TACO CLI.* 
+Visual Studio Team Services (formerly Visual Studio Online) and Team Foundation Services (TFS) 2015 can be used for building and testing Cordova apps in a Continuous Integration (CI) environment thanks to a new [cross-platform agent](http://go.microsoft.com/fwlink/?LinkID=533789) that supports OSX. This new agent enables you to use Visual Studio Team Services (VSTS) or TFS to build projects targeting Android, iOS, or Windows created using [Tools for Apache Cordova](http://go.microsoft.com/fwlink/?LinkID=536496) or *any Cordova compliant CLI like the Ionic, PhoneGap, or TACO CLI.* 
 
 ## Visual Studio Team Services Extension for Cordova
 
@@ -26,6 +26,7 @@ See the following articles for details on using these tasks in VSTS/TFS:
 	- [Securing Signing Certs](http://go.microsoft.com/fwlink/?LinkID=691933)
 2. [Cordova Command](http://go.microsoft.com/fwlink/?LinkID=692058)
 3. [Ionic Command](http://go.microsoft.com/fwlink/?LinkID=692057)
+4. [PhoneGap Command](http://go.microsoft.com/fwlink/?LinkID=692057)
 
 ## Installation for TFS 2015 Update 1 or Earlier
 
