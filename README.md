@@ -37,11 +37,11 @@ See the following articles on using these tasks in VSTS/TFS:
 	- [Securing Signing Certs](http://go.microsoft.com/fwlink/?LinkID=691933)
 2. [Cordova Command Task](http://go.microsoft.com/fwlink/?LinkID=692058)
 3. [Ionic Command Task](http://go.microsoft.com/fwlink/?LinkID=692057)
+4. [PhoneGap Command Task](http://go.microsoft.com/fwlink/?LinkID=692057)
 
 To be implemented:
 
 1. TACO CLI Command Task
-2. PhoneGap CLI Command Task
 
 There are gaps and known issues for most tasks. See [TODOs](./docs/TODO.md) for more information.
 
