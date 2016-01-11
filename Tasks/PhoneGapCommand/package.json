@@ -6,7 +6,7 @@
   "license": "MIT",
   "dependencies": {
     "minimatch": "^2.0.10",
-    "taco-team-build": "^0.1.6",
+    "taco-team-build": "^0.2.1",
     "vso-task-lib": "^0.4.5"
   }
 }
