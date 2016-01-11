@@ -305,9 +305,11 @@ function execBuild(code) {
 
     // Add optional additional args
     var rawArgs = taskLibrary.getInput('cordovaArgs', /* required */ false);
-    var args = rawArgs.match(/([^" ]*("[^"]*")[^" ]*)|[^" ]+/g);
+    var args;
+    if (rawArgs) {
+        args = rawArgs.match(/([^" ]*("[^"]*")[^" ]*)|[^" ]+/g);
+    }
 
-    
     if (args) {
         //remove double quotes from each string in args as child_process.spawn() cannot handle literal quotes as part of arguments
         for (var i = 0; i < args.length; i++) {
