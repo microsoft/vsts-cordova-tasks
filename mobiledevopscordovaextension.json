@@ -1,5 +1,5 @@
 ﻿{
-    "manifestVersion": 1.1,
+    "manifestVersion": 1,
     "id": "cordova-extension",
     "name": "Cordova Build",
     "version": "1.1.2",
