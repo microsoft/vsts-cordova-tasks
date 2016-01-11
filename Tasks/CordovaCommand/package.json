@@ -1,6 +1,6 @@
 {
   "name": "vsts-task-cordova-command",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A VSTS build task for running Cordova commands.",
   "author": "Microsoft",
   "license": "MIT",

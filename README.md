@@ -6,7 +6,7 @@
 </td>
 </tr></table>
 # Visual Studio Team Services Extension for Cordova
-Visual Studio Team Services (formerly Visual Studio Online) and Team Foundation Services (TFS) 2015 can be used for building and testing Cordova apps in a Continuous Integration (CI) environment thanks to a new [cross-platform agent](http://go.microsoft.com/fwlink/?LinkID=533789) that supports OSX. This new agent enables you to use Visual Studio Team Services (VSTS) or TFS to build projects targeting Android, iOS, or Windows created using [Tools for Apache Cordova](http://go.microsoft.com/fwlink/?LinkID=536496) or *any Cordova compliant CLI like the Ionic, PhoneGap (local), or TACO CLI.* 
+Visual Studio Team Services (formerly Visual Studio Online) and Team Foundation Services (TFS) 2015 can be used for building and testing Cordova apps in a Continuous Integration (CI) environment thanks to a new [cross-platform agent](http://go.microsoft.com/fwlink/?LinkID=533789) that supports OSX. This new agent enables you to use Visual Studio Team Services (VSTS) or TFS to build projects targeting Android, iOS, or Windows created using [Tools for Apache Cordova](http://go.microsoft.com/fwlink/?LinkID=536496) or *any Cordova compliant CLI like the Ionic, PhoneGap, or TACO CLI.* 
 
 This extension contains a set of VS Team Services "tasks" (or "build steps") that streamline setup when building Cordova based applications in a CI environment. These tasks can be used with either VSTS or TFS 2015 on-prem servers (see below) and are intended to work with any Cordova based project including, but not limited to, those created using Tools for Apache Cordova. The tasks:
 
@@ -37,11 +37,11 @@ See the following articles on using these tasks in VSTS/TFS:
 	- [Securing Signing Certs](http://go.microsoft.com/fwlink/?LinkID=691933)
 2. [Cordova Command Task](http://go.microsoft.com/fwlink/?LinkID=692058)
 3. [Ionic Command Task](http://go.microsoft.com/fwlink/?LinkID=692057)
+4. [PhoneGap Command Task](http://go.microsoft.com/fwlink/?LinkID=692057)
 
 To be implemented:
 
 1. TACO CLI Command Task
-2. PhoneGap CLI Command Task
 
 There are gaps and known issues for most tasks. See [TODOs](./docs/TODO.md) for more information.
 
