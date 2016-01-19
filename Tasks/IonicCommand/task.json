@@ -67,7 +67,7 @@
     ],
     "execution": {
         "Node": {
-            "target": "ionic-command-task.js",
+            "target": "node-setup.js",
             "argumentFormat": ""
         },
         "PowerShell": {
