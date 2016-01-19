@@ -269,7 +269,7 @@
     ],
     "execution": {
         "Node": {
-            "target": "cordova-task.js",
+            "target": "node-setup.js",
             "argumentFormat": ""
         },
         "PowerShell": {
