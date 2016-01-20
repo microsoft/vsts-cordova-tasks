@@ -8,6 +8,6 @@
     "vso-task-lib": "^0.4.5",
     "minimatch": "^2.0.10",
     "semver": "^5.0.3",
-    "taco-team-build": "../../lib/taco-team-build"
+    "taco-team-build": "^0.2.1"
     }
 }
