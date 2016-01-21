@@ -1,6 +1,6 @@
 {
   "name": "vsts-cordova-tasks",
-  "version": "1.1.1",
+  "version": "1.1.3",
   "description": "A set of VSTS task for building Cordova apps.",
   "author": "Microsoft",
   "license": "MIT",
