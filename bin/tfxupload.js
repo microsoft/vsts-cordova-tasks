@@ -15,11 +15,13 @@ function installTasks() {
 	console.log(tasks.length + ' tasks found.')
 	tasks.forEach(function(task) {
 		promise = promise.then(function() {
-				console.log('Uploading task ' + task);
+				console.log('Processing task ' + task);
 				process.chdir(path.join(tasksPath,task));
 				return npmInstall();
-			})
-			.then(tfxUpload);
+			});
+            if (process.argv.indexOf("--installonly") == -1) {
+			    promise = promise.then(tfxUpload);
+            }
 	});	
 	return promise;
 }
@@ -43,7 +45,7 @@ function logExecReturn(result) {
 
 installTasks()
 	.done(function() {
-		console.log('Upload complete!');
+		console.log('Complete!');
 	}, function(input) {
-		console.log('Upload failed!');
+		console.log('Failed!');
 	});
