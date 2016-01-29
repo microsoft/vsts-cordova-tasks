@@ -328,7 +328,7 @@ function execBuild(code) {
         cordovaConfig.moduleVersion = version;
     }
 
-    var updateXcconfig = (iosXcConfig != '')
+    var updateXcconfig = (iosXcConfig != '');
     return teambuild.setupCordova(cordovaConfig)
         .then(function (cordova) {
         // Add update Xcconfig hook if needed
