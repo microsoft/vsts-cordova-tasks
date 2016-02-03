@@ -31,6 +31,8 @@ if (version) {
         nodeSetupPromise = nodeManager.setupMaxNode('4.0.0', '0.12.7');
     } else if (semver.lt(version, '5.4.0')) {
         nodeSetupPromise = nodeManager.setupMaxNode('5.0.0', '4.2.3');
+    } else {
+        nodeSetupPromise = nodeManager.setupNode('0.12.7');
     }
 } else {
     nodeSetupPromise = nodeManager.setupNode('0.12.7');
