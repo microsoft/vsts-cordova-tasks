@@ -40,7 +40,7 @@ nodeSetupPromise.then(function () {
     var nodePath = nodeManager.getNodePath();
     var cmd = nodePath + '/node';
     var commandRunner = new taskLibrary.ToolRunner(cmd);
-    commandRunner.arg(__dirname + '/cordova-command-task.js');
+    commandRunner.arg(__dirname + '/cordova-task.js');
 
     return commandRunner.exec().fail(function (err) {
         console.error(err.message);
