@@ -49,4 +49,7 @@ nodeSetupPromise.then(function () {
         taskLibrary.debug('taskRunner fail');
         taskLibrary.exit(1);
     });
+}).fail(function (err) {
+    console.error(err.message);
+    taskLibrary.exit(1);
 });

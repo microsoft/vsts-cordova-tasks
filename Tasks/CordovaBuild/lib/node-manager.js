@@ -52,7 +52,13 @@ function setupNode(targetVersion, /*optional*/ installNpmOnWindows) {
     if(!fs.existsSync(NODE_VERSION_CACHE)) {
         taskLibrary.mkdirP(NODE_VERSION_CACHE);
     }
-    var dlNodeCommand = new taskLibrary.ToolRunner(taskLibrary.which('curl', true));
+    
+    var curlPath = taskLibrary.which('curl', true);
+    if (!curlPath) {
+        throw "curl was not found in PATH. curl needs to be in the path on Windows. You can get curl by install the Git Command Line Tools (www.git-scm.com/downloads)";
+    }
+    
+    var dlNodeCommand = new taskLibrary.ToolRunner(curlPath);
     if(process.platform == 'win32') {
         var promise;
         nodePath = path.join(NODE_VERSION_CACHE, 'node-win-x86-' + targetVersion);
