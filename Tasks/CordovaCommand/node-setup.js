@@ -4,13 +4,28 @@
 */
 
 var path = require('path'),
+    fs = require('fs'),
     semver = require('semver'),
     nodeManager = require('./lib/node-manager.js'),
     taskLibrary = require('./lib/vso-task-lib-proxy.js'),
     teambuild = require('taco-team-build');
 
 var nodeSetupPromise;
+
+var cwd = taskLibrary.getInput('cwd', /* required */ false);
+var tacoFile = path.join((cwd ? cwd : '.'), 'taco.json');
+
 var version = taskLibrary.getInput('cordovaVersion', /* required */ false);
+if (!version) {
+    try {
+        var stats = fs.statSync(tacoFile);
+        if (stats && stats.isDirectory()) {
+            version = require(tacoFile)['cordova-cli'];
+            console.log('Cordova version set to ' + version + ' based on the contents of taco.json');
+        }
+    } catch (e) { }
+}
+
 if (version) {
     if (semver.lt(version, '5.3.3')) {
         nodeSetupPromise = nodeManager.setupMaxNode('4.0.0', '0.12.7');
@@ -18,7 +33,7 @@ if (version) {
         nodeSetupPromise = nodeManager.setupMaxNode('5.0.0', '4.2.3');
     }
 } else {
-    nodeSetupPromise = nodeManager.setupNode('5.0.0');
+    nodeSetupPromise = nodeManager.setupNode('0.12.7');
 }
 
 nodeSetupPromise.then(function () {
