@@ -38,7 +38,7 @@ if (version) {
 
 nodeSetupPromise.then(function () {
     var nodePath = nodeManager.getNodePath();
-    var cmd = nodePath + '/node';
+    var cmd = path.join(nodePath, 'node');
     var commandRunner = new taskLibrary.ToolRunner(cmd);
     commandRunner.arg(path.join(__dirname, 'phonegap-command-task.js'));
 
