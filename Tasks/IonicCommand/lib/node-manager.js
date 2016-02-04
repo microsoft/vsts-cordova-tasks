@@ -48,11 +48,23 @@ function setupMaxNode(maxVersion, targetVersion, /*optional*/ installNpmOnWindow
         });
 }
 
+function useSystemNode() {
+    nodePath = path.dirname(taskLibrary.which('node'));
+    return Q();
+}
+
 function setupNode(targetVersion, /*optional*/ installNpmOnWindows) {
     if(!fs.existsSync(NODE_VERSION_CACHE)) {
         taskLibrary.mkdirP(NODE_VERSION_CACHE);
     }
-    var dlNodeCommand = new taskLibrary.ToolRunner(taskLibrary.which('curl', true));
+    
+    var curlPath = taskLibrary.which('curl', true);
+    if (!curlPath) {
+        taskLibrary.error("curl was not found in PATH. curl needs to be in the path on Windows. You can get curl by installing the Git Command Line Tools (www.git-scm.com/downloads)");
+        return null;
+    }
+    
+    var dlNodeCommand = new taskLibrary.ToolRunner(curlPath);
     if(process.platform == 'win32') {
         var promise;
         nodePath = path.join(NODE_VERSION_CACHE, 'node-win-x86-' + targetVersion);
@@ -114,6 +126,7 @@ module.exports = {
     setupNode: setupNode,
     setupMaxNode: setupMaxNode,
     setupMinNode: setupMinNode,
+    useSystemNode: useSystemNode,
     getNodePath: function() {
         return nodePath;
     }
