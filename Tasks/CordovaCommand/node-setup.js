@@ -19,7 +19,7 @@ var version = taskLibrary.getInput('cordovaVersion', /* required */ false);
 if (!version) {
     try {
         var stats = fs.statSync(tacoFile);
-        if (stats && stats.isDirectory()) {
+        if (stats && stats.isFile()) {
             version = require(tacoFile)['cordova-cli'];
             console.log('Cordova version set to ' + version + ' based on the contents of taco.json');
         } else {
