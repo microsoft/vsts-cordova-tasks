@@ -22,6 +22,9 @@ if (!version) {
         if (stats && stats.isDirectory()) {
             version = require(tacoFile)['cordova-cli'];
             console.log('Cordova version set to ' + version + ' based on the contents of taco.json');
+        } else {
+            version = process.env.CORDOVA_DEFAULT_VERSION;
+            console.log('Attempting to use the environment specified Cordova version ' + version);
         }
     } catch (e) { }
 }
