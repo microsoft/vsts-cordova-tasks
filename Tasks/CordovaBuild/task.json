@@ -1,7 +1,7 @@
 {
-    "id": "70E94267-15DC-434D-8973-023D766825D7",
-    "name": "CordovaBuild",
-    "friendlyName": "Cordova Build",
+    "id": "70E94267-15DC-434D-8973-023D766825DD",
+    "name": "CordovaBuildDev",
+    "friendlyName": "Cordova Build-Dev",
     "description": "Build a hybrid app project based on the Cordova CLI, Ionic CLI, TACO CLI, or other Cordova-compliant CLI",
     "helpMarkDown": "[More Information](http://go.microsoft.com/fwlink/?LinkID=691186)",
     "category": "Build",

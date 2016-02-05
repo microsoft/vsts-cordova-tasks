@@ -10,6 +10,6 @@
     "minimatch": "^2.0.10",
     "glob": "^5.0.14",
     "semver": "^5.0.3",
-    "taco-team-build": "^0.2.1"
+    "taco-team-build": "git://github.com/Microsoft/taco-team-build.git"
     }
 } 

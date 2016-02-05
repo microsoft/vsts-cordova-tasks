@@ -1,7 +1,7 @@
 {
-    "id": "E144B169-0587-4146-A3FC-D9D3432A512A",
-    "name": "IonicCommand",
-    "friendlyName": "Ionic Command",
+    "id": "E144B169-0587-4146-A3FC-D9D3432A512D",
+    "name": "IonicCommandDev",
+    "friendlyName": "Ionic Command-Dev",
     "description": "Run an Ionic CLI command",
     "helpMarkDown": "[More Information](http://go.microsoft.com/fwlink/?LinkID=692057)",
     "category": "Build",
