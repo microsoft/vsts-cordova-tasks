@@ -1,7 +1,7 @@
 {
-    "id": "5d36155d-bdb2-4d7b-b2a6-f9244e164c3D",
-    "name": "PhoneGapCommandDev",
-    "friendlyName": "PhoneGap Command-Dev",
+    "id": "5d36155d-bdb2-4d7b-b2a6-f9244e164c3e",
+    "name": "PhoneGapCommand",
+    "friendlyName": "PhoneGap Command",
     "description": "Run a PhoneGap CLI command",
     "helpMarkDown": "[More Information](http://go.microsoft.com/fwlink/?LinkID=692058)",
     "category": "Build",

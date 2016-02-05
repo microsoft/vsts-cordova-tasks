@@ -1,7 +1,7 @@
 {
-    "id": "61EC6339-4A6A-4A69-875E-5A6f4DB157AD",
-    "name": "CordovaCommandDev",
-    "friendlyName": "Cordova Command-Dev",
+    "id": "61EC6339-4A6A-4A69-875E-5A6f4DB157A2",
+    "name": "CordovaCommand",
+    "friendlyName": "Cordova Command",
     "description": "Run a Cordova CLI command",
     "helpMarkDown": "[More Information](http://go.microsoft.com/fwlink/?LinkID=692058)",
     "category": "Build",
