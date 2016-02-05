@@ -9,6 +9,11 @@
     "categories": [
         "Build and release"
     ],
+    "targets": [
+        {
+            "id": "Microsoft.VisualStudio.Services"
+        }
+    ],
     "visibility": [
         "Build and release"
     ],
@@ -42,7 +47,7 @@
             "path": "docs/extension-overview.md"
         },
         "thirdpartynotice": {
-            "path": "thirdpartynotices.txt"
+            "path": "ThirdPartyNotices.txt"
         }
     },
     "files": [

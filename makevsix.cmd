@@ -8,7 +8,7 @@ CALL npm --version > NUL
 IF NOT %ERRORLEVEL%==0 GOTO FAILED
 
 CALL vset --version > NUL
-IF NOT %ERRORLEVEL%==0 GOTO VSETINSTALL
+IF NOT %ERRORLEVEL%==0 GOTO TFXINSTALL
 
 :NPMINSTALL
 ECHO Installing Dependencies...
@@ -19,14 +19,14 @@ IF NOT %ERRORLEVEL%==0 GOTO INSTALLFAILED
 
 :CREATEVSIX
 ECHO Creating vsix...
-CALL vset package -m mobiledevopscordovaextension.json
+CALL tfx extension create --manifest-globs mobiledevopscordovaextension.json
 IF NOT %ERRORLEVEL%==0 GOTO FAILED
 
 EXIT /B 0
 
-:VSETINSTALL
-ECHO Installing vset...
-CALL npm install -g vset
+:TFXINSTALL
+ECHO Installing tfx-cli...
+CALL npm install -g tfx-cli
 IF %ERRORLEVEL%==0 GOTO CREATEVSIX
 
 :INSTALLFAILED
