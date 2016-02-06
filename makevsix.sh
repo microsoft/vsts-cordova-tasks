@@ -18,5 +18,14 @@ echo "Installing Dependencies..."
 npm install --only=prod
 node bin/tfxupload.js --installonly
 
-echo "Creating VSIX..."
-tfx extension create --manifest-globs mobiledevopscordovaextension.json
+if [ $1 == "create" ] ; then
+  echo "Creating VSIX..."
+  tfx extension create --manifest-globs mobiledevopscordovaextension.json
+fi
+
+if [ $1 == "publish" ] ; then
+  echo "Creating and publishing VSIX..."
+  tfx extension publish --manifest-globs mobiledevopscordovaextension.json --share-with mobiledevops x04ty29er --pat $publishaccesstoken
+fi
+
+
