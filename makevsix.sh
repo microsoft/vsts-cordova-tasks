@@ -20,7 +20,7 @@ node bin/tfxupload.js --installonly
 
 if [ $1 == "create" ] ; then
   echo "Creating VSIX..."
-  tfx extension create --manifest-globs mobiledevopscordovaextension.json
+  tfx extension create --manifest-globs mobiledevopscordovaextension.json --override '{ "public": true }'
 fi
 
 if [ $1 == "publishtest" ] ; then
