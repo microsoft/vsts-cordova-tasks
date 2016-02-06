@@ -23,9 +23,9 @@ if [ $1 == "create" ] ; then
   tfx extension create --manifest-globs mobiledevopscordovaextension.json
 fi
 
-if [ $1 == "publish" ] ; then
-  echo "Creating and publishing VSIX..."
-  tfx extension publish --manifest-globs mobiledevopscordovaextension.json --share-with mobiledevops x04ty29er --token $PUBLISH_ACCESSTOKEN
+if [ $1 == "publishtest" ] ; then
+  echo "Creating and publishing test VSIX..."
+  tfx extension publish --manifest-globs mobiledevopscordovaextension.json --override '{ "public": "false", "name": "Cordova Build-Dev", "id": "cordova-extension-dev", "publisher": "ms-mobiledevops-test"}' --share-with mobiledevops x04ty29er --token $PUBLISH_ACCESSTOKEN
 fi
 
 
