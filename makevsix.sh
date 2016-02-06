@@ -25,7 +25,7 @@ fi
 
 if [ $1 == "publish" ] ; then
   echo "Creating and publishing VSIX..."
-  tfx extension publish --manifest-globs mobiledevopscordovaextension.json --share-with mobiledevops x04ty29er --pat $publishaccesstoken
+  tfx extension publish --manifest-globs mobiledevopscordovaextension.json --share-with mobiledevops x04ty29er --pat $PUBLISH_ACCESSTOKEN
 fi
 
 
