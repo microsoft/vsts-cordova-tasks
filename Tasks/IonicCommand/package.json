@@ -1,6 +1,6 @@
 {
   "name": "vsts-task-ionic-command",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "description": "A VSTS build task for running Ionic commands.",
   "author": "Microsoft",
   "license": "MIT",
