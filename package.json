@@ -8,7 +8,7 @@
     "q": "^1.4.1"
   },
   "devDependencies": {
-    "shelljs": "^0.6.0",
-    "yargs": "^3.32.0"
+    "command-line-args": "^2.1.4",
+    "shelljs": "^0.6.0"
   }
 }
