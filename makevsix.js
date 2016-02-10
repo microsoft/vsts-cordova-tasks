@@ -4,15 +4,26 @@
 //
 
 require('shelljs/global');
-
 var path = require('path'),
     fs = require('fs');
 var commandLineArgs = require('command-line-args');
 
+var devManifestOverride = {
+    public: false,
+    name: "Cordova Build-Dev",
+    id: "cordova-extension-dev",
+    publisher: "ms-mobiledevops-test"
+}
+
+var prodManifestOverride = {
+    public: true
+}
+
 var cli = commandLineArgs([
   { name: 'maketest', alias: 't', description: 'make test VSIX', type: Boolean },
   { name: 'makeprod', alias: 'p', description: 'make production VSIX', type: Boolean },
-  { name: 'publishtest', alias: 'b', description: 'publish test VSIX (implies --maketest)', type: Boolean },
+  { name: 'publishtest', alias: 'b', description: 'publish test VSIX', type: Boolean },
+  { name: 'skipinstalldeps', alias: 's', description: 'skip npm installing task dependencies (to speed up)', type: Boolean },
 ]);
 
 var options;
@@ -35,26 +46,15 @@ if (! exec("npm --version", {silent: true})) {
 if (exec('tfx --version', {silent: true}).code != 0)
     echoAndExec("tfx-cli not found. installing", "npm install -g tfx-cli");
 
-//installTasks()
+if (! options.skipinstalldeps)
+    installTasks()
 
-if (options.makeprod) {
-    var override = {
-        public: true
-    }
-
-    echoAndExec('Creating VSIX', 'tfx extension create --manifest-globs mobiledevopscordovaextension.json --override ' + toOverrideString(override));
-}
-
-var testOverride = {
-    public: false,
-    name: "Cordova Build-Dev",
-    id: "cordova-extension-dev",
-    publisher: "ms-mobiledevops-test"
-}
+if (options.makeprod)
+    echoAndExec('Creating VSIX', 'tfx extension create --manifest-globs mobiledevopscordovaextension.json --override ' + toOverrideString(prodManifestOverride));
 
 if (options.maketest)
     echoAndExec('Creating test VSIX',
-        'tfx extension create --manifest-globs mobiledevopscordovaextension.json --override ' + toOverrideString(testOverride));
+        'tfx extension create --manifest-globs mobiledevopscordovaextension.json --override ' + toOverrideString(devManifestOverride));
 
 if (options.publishtest) {
     var accessToken = env['PUBLISH_ACCESSTOKEN'];
@@ -64,7 +64,7 @@ if (options.publishtest) {
     }
 
     echoAndExec('Publishing test VSIX',
-        'tfx extension publish --manifest-globs mobiledevopscordovaextension.json --override ' + toOverrideString(testOverride) + ' --share-with mobiledevops x04ty29er --token ' + accessToken);
+        'tfx extension publish --manifest-globs mobiledevopscordovaextension.json --override ' + toOverrideString(devManifestOverride) + ' --share-with mobiledevops x04ty29er --token ' + accessToken);
 }
 
 //
