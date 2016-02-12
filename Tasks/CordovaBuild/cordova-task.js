@@ -80,7 +80,7 @@ function processInputs() {
 
     var archs = taskLibrary.getInput('archs', /* required */ false);
     if (archs) {
-        buildArgs.push('--archs="' + archs + '"')
+        buildArgs.push('--archs=' + archs);
     }
 
     platform = taskLibrary.getInput('platform', /* required */ true).toLowerCase();
