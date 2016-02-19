@@ -45,6 +45,26 @@ To be implemented:
 
 There are gaps and known issues for most tasks. See [TODOs](./docs/TODO.md) for more information.
 
+##FAQ
+**Q:** I am trying to build an Ionic app and am running into a **spawn EACCES** error when building on a Mac. How to I resolve this problem?
+
+**A:** This can happen if you've added your Ionic to source control project Windows hooks/after_prepare/010_add_platform_class.js will not have an execute bit set as [required by Cordova](http://cordova.apache.org/docs/en/latest/guide/appdev/hooks/index.html). To resolve, add the execute bit to the file in source control or add the following using the **Command Line** task:
+* Tool: chmod 
+* Arguments: +x hooks/after_prepare/010_add_platform_class.js
+
+
+**Q:** After Feb 14th, I am seeing the following error when referencing P12 file in the Xcode Build task: "Command failed: /bin/sh -c /usr/bin/security find-identity -v -p codesigning ..."
+
+**A:** This is due to the Apple's WWDR certificate expiring on this date and an old certificate still being present on the system. To resolve, follow the steps outlined by Apple here: https://developer.apple.com/support/certificates/expiration/ In particular, be sure to see "What should I do if Xcode doesn’t recognize my distribution certificate?" and be sure to **remove any expired certificates** as this can cause the error to occur even after you've installed updated certificates. This **also affects development certs** despite the title.
+
+**Q:** I am using my own Mac for a cross-platform agent and have it configured to run as a daemon. Signing is failing. How can I resolve this problem?
+
+**A:** Configure the agent as a launch agent (./svc.sh install agent) or run it as an interactive process (node agent/vsoagent.js) to ensure Xcode is able to access the appropriate keychains. See the [secure app signing](https://msdn.microsoft.com/Library/vs/alm/Build/apps/secure-certs) tutorial for additional details. You could also opt to use [MacinCloud](http://go.microsoft.com/fwlink/?LinkID=691834) instead.
+
+**Q:** I am seeing Windows 10 builds fail in the VSTS Hosted Pool with a "Could not load file or assembly" error when using Cordova 5.4.x. How do I resolve this problem?
+
+**A:** This is a Cordova bug when 64-bit Node.js is used. Upgrade to 6.0.0+ to resolve. See the [Cordova bug](https://issues.apache.org/jira/browse/CB-9565?jql=text%20%7E%20%22An%20attempt%20was%20made%20to%20load%20a%20program%20with%20an%20incorrect%20format.%22) for details.
+
 ##Installation
 
 ### Visual Studio Team Services / Visual Studio Online
