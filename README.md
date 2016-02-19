@@ -42,7 +42,7 @@ See the following articles on using these tasks in VSTS/TFS:
 ##FAQ
 **Q:** I am trying to build an Ionic app and am running into a **spawn EACCES** error when building on a Mac or Linux. How to I resolve this problem?
 
-**A:** This can happen if you've added your project to source control project on Windows and have files present in the "hooks" folder. (Ex: hooks/after_prepare/010_add_platform_class.js) [Cordova requires](http://cordova.apache.org/docs/en/latest/guide/appdev/hooks/index.html). To resolve, add the execute hooks have an "execute bit" set to run on a Mac or Linux. To resolve, add an execute bit to the file in source control or add the following using the **Command Line** task:
+**A:** This can happen if you've added your project to source control  on Windows and have files present in the "hooks" folder. (Ex: hooks/after_prepare/010_add_platform_class.js) [Cordova requires](http://cordova.apache.org/docs/en/latest/guide/appdev/hooks/index.html) files in the hooks folder to have an "execute bit" set to run on a Mac or Linux which will be missing in this case. To resolve, add an execute bit to the files in source control or add the following using the **Command Line** task:
 * Tool: chmod 
 * Arguments: +x hooks/after_prepare/010_add_platform_class.js
 
