@@ -47,6 +47,10 @@ See the following articles for details on using these tasks in VSTS/TFS:
 
 **A:** This is a Cordova bug when 64-bit Node.js is used. Upgrade to 6.0.0+ to resolve. See the [Cordova bug](https://issues.apache.org/jira/browse/CB-9565?jql=text%20%7E%20%22An%20attempt%20was%20made%20to%20load%20a%20program%20with%20an%20incorrect%20format.%22) for details.
 
+**Q:** Android is failing to build on a Mac or Linux when using Cordova 6.0.0. How can I resolve this issue?
+
+**A:** This is a Cordova bug that will be resolved in the next Cordova release. If you must use Cordova 6.0.0, use a Windows agent instead.
+
 ## Installation for TFS 2015 Update 1 or Earlier
 
 See the [source code repository](http://go.microsoft.com/fwlink/?LinkID=691187) for instructions on installing these tasks on TFS 2015 Update 1 or earlier.
