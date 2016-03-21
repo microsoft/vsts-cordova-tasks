@@ -8,8 +8,8 @@ var path = require('path'),
     Q = require('q'),
     semver = require('semver'),
     glob = require('glob'),
-    xcutils = require('./lib/xcode-task-utils.js'),
-    taskLibrary = require('./lib/vso-task-lib-proxy.js'),
+    xcutils = require('./xcode-task-utils.js'),
+    taskLibrary = require('./vso-task-lib-proxy.js'),
     teambuild = require('taco-team-build');
 
 

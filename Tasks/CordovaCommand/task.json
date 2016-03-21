@@ -60,8 +60,8 @@
     ],
     "execution": {
         "Node": {
-            "target": "lib/node-setup.js cordova-command-task.js",
-            "argumentFormat": ""
+            "target": "lib/node-setup.js",
+            "argumentFormat": "cordova-command-task.js"
         },
         "PowerShell": {
             "target": "$(currentDirectory)\\bootstrapper.ps1",

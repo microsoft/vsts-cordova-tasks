@@ -6,7 +6,8 @@
 var path = require('path'),
     fs = require('fs'),
     Q = require ('q'),
-    exec = Q.nfbind(require('child_process').exec);
+    exec = Q.nfbind(require('child_process').exec),
+    execSync = require('child_process').execSync;
 
 function installTasks() {
     var promise = Q();
@@ -39,24 +40,22 @@ function copyLibs(task) {
         console.log('failed to read required libs!');
         return Q.reject();
     } else {
-        console.log('Got lib list: ' + config);
+        console.log(config);
     }
     
     console.log('Copying lib files...');
-    var copyLibPromise;
     for (var i in config) {
-        var copyCommand = 'cp ' + path.join(process.cwd(), '../../lib', config[i]) + ' ' + path.join(process.cwd(), 'lib', config[i]);
-        console.log("executing copy " + copyCommand);
-        if (copyLibPromise) {
-            copyLibPromise = copyLibPromise.then(function() {
-                return exec(copyCommand);
-            }).then(logExecReturn);
-        } else {
-            copyLibPromise = exec(copyCommand).then(logExecReturn);
+        var outputFile = path.join(process.cwd(), 'lib', i);
+        if (config[i]["injectBefore"]) {
+            execSync("echo " + config[i]["injectBefore"] + " > " + outputFile, {stdio:[0,1,2]});
         }
+        
+        var copyCommand = 'cat ' + path.join(process.cwd(), '../../lib', i) + ' >> ' + outputFile;
+        console.log("executing copy " + copyCommand);
+        execSync(copyCommand, {stdio: [0,1,2]});
     }
     
-    return copyLibPromise;
+    return Q();
 }
 
 function tfxUpload() {

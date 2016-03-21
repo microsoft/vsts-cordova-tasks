@@ -67,8 +67,8 @@
     ],
     "execution": {
         "Node": {
-            "target": "lib/node-setup.js ionic-command-task.js",
-            "argumentFormat": ""
+            "target": "lib/node-setup.js",
+            "argumentFormat": "ionic-command-task.js"
         },
         "PowerShell": {
             "target": "$(currentDirectory)\\bootstrapper.ps1",

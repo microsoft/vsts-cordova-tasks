@@ -4,7 +4,7 @@
 */
 
 var path = require('path'),
-    taskLibrary = require('./lib/vso-task-lib-proxy.js'),
+    taskLibrary = require('./vso-task-lib-proxy.js'),
     buildUtilities = require('taco-team-build');
 
 
