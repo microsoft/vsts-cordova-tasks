@@ -3,5 +3,6 @@
     "node-manager.js",
     "unlockdefaultkeychain.sh",
     "vso-task-lib-proxy.js",
-    "xcode-task-utils.js"
+    "xcode-task-utils.js",
+    "node-setup.js"
 ]

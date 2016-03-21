@@ -60,7 +60,7 @@
     ],
     "execution": {
         "Node": {
-            "target": "node-setup.js",
+            "target": "lib/node-setup.js cordova-command-task.js",
             "argumentFormat": ""
         },
         "PowerShell": {

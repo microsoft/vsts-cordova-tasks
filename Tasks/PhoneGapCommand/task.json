@@ -60,7 +60,7 @@
     ],
     "execution": {
         "Node": {
-            "target": "node-setup.js",
+            "target": "lib/node-setup.js phonegap-command-task.js",
             "argumentFormat": ""
         },
         "PowerShell": {
