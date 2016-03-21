@@ -1,7 +1,5 @@
 {
     "node-manager.js": {},
     "vso-task-lib-proxy.js": {},
-    "node-setup.js": {
-        "injectBefore": "var execFile=\"phonegap-command-task.js\";"
-    }
+    "node-setup.js": {}
 }

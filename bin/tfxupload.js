@@ -46,11 +46,7 @@ function copyLibs(task) {
     console.log('Copying lib files...');
     for (var i in config) {
         var outputFile = path.join(process.cwd(), 'lib', i);
-        if (config[i]["injectBefore"]) {
-            execSync("echo " + config[i]["injectBefore"] + " > " + outputFile, {stdio:[0,1,2]});
-        }
-        
-        var copyCommand = 'cat ' + path.join(process.cwd(), '../../lib', i) + ' >> ' + outputFile;
+        var copyCommand = 'cp ' + path.join(process.cwd(), '../../lib', i) + ' ' + outputFile;
         console.log("executing copy " + copyCommand);
         execSync(copyCommand, {stdio: [0,1,2]});
     }

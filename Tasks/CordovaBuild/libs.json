@@ -4,7 +4,5 @@
     "unlockdefaultkeychain.sh": {},
     "vso-task-lib-proxy.js": {},
     "xcode-task-utils.js": {},
-    "node-setup.js": {
-        "injectBefore": "var execFile=\"cordova-task.js\";"
-    }
+    "node-setup.js": {}
 }
