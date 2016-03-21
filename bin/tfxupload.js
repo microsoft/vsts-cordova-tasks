@@ -17,7 +17,7 @@ function installTasks() {
         promise = promise.then(function() {
                 console.log('Processing task ' + task);
                 process.chdir(path.join(tasksPath,task));
-                return npmInstall();
+                return npmInstall(task).then(function() { return copyLibs(task); });
             });
 
         if (process.argv.indexOf("--installonly") == -1) {
@@ -27,9 +27,36 @@ function installTasks() {
     return promise;
 }
 
-function npmInstall() {
-    console.log('Installing npm dependencies for task...');
+function npmInstall(task) {
+    console.log('Installing npm dependencies for task ' + task + ' ...');
     return exec('npm install --only=prod').then(logExecReturn);
+}
+
+function copyLibs(task) {
+    console.log('Reading Config for lib list...' + process.cwd());
+    var config = require(process.cwd() + '/libs.json');
+    if (!config) {
+        console.log('failed to read required libs!');
+        return Q.reject();
+    } else {
+        console.log('Got lib list: ' + config);
+    }
+    
+    console.log('Copying lib files...');
+    var copyLibPromise;
+    for (var i in config) {
+        var copyCommand = 'cp ' + path.join(process.cwd(), '../../lib', config[i]) + ' ' + path.join(process.cwd(), 'lib', config[i]);
+        console.log("executing copy " + copyCommand);
+        if (copyLibPromise) {
+            copyLibPromise = copyLibPromise.then(function() {
+                return exec(copyCommand);
+            }).then(logExecReturn);
+        } else {
+            copyLibPromise = exec(copyCommand).then(logExecReturn);
+        }
+    }
+    
+    return copyLibPromise;
 }
 
 function tfxUpload() {
