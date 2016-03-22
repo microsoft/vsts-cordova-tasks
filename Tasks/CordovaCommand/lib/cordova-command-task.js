@@ -10,7 +10,7 @@ var path = require("path"),
 var spawn = Q.nfbind(require("child_process").spawn);
 
 
-var buildSourceDirectory = process.env["BUILD.SOURCEDIRECTORY"] || process.env["BUILD.SOURCESDIRECTORY"];
+var buildSourceDirectory = process.env["BUILD_SOURCEDIRECTORY"] || process.env["BUILD_SOURCESDIRECTORY"];
 //Process working directory
 var workingDirectory = process.env["INPUT_CWD"] || buildSourceDirectory;
 process.chdir(workingDirectory);
