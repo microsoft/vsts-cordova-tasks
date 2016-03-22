@@ -6,4 +6,4 @@
 var childProcess = require("child_process");
 var path = require("path");
 
-childProcess.spawnSync("node", [path.join(__dirname, "lib", "node-setup.js"), "phonegap-command-task.js"], { stdio: [0, 1, 2] });
+childProcess.spawnSync("node", [path.join(__dirname, "lib", "node-setup.js"), path.join(__dirname, "lib", "phonegap-command-task.js")], { stdio: [0, 1, 2] });
