@@ -7,7 +7,7 @@ var path = require("path"),
     Q = require("q"),
     buildUtilities = require("taco-team-build");
 
-var exec = Q.nfbind(require("child_process").exec);
+var spawn = Q.nfbind(require("child_process").spawn);
 
 var buildSourceDirectory = process.env["BUILD.SOURCEDIRECTORY"] || process.env["BUILD.SOURCESDIRECTORY"];
 //Process working directory
@@ -41,16 +41,9 @@ function callIonic() {
         
         var ionicExecutable = process.platform == "win32" ? "ionic.cmd" : "ionic";
         var ionicCmd = path.resolve(ionicModule.path, "..", ".bin", ionicExecutable);
-        var execString = ionicCmd;
-        
         var rawCmd = process.env["INPUT_IONICCOMMAND"];
-        execString += " " + rawCmd;
-        
         var rawArgs = process.env["INPUT_IONICARGS"];
-        if (rawArgs) {
-            execString += " " + rawArgs;
-        }
 
-        return exec(execString, { stdio: [0, 1, 2] });
+        return spawn(ionicCmd, [rawCmd, rawArgs], { stdio: "inherit" });
     });
 }

@@ -7,7 +7,7 @@ var path = require("path"),
     Q = require("q"),
     buildUtilities = require("taco-team-build");
 
-var exec = Q.nfbind(require("child_process").exec);
+var spawn = Q.nfbind(require("child_process").spawn);
 
 var buildSourceDirectory = process.env["BUILD.SOURCEDIRECTORY"] || process.env["BUILD.SOURCESDIRECTORY"];
 //Process working directory
@@ -36,18 +36,10 @@ function callPhoneGap() {
 
         var phonegapExecutable = process.platform == "win32" ? "phonegap.cmd" : "phonegap";
         var phonegapCmd = path.resolve(phonegapModule.path, "..", ".bin", phonegapExecutable);
-
-        var execString = phonegapCmd;
-
         var rawCmd = process.env["INPUT_PHONEGAPCOMMAND"];
-        execString += " " + rawCmd;
-
         var rawArgs = process.env["INPUT_PHONEGAPARGS"];
-        if (rawArgs) {
-            execString += " " + rawArgs;
-        }
 
-        return exec(execString, { stdio: [0, 1, 2] });
+        return spawn(phonegapCmd, [rawCmd, rawArgs], { stdio: "inherit" });
     });
 }
 
