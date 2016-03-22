@@ -40,17 +40,23 @@ processInputs()															// Process inputs to task
     })
     .fin(function(code) {
         process.env['DEVELOPER_DIR'] = origXcodeDeveloperDir;			// Return to original developer dir if set
-        var promise = deleteKeychain ? deleteKeychain.exec() : Q(0);	// Delete temp keychain if created
-        if (deleteProfile) {												// Delete installed profile only if flag is set
+        var promise = deleteKeychain ? deleteKeychain() : Q(0);	        // Delete temp keychain if created
+        if (deleteProfile) {											// Delete installed profile only if flag is set
             promise = promise.then(function(code) {
-                return deleteProfile.exec();
+                return deleteProfile();
             });
         }
         return promise;
     })
     .fail(function(err) {
+        var promise = deleteKeychain ? deleteKeychain() : Q(0);	        // Delete temp keychain if created
+        if (deleteProfile) {											// Delete installed profile only if flag is set
+            promise = promise.then(function(code) {
+                return deleteProfile();
+            });
+        }
+
         console.error(err.message);
-        console.log('taskRunner fail');
         process.exit(1);
     });
 
