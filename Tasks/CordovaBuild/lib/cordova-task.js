@@ -10,7 +10,8 @@ var path = require('path'),
     glob = require('glob'),
     xcutils = require('./xcode-task-utils.js'),
     taskLibrary = require('./vso-task-lib-proxy.js'),
-    teambuild = require('taco-team-build');
+    teambuild = require('taco-team-build'),
+    shelljs = require('shelljs');
 
 
 // Globals - Easy way to have data available across promises.

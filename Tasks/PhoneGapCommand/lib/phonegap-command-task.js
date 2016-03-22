@@ -3,50 +3,51 @@
   Licensed under the MIT license. See LICENSE file in the project root for full license information.
 */
 
-var path = require('path'),
-    taskLibrary = require('./vso-task-lib-proxy.js'),
-    buildUtilities = require('taco-team-build');
+var path = require("path"),
+    Q = require("q"),
+    buildUtilities = require("taco-team-build");
 
+var exec = Q.nfbind(require("child_process").exec);
 
-var buildSourceDirectory = taskLibrary.getVariable('build.sourceDirectory') || taskLibrary.getVariable('build.sourcesDirectory');
+var buildSourceDirectory = process.env["BUILD.SOURCEDIRECTORY"] || process.env["BUILD.SOURCESDIRECTORY"];
 //Process working directory
-var workingDirectory = taskLibrary.getInput('cwd', /*required*/ false) || buildSourceDirectory;
-taskLibrary.cd(workingDirectory);
+var workingDirectory = process.env["INPUT_CWD"] || buildSourceDirectory;
+process.chdir(workingDirectory);
 
 callPhoneGap().fail(function (err) {
     console.error(err.message);
-    taskLibrary.debug('taskRunner fail');
-    taskLibrary.exit(1);
+    process.exit(1);
 });
 
 // Main PhoneGap command exec
 function callPhoneGap() {
     var phonegapConfig = {
-        nodePackageName: 'phonegap',
+        nodePackageName: "phonegap",
         projectPath: workingDirectory
     };
 
-    var version = taskLibrary.getInput('phonegapVersion', /*required*/ false);
+    var version = process.env["INPUT_PHONEGAPVERSION"];
     if (version) {
         phonegapConfig.moduleVersion = version;
     }
 
     return buildUtilities.cacheModule(phonegapConfig).then(function (phonegapModule) {
-        taskLibrary.debug('PhoneGap Module Path: ' + phonegapModule.path);
-         
-        var phonegapExecutable = process.platform == 'win32' ? 'phonegap.cmd' : 'phonegap';
-        var phonegapCmd = path.resolve(phonegapModule.path, '..', '.bin', phonegapExecutable);
-        var commandRunner = new taskLibrary.ToolRunner(phonegapCmd);
+        console.log("PhoneGap Module Path: " + phonegapModule.path);
 
-        var rawCmd = taskLibrary.getInput('phonegapCommand', /* required */ true);
-        commandRunner.arg(rawCmd);
-        
-        var rawArgs = taskLibrary.getInput('phonegapArgs', /* required */ false);
+        var phonegapExecutable = process.platform == "win32" ? "phonegap.cmd" : "phonegap";
+        var phonegapCmd = path.resolve(phonegapModule.path, "..", ".bin", phonegapExecutable);
+
+        var execString = phonegapCmd;
+
+        var rawCmd = process.env["INPUT_PHONEGAPCOMMAND"];
+        execString += " " + rawCmd;
+
+        var rawArgs = process.env["INPUT_PHONEGAPARGS"];
         if (rawArgs) {
-            commandRunner.arg(rawArgs);
+            execString += " " + rawArgs;
         }
 
-        return commandRunner.exec();
+        return exec(execString, { stdio: [0, 1, 2] });
     });
 }
 

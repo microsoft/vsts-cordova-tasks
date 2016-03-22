@@ -3,20 +3,20 @@
   Licensed under the MIT license. See LICENSE file in the project root for full license information.
 */
 
-var path = require('path'),
-    taskLibrary = require('./vso-task-lib-proxy.js'),
-    buildUtilities = require('taco-team-build');
+var path = require("path"),
+    Q = require("q"),
+    buildUtilities = require("taco-team-build");
 
+var exec = Q.nfbind(require("child_process").exec);
 
-var buildSourceDirectory = taskLibrary.getVariable('build.sourceDirectory') || taskLibrary.getVariable('build.sourcesDirectory');
+var buildSourceDirectory = process.env["BUILD.SOURCEDIRECTORY"] || process.env["BUILD.SOURCESDIRECTORY"];
 //Process working directory
-var workingDirectory = taskLibrary.getInput('cwd', /*required*/ false) || buildSourceDirectory;
-taskLibrary.cd(workingDirectory);
+var workingDirectory = process.env["INPUT_CWD"] || buildSourceDirectory;
+process.chdir(workingDirectory);
 
 callIonic().fail(function (err) {
     console.error(err.message);
-    taskLibrary.debug('taskRunner fail');
-    taskLibrary.exit(1);
+    process.exit(1);
 });
 
 // Main Ionic command exec
@@ -24,32 +24,33 @@ function callIonic() {
     // Ionic requires the Cordova CLI in the path		
     return buildUtilities.cacheModule({
         projectPath: workingDirectory,
-        nodePackageName: 'cordova',
-        moduleVersion: taskLibrary.getInput('cordovaVersion', /*required*/ false)
+        nodePackageName: "cordova",
+        moduleVersion: process.env["INPUT_CORDOVAVERSION"]
     }).then(function (cordovaModule) {
-        taskLibrary.debug('Cordova Module Path: ' + cordovaModule.path);
+        console.log("Cordova Module Path: " + cordovaModule.path);
 
         // Add Cordova to path, then get Ionic
-        process.env.PATH = path.resolve(cordovaModule.path, '..', '.bin') + path.delimiter + process.env.PATH;
+        process.env.PATH = path.resolve(cordovaModule.path, "..", ".bin") + path.delimiter + process.env.PATH;
         return buildUtilities.cacheModule({
             projectPath: workingDirectory,
-            nodePackageName: 'ionic',
-            moduleVersion: taskLibrary.getInput('ionicVersion', /*required*/ false)
+            nodePackageName: "ionic",
+            moduleVersion: process.env["INPUT_IONICVERSION"]
         });
     }).then(function (ionicModule) {
-        taskLibrary.debug('Ionic Module Path: ' + ionicModule.path);
+        console.log("Ionic Module Path: " + ionicModule.path);
         
-        var ionicExecutable = process.platform == 'win32' ? 'ionic.cmd' : 'ionic';
-        var ionicCmd = path.resolve(ionicModule.path, '..', '.bin', ionicExecutable);
-        var commandRunner = new taskLibrary.ToolRunner(ionicCmd);
+        var ionicExecutable = process.platform == "win32" ? "ionic.cmd" : "ionic";
+        var ionicCmd = path.resolve(ionicModule.path, "..", ".bin", ionicExecutable);
+        var execString = ionicCmd;
         
-        var rawCmd = taskLibrary.getInput('ionicCommand', /* required */ false);
-        commandRunner.arg(rawCmd);
-        var rawArgs = taskLibrary.getInput('ionicArgs', /* required */ false);
+        var rawCmd = process.env["INPUT_IONICCOMMAND"];
+        execString += " " + rawCmd;
+        
+        var rawArgs = process.env["INPUT_IONICARGS"];
         if (rawArgs) {
-            commandRunner.arg(rawArgs);
+            execString += " " + rawArgs;
         }
 
-        return commandRunner.exec();
+        return exec(execString, { stdio: [0, 1, 2] });
     });
 }

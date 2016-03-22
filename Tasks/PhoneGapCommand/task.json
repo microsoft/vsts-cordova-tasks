@@ -60,8 +60,8 @@
     ],
     "execution": {
         "Node": {
-            "target": "lib/node-setup.js",
-            "argumentFormat": "phonegap-command-task.js"
+            "target": "exec.js",
+            "argumentFormat": ""
         },
         "PowerShell": {
             "target": "$(currentDirectory)\\bootstrapper.ps1",
