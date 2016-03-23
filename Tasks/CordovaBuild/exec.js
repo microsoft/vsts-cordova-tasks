@@ -5,5 +5,10 @@
 
 var childProcess = require("child_process");
 var path = require("path");
+var taskLibrary = require("./lib/vsts-task-lib-proxy.js");
 
-childProcess.spawnSync("node", [path.join(__dirname, "lib", "node-setup.js"), path.join(__dirname, "lib", "cordova-task.js")], { stdio: [0, 1, 2] });
+var result = childProcess.spawnSync("node", [path.join(__dirname, "lib", "node-setup.js"), path.join(__dirname, "lib", "cordova-task.js")], { stdio: "inherit" });
+
+if (result.status > 0) {
+    taskLibrary.setResult(1, "Task failed");
+}

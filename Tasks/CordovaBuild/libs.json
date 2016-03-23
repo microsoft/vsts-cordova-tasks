@@ -3,5 +3,6 @@
     "node-manager.js": {},
     "unlockdefaultkeychain.sh": {},
     "xcode-task-utils.js": {},
+    "vsts-task-lib-proxy.js": {},
     "node-setup.js": {}
 }

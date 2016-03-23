@@ -7,7 +7,7 @@ var path = require("path"),
     Q = require("q"),
     buildUtilities = require("taco-team-build");
 
-var spawn = Q.nfbind(require("child_process").spawn);
+var spawnSync = require("child_process").spawnSync;
 
 
 var buildSourceDirectory = process.env["BUILD_SOURCEDIRECTORY"] || process.env["BUILD_SOURCESDIRECTORY"];
@@ -40,7 +40,13 @@ function callCordova() {
         var rawCmd = process.env["INPUT_CORDOVACOMMAND"];
         var rawArgs = process.env["INPUT_CORDOVAARGS"];
 
-        return spawn(cordovaCmd, [rawCmd, rawArgs], { stdio: "inherit" });
+        var result = spawnSync(cordovaCmd, [rawCmd, rawArgs], { stdio: "inherit" });
+
+        if (result.status > 0) {
+            process.exit(1);
+        }
+
+        return Q();
     });
 }
 

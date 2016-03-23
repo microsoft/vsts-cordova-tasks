@@ -1,4 +1,5 @@
 {
     "node-manager.js": {},
+    "vsts-task-lib-proxy.js": {},
     "node-setup.js": {}
 }
