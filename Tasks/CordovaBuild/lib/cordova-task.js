@@ -56,6 +56,7 @@ processInputs()															// Process inputs to task
         });
     }
 
+    console.error(err);
     process.exit(1);
 });
 
@@ -294,7 +295,10 @@ function copyToOutputFolder(code) {
     sources.forEach(function (source) {
         if (fileExistsSync(source.directory)) {
             console.log('Copying ' + source.fullSource + ' to ' + configOutputDirectory);
-            shelljs.cp('-Rf', source.fullSource, configOutputDirectory);
+            // Workaround for shelljs 0.6.0 bug with cp, wildcards, and recursive option
+            // see https://github.com/shelljs/shelljs/issues/376 for more information
+            var options = "-" + (fs.existsSync(source.fullSource) && fs.statSync(source.fullSource).isDirectory ? "R" : "") + "f";
+            shelljs.cp(options, source.fullSource, configOutputDirectory);
         }
     });
 
