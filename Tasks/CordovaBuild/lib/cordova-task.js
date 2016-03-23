@@ -35,9 +35,6 @@ processInputs()															// Process inputs to task
     return targetEmulator ? 0 : teambuild.packageProject(platform);		// Package apps if configured
 })
     .then(copyToOutputFolder)
-    .then(function (code) {												// On success, exit
-    process.exit(code);
-})
     .fin(function (code) {
     process.env['DEVELOPER_DIR'] = origXcodeDeveloperDir;			// Return to original developer dir if set
     var promise = deleteKeychain ? deleteKeychain() : Q(0);	        // Delete temp keychain if created
@@ -46,7 +43,9 @@ processInputs()															// Process inputs to task
             return deleteProfile();
         });
     }
-    return promise;
+    return promise.then(function() {
+        process.exit(code);
+    });
 })
     .fail(function (err) {
     var promise = deleteKeychain ? deleteKeychain() : Q(0);	        // Delete temp keychain if created
