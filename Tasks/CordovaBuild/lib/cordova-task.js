@@ -35,18 +35,6 @@ processInputs()															// Process inputs to task
     return targetEmulator ? 0 : teambuild.packageProject(platform);		// Package apps if configured
 })
     .then(copyToOutputFolder)
-    .fin(function (code) {
-    process.env['DEVELOPER_DIR'] = origXcodeDeveloperDir;			// Return to original developer dir if set
-    var promise = deleteKeychain ? deleteKeychain() : Q(0);	        // Delete temp keychain if created
-    if (deleteProfile) {											// Delete installed profile only if flag is set
-        promise = promise.then(function (code) {
-            return deleteProfile();
-        });
-    }
-    return promise.then(function() {
-        process.exit(code);
-    });
-})
     .fail(function (err) {
     var promise = deleteKeychain ? deleteKeychain() : Q(0);	        // Delete temp keychain if created
     if (deleteProfile) {											// Delete installed profile only if flag is set
@@ -56,7 +44,21 @@ processInputs()															// Process inputs to task
     }
 
     console.error(err);
-    process.exit(1);
+    return promise.then(function () {
+        process.exit(1);
+    });
+})
+    .done(function (code) {
+    process.env['DEVELOPER_DIR'] = origXcodeDeveloperDir;			// Return to original developer dir if set
+    var promise = deleteKeychain ? deleteKeychain() : Q(0);	        // Delete temp keychain if created
+    if (deleteProfile) {											// Delete installed profile only if flag is set
+        promise = promise.then(function (code) {
+            return deleteProfile();
+        });
+    }
+    return promise.then(function () {
+        process.exit(code);
+    });
 });
 
 // Process VSO task inputs and get ready to build
