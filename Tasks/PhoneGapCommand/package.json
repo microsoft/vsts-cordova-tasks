@@ -1,6 +1,6 @@
 {
   "name": "vso-task-phonegap-command",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "A VSO build task for running PhoneGap CLI commands.",
   "author": "Microsoft",
   "license": "MIT",
