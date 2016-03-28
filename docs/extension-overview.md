@@ -12,7 +12,7 @@ This extension contains a set of VS Team Services "tasks" (or "build steps") tha
 ## Quick Start
 
 1. After installing the extension, upload your project to VSTS, TFS, or GitHub.
-2. Go to your VSTS or TFS project, click on the **Build** tab, and create a new build definition (the "+" icon).
+2. Go to your VSTS or TFS project, click on the **Build** tab, and create a new build definition (the "+" icon) and select the Empty template.
 3. Click **Add build step...** and select **Cordova Build** from the **Build** category
 4. Configure the build step - *Check out the tool tips for handy inline documentation.*
 5. Add a **Demand** under the **General** tab of **xcode** to force the build to run on OSX or **cmd** to force it to run on Windows as appropriate
@@ -29,12 +29,6 @@ See the following articles for details on using these tasks in VSTS/TFS:
 4. [PhoneGap Command](http://go.microsoft.com/fwlink/?LinkID=692057)
 
 ##FAQ
-**Q:** I am trying to build an Ionic app and am running into a **spawn EACCES** error when building on a Mac or Linux. How to I resolve this problem?
-
-**A:** This can happen if you've added your project to source control  on Windows and have files present in the "hooks" folder. (Ex: hooks/after_prepare/010_add_platform_class.js) [Cordova requires](http://cordova.apache.org/docs/en/latest/guide/appdev/hooks/index.html) files in the hooks folder to have an "execute bit" set to run on a Mac or Linux which will be missing in this case. To resolve, add an execute bit to the files in source control or add the following using the **Command Line** task:
-* Tool: chmod 
-* Arguments: +x hooks/after_prepare/010_add_platform_class.js
-
 **Q:** After Feb 14th, I am seeing the following error when referencing P12 file: "Command failed: /bin/sh -c /usr/bin/security find-identity -v -p codesigning ..."
 
 **A:** This is due to the Apple's WWDR certificate expiring on this date and an old certificate still being present on the system. To resolve, follow the steps outlined by Apple here: https://developer.apple.com/support/certificates/expiration/ In particular, be sure to see "What should I do if Xcode doesn’t recognize my distribution certificate?" and be sure to **remove any expired certificates** as this can cause the error to occur even after you've installed updated certificates. This **also affects development certs** despite the title.
