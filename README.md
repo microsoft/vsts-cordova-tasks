@@ -40,6 +40,18 @@ See the following articles on using these tasks in VSTS/TFS:
 4. [PhoneGap Command Task](http://go.microsoft.com/fwlink/?LinkID=692057)
 
 ##FAQ
+**Q:** Android for Cordova 6.0.0 is failing to build when specifying a keystore path. How can I resolve this issue?
+
+**A:** This is a due to a Cordova bug that was resolved in Cordova 6.1.0. Use Cordova 5.4.1 or upgrade to 6.1.0+ to resolve.
+
+**Q:** Android for Cordova 6.0.0 is failing to build on a Mac or Linux. How can I resolve this issue?
+
+**A:** This is a due to a Cordova bug that was resolved in Cordova 6.1.0. Use Cordova 5.4.1 or upgrade to 6.1.0+ to resolve.
+
+**Q:** I am seeing Windows 10 builds fail in the VSTS Hosted Pool with a "Could not load file or assembly" error when using Cordova 5.4.x. How do I resolve this problem?
+
+**A:** This is a Cordova bug when 64-bit Node.js is used. Upgrade to 6.1.0+ to resolve. See the [Cordova bug](https://issues.apache.org/jira/browse/CB-9565?jql=text%20%7E%20%22An%20attempt%20was%20made%20to%20load%20a%20program%20with%20an%20incorrect%20format.%22) for details.
+
 **Q:** After Feb 14th, I am seeing the following error when referencing P12 file: "Command failed: /bin/sh -c /usr/bin/security find-identity -v -p codesigning ..."
 
 **A:** This is due to the Apple's WWDR certificate expiring on this date and an old certificate still being present on the system. To resolve, follow the steps outlined by Apple here: https://developer.apple.com/support/certificates/expiration/ In particular, be sure to see "What should I do if Xcode doesn’t recognize my distribution certificate?" and be sure to **remove any expired certificates** as this can cause the error to occur even after you've installed updated certificates. This **also affects development certs** despite the title.
@@ -47,18 +59,6 @@ See the following articles on using these tasks in VSTS/TFS:
 **Q:** I am using my own Mac for a cross-platform agent and have it configured to run as a daemon. Signing is failing. How can I resolve this problem?
 
 **A:** Configure the agent as a launch agent (./svc.sh install agent) or run it as an interactive process (node agent/vsoagent.js) to ensure Xcode is able to access the appropriate keychains. See the [secure app signing](https://msdn.microsoft.com/Library/vs/alm/Build/apps/secure-certs) tutorial for additional details. You could also opt to use [MacinCloud](http://go.microsoft.com/fwlink/?LinkID=691834) instead.
-
-**Q:** Android for Cordova 6.0.0 is failing to build when specifying a keystore path. How can I resolve this issue?
-
-**A:** This is a due to a Cordova bug that was resolved in Cordova 6.1.0. Upgrade to resolve the problem.
-
-**Q:** Android for Cordova 6.0.0 is failing to build on a Mac or Linux when Cordova 6.0.0. How can I resolve this issue?
-
-**A:** This is a due to a Cordova bug that was resolved in Cordova 6.1.0. Upgrade to resolve the problem.
-
-**Q:** I am seeing Windows 10 builds fail in the VSTS Hosted Pool with a "Could not load file or assembly" error when using Cordova 5.4.x. How do I resolve this problem?
-
-**A:** This is a Cordova bug when 64-bit Node.js is used. Upgrade to 6.1.0+ to resolve. See the [Cordova bug](https://issues.apache.org/jira/browse/CB-9565?jql=text%20%7E%20%22An%20attempt%20was%20made%20to%20load%20a%20program%20with%20an%20incorrect%20format.%22) for details.
 
 ##Installation
 
