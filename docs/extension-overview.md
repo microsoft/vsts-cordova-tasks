@@ -37,13 +37,17 @@ See the following articles for details on using these tasks in VSTS/TFS:
 
 **A:** Configure the agent as a launch agent (./svc.sh install agent) or run it as an interactive process (node agent/vsoagent.js) to ensure Xcode is able to access the appropriate keychains. See the [secure app signing](https://msdn.microsoft.com/Library/vs/alm/Build/apps/secure-certs) tutorial for additional details. You could also opt to use [MacinCloud](http://go.microsoft.com/fwlink/?LinkID=691834) instead.
 
+**Q:** Android for Cordova 6.0.0 is failing to build when specifying a keystore path. How can I resolve this issue?
+
+**A:** This is a due to a Cordova bug that was resolved in Cordova 6.1.0. Upgrade to resolve the problem.
+
+**Q:** Android for Cordova 6.0.0 is failing to build on a Mac or Linux when Cordova 6.0.0. How can I resolve this issue?
+
+**A:** This is a due to a Cordova bug that was resolved in Cordova 6.1.0. Upgrade to resolve the problem.
+
 **Q:** I am seeing Windows 10 builds fail in the VSTS Hosted Pool with a "Could not load file or assembly" error when using Cordova 5.4.x. How do I resolve this problem?
 
-**A:** This is a Cordova bug when 64-bit Node.js is used. Upgrade to 6.0.0+ to resolve. See the [Cordova bug](https://issues.apache.org/jira/browse/CB-9565?jql=text%20%7E%20%22An%20attempt%20was%20made%20to%20load%20a%20program%20with%20an%20incorrect%20format.%22) for details.
-
-**Q:** Android is failing to build on a Mac or Linux when using Cordova 6.0.0. How can I resolve this issue?
-
-**A:** This is a Cordova bug that will be resolved in the next Cordova release. If you must use Cordova 6.0.0, use a Windows agent instead.
+**A:** This is a Cordova bug when 64-bit Node.js is used. Upgrade to 6.1.0+ to resolve. See the [Cordova bug](https://issues.apache.org/jira/browse/CB-9565?jql=text%20%7E%20%22An%20attempt%20was%20made%20to%20load%20a%20program%20with%20an%20incorrect%20format.%22) for details.
 
 ## Installation for TFS 2015 Update 1 or Earlier
 
