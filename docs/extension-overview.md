@@ -29,6 +29,12 @@ See the following articles for details on using these tasks in VSTS/TFS:
 4. [PhoneGap Command](http://go.microsoft.com/fwlink/?LinkID=692057)
 
 ##FAQ
+**Q:** Building for Cordova 5.1.1 is failing with an ENOENT error. How can i resolve this issue?
+
+**A:** This is due to a Cordova bug very specific to 5.1.1 where it fails to create some needed folders on a first time run. You can work around this in one of a few ways.
+1. Run another build with another version of Cordova. This will create the folders that 5.1.1 needs.
+2. Create the needed folders manually. By default, the folders that need to be created are ~/.taco_home/node_modules/_cordova/lib/npm_cache for OSX/Linux and %APPDATA%/taco_home/node_modules/_cordova/lib/npm_cache for Windows. Note that if CORDOVA_CACHE environment variable is set, the folder to be created is $CORDOVA_CACHE/_cordova/lib/npm_cache. 
+
 **Q:** Android for Cordova 6.0.0 is failing to build when specifying a keystore path. How can I resolve this issue?
 
 **A:** This is a due to a Cordova bug that was resolved in Cordova 6.1.0. Use Cordova 5.4.1 or upgrade to 6.1.0+ to resolve.
