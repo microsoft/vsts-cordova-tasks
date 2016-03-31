@@ -75,4 +75,4 @@ if(!$node)
 
 #cordova Script is in same spot as this powershell script
 $scriptRoot = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
-Invoke-Tool -Path $node.Path -Arguments "node-setup.js ##vso-task-powershell" -WorkingFolder $scriptRoot 
+Invoke-Tool -Path $node.Path -Arguments "lib/node-setup.js cordova-task.js ##vso-task-powershell" -WorkingFolder $scriptRoot 

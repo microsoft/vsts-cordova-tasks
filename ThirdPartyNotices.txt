@@ -11,7 +11,7 @@ Visual Studio Team Services Extension for Cordova incorporates components from t
 6.	Q version 1.4.1 (https://github.com/kriskowal/q)
 7.	semver version 5.0.3 (https://github.com/npm/node-semver/blob/master/LICENSE)
 8.	taco-team-build version 0.2.0 (https://github.com/Microsoft/taco-team-build/)
-9.	VSO DevOps Task SDK version 0.4.5 (https://github.com/Microsoft/vso-task-lib)
+9.	VSTS DevOps Task SDK version 0.4.5 (https://github.com/Microsoft/vsts-task-lib)
 		Includes: ShellJS version 0.3.0 (https://github.com/shelljs/shelljs/blob/master/LICENSE)
 
 %% balanced-match NOTICES AND INFORMATION BEGIN HERE
@@ -136,7 +136,7 @@ END OF minimatch NOTICES AND INFORMATION
 
 %% Q NOTICES AND INFORMATION BEGIN HERE
 =========================================
-Copyright 2009–2014 Kristopher Michael Kowal. All rights reserved.
+Copyright 2009ï¿½2014 Kristopher Michael Kowal. All rights reserved.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy 
 of this software and associated documentation files (the "Software"), to 
