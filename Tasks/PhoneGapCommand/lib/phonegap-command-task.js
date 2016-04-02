@@ -7,7 +7,7 @@ var path = require("path"),
     Q = require("q"),
     buildUtilities = require("taco-team-build");
 
-var spawn = require("child_process").spawn;
+var spawnSync = require("child_process").spawnSync;
 
 var buildSourceDirectory = process.env["BUILD_SOURCEDIRECTORY"] || process.env["BUILD_SOURCESDIRECTORY"];
 //Process working directory
