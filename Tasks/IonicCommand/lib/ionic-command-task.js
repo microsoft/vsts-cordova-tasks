@@ -44,7 +44,17 @@ function callIonic() {
         var rawCmd = process.env["INPUT_IONICCOMMAND"];
         var rawArgs = process.env["INPUT_IONICARGS"];
 
-        var result = spawnSync(ionicCmd, [rawCmd, rawArgs], { stdio: "inherit" });
+        var spawnArgs = [];
+
+        if (rawCmd) {
+            spawnArgs.push(rawCmd);
+        }
+
+        if (rawArgs) {
+            spawnArgs.push(rawArgs);
+        }
+
+        var result = spawnSync(ionicCmd, spawnArgs, { stdio: "inherit" });
 
         if (result.status > 0) {
             process.exit(1);

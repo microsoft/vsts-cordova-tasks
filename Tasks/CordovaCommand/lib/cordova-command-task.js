@@ -40,7 +40,17 @@ function callCordova() {
         var rawCmd = process.env["INPUT_CORDOVACOMMAND"];
         var rawArgs = process.env["INPUT_CORDOVAARGS"];
 
-        var result = spawnSync(cordovaCmd, [rawCmd, rawArgs], { stdio: "inherit" });
+        var spawnArgs = [];
+
+        if (rawCmd) {
+            spawnArgs.push(rawCmd);
+        }
+
+        if (rawArgs) {
+            spawnArgs.push(rawArgs);
+        }
+
+        var result = spawnSync(cordovaCmd, spawnArgs, { stdio: "inherit" });
 
         if (result.status > 0) {
             process.exit(1);

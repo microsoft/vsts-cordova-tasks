@@ -39,7 +39,17 @@ function callPhoneGap() {
         var rawCmd = process.env["INPUT_PHONEGAPCOMMAND"];
         var rawArgs = process.env["INPUT_PHONEGAPARGS"];
 
-        var result = spawnSync(phonegapCmd, [rawCmd, rawArgs], { stdio: "inherit" });
+        var spawnArgs = [];
+
+        if (rawCmd) {
+            spawnArgs.push(rawCmd);
+        }
+
+        if (rawArgs) {
+            spawnArgs.push(rawArgs);
+        }
+
+        var result = spawnSync(phonegapCmd, spawnArgs, { stdio: "inherit" });
 
         if (result.status > 0) {
             process.exit(1);
