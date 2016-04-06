@@ -9,10 +9,15 @@ var taskLibrary = require("./lib/vsts-task-lib-proxy.js");
 
 process.env["BUILD_SOURCEDIRECTORY"] = taskLibrary.getVariable("BUILD_SOURCEDIRECTORY", false);
 process.env["BUILD_SOURCESDIRECTORY"] = taskLibrary.getVariable("BUILD_SOURCESDIRECTORY", false);
-process.env["INPUT_CWD"] = taskLibrary.getInput("CWD", false);
-process.env["INPUT_PHONEGAPARGS"] = taskLibrary.getInput("PHONEGAPARGS", false);
-process.env["INPUT_PHONEGAPVERSION"] = taskLibrary.getInput("PHONEGAPVERSION", false);
-process.env["INPUT_PHONEGAPCOMMAND"] = taskLibrary.getInput("PHONEGAPCOMMAND", false);
+
+var inputs = ["CWD", "PHONEGAPARGS", "PHONEGAPVERSION", "PHONEGAPCOMMAND"];
+    
+for (var i = 0; i < inputs.length; i ++) {
+    var inputValue = taskLibrary.getInput(inputs[i], false);
+    if (inputValue) {
+        process.env[inputs[i]] = inputValue;
+    }
+}
 
 var result = childProcess.spawnSync("node",
     [path.join(__dirname, "lib", "node-setup.js"), path.join(__dirname, "lib", "phonegap-command-task.js")],

@@ -9,10 +9,15 @@ var taskLibrary = require("./lib/vsts-task-lib-proxy.js");
 
 process.env["BUILD_SOURCEDIRECTORY"] = taskLibrary.getVariable("BUILD_SOURCEDIRECTORY", false);
 process.env["BUILD_SOURCESDIRECTORY"] = taskLibrary.getVariable("BUILD_SOURCESDIRECTORY", false);
-process.env["INPUT_CWD"] = taskLibrary.getInput("CWD", false);
-process.env["INPUT_CORDOVAARGS"] = taskLibrary.getInput("CORDOVAARGS", false);
-process.env["INPUT_CORDOVAVERSION"] = taskLibrary.getInput("CORDOVAVERSION", false);
-process.env["INPUT_CORDOVACOMMAND"] = taskLibrary.getInput("CORDOVACOMMAND", false);
+
+var inputs = ["CWD", "CORDOVAARGS", "CORDOVAVERSION", "CORDOVACOMMAND"];
+    
+for (var i = 0; i < inputs.length; i ++) {
+    var inputValue = taskLibrary.getInput(inputs[i], false);
+    if (inputValue) {
+        process.env["INPUT_" + inputs[i]] = inputValue;
+    }
+}
 
 var result = childProcess.spawnSync("node",
     [path.join(__dirname, "lib", "node-setup.js"), path.join(__dirname, "lib", "cordova-command-task.js")],
