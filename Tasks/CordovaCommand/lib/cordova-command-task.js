@@ -13,7 +13,9 @@ var spawnSync = require("child_process").spawnSync;
 var buildSourceDirectory = process.env["BUILD_SOURCEDIRECTORY"] || process.env["BUILD_SOURCESDIRECTORY"];
 //Process working directory
 var workingDirectory = process.env["INPUT_CWD"] || buildSourceDirectory;
-process.chdir(workingDirectory);
+if (workingDirectory) {
+    process.chdir(workingDirectory);
+}
 
 callCordova().fail(function (err) {
     console.error(err.message);
