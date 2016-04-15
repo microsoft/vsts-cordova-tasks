@@ -7,6 +7,7 @@ require('shelljs/global');
 var path = require('path'),
     fs = require('fs');
 var commandLineArgs = require('command-line-args');
+var execSync = require('child_process').execSync;
 
 var devManifestOverride = {
     public: false,
@@ -88,6 +89,8 @@ function installTasks() {
     tasks.forEach(function(task) {
         console.log('Processing task ' + task);
         process.chdir(path.join(tasksPath,task));
+        
+        copyLibs(task);
 
         console.log('Installing npm dependencies for task...');
         if (exec('npm install --only=prod').code != 0) {
@@ -97,6 +100,25 @@ function installTasks() {
     });
 
     process.chdir(rootPath);
+}
+
+function copyLibs(task) {
+    console.log('Reading Config for lib list...' + process.cwd());
+    var config = require(process.cwd() + '/libs.json');
+    if (!config) {
+        console.log('failed to read required libs!');
+        return Q.reject();
+    } else {
+        console.log(config);
+    }
+    
+    console.log('Copying lib files...');
+    for (var i in config) {
+        var outputFile = path.join(process.cwd(), 'lib', i);
+        var copyCommand = 'cp ' + path.join(process.cwd(), '../../lib', i) + ' ' + outputFile;
+        console.log("executing copy " + copyCommand);
+        execSync(copyCommand, {stdio: [0,1,2]});
+    }
 }
 
 function echoAndExec(prefix, cmd) {
