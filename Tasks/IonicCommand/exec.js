@@ -7,13 +7,25 @@ var childProcess = require("child_process");
 var path = require("path");
 var taskLibrary = require("./lib/vsts-task-lib-proxy.js");
 
-process.env["BUILD_SOURCEDIRECTORY"] = taskLibrary.getVariable("BUILD_SOURCEDIRECTORY", false);
-process.env["BUILD_SOURCESDIRECTORY"] = taskLibrary.getVariable("BUILD_SOURCESDIRECTORY", false);
-process.env["INPUT_CWD"] = taskLibrary.getInput("CWD", false);
-process.env["INPUT_CORDOVAVERSION"] = taskLibrary.getInput("CORDOVAVERSION", false)
-process.env["INPUT_IONICARGS"] = taskLibrary.getInput("IONICARGS", false);
-process.env["INPUT_IONICVERSION"] = taskLibrary.getInput("IONICVERSION", false);
-process.env["INPUT_IONICCOMMAND"] = taskLibrary.getInput("IONICCOMMAND", false);
+var buildSourceDir = taskLibrary.getVariable("BUILD_SOURCEDIRECTORY", false);
+var buildSourcesDir = taskLibrary.getVariable("BUILD_SOURCESDIRECTORY", false);
+
+if (buildSourceDir) {
+    process.env["BUILD_SOURCEDIRECTORY"] = buildSourceDir;
+}
+
+if (buildSourcesDir) {
+    process.env["BUILD_SOURCESDIRECTORY"] = buildSourcesDir;
+}
+
+var inputs = ["CWD", "CORDOVAVERSION", "IONICARGS", "IONICVERSION", "IONICCOMMAND"];
+
+for (var i = 0; i < inputs.length; i++) {
+    var inputValue = taskLibrary.getInput(inputs[i], false);
+    if (inputValue) {
+        process.env["INPUT_" + inputs[i]] = inputValue;
+    }
+}
 
 var result = childProcess.spawnSync("node",
     [path.join(__dirname, "lib", "node-setup.js"), path.join(__dirname, "lib", "ionic-command-task.js")],

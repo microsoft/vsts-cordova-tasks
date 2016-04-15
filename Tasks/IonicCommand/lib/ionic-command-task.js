@@ -12,7 +12,9 @@ var spawnSync = require("child_process").spawnSync;
 var buildSourceDirectory = process.env["BUILD_SOURCEDIRECTORY"] || process.env["BUILD_SOURCESDIRECTORY"];
 //Process working directory
 var workingDirectory = process.env["INPUT_CWD"] || buildSourceDirectory;
-process.chdir(workingDirectory);
+if (workingDirectory) {
+    process.chdir(workingDirectory);
+}
 
 callIonic().fail(function (err) {
     console.error(err.message);
@@ -38,7 +40,7 @@ function callIonic() {
         });
     }).then(function (ionicModule) {
         console.log("Ionic Module Path: " + ionicModule.path);
-        
+
         var ionicExecutable = process.platform == "win32" ? "ionic.cmd" : "ionic";
         var ionicCmd = path.resolve(ionicModule.path, "..", ".bin", ionicExecutable);
         var rawCmd = process.env["INPUT_IONICCOMMAND"];
