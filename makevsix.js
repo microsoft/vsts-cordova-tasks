@@ -16,13 +16,13 @@ var devManifestOverride = {
 }
 
 var prodManifestOverride = {
-    galleryFlags: [ "Public", "Preview" ]
+    public: true
 }
 
 var cli = commandLineArgs([
   { name: 'maketest', alias: 't', description: 'make test VSIX', type: Boolean },
   { name: 'makeprod', alias: 'p', description: 'make production VSIX', type: Boolean },
-  { name: 'publishtest', alias: 'b', description: 'publish test VSIX; must supply access token as argument', type: String },
+  { name: 'publishtest', alias: 'b', description: 'publish test VSIX', type: Boolean },
   { name: 'skipinstalldeps', alias: 's', description: 'skip npm installing task dependencies (to speed up)', type: Boolean },
 ]);
 
@@ -57,10 +57,14 @@ if (options.maketest)
         'tfx extension create --manifest-globs mobiledevopscordovaextension.json --override ' + toOverrideString(devManifestOverride));
 
 if (options.publishtest) {
-    var accessToken = options.publishtest;
+    var accessToken = env['PUBLISH_ACCESSTOKEN'];
+    if (accessToken === undefined) {
+        echo("Must set PUBLISH_ACCESSTOKEN environment variable to publish a test VSIX");
+        exit(1);
+    }
 
     echoAndExec('Publishing test VSIX',
-        'tfx extension publish --manifest-globs mobiledevopscordovaextension.json --override ' + toOverrideString(devManifestOverride) + ' --share-with mobiledevops --token ' + accessToken);
+        'tfx extension publish --manifest-globs mobiledevopscordovaextension.json --override ' + toOverrideString(devManifestOverride) + ' --share-with mobiledevops x04ty29er --token ' + accessToken);
 }
 
 //
