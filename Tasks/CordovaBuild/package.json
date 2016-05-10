@@ -1,6 +1,6 @@
 {
   "name": "vsts-task-cordova-build",
-  "version": "1.2.0",
+  "version": "1.2.13",
   "description": "A VSTS build task for building Cordova apps.",
   "author": "Microsoft",
   "license": "MIT",
@@ -9,7 +9,7 @@
     "minimatch": "^2.0.10",
     "q": "^1.4.1",
     "semver": "^5.0.3",
-    "shelljs": "^0.6.0",
+    "shelljs": "^0.7.0",
     "taco-team-build": "^0.2.1",
     "vsts-task-lib": "^0.6.2"
   }

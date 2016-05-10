@@ -32,34 +32,34 @@ var deleteKeychain, 										// Command to delete OSX keychain if needed
 processInputs()															// Process inputs to task
     .then(execBuild)													// Run main Cordova build via taco-team-build
     .then(function () {
-    return targetEmulator ? 0 : teambuild.packageProject(platform);		// Package apps if configured
-})
+        return targetEmulator ? 0 : teambuild.packageProject(platform);		// Package apps if configured
+    })
     .then(copyToOutputFolder)
     .fail(function (err) {
-    var promise = deleteKeychain ? deleteKeychain() : Q(0);	        // Delete temp keychain if created
-    if (deleteProfile) {											// Delete installed profile only if flag is set
-        promise = promise.then(function (code) {
-            return deleteProfile();
-        });
-    }
+        var promise = deleteKeychain ? deleteKeychain() : Q(0);	        // Delete temp keychain if created
+        if (deleteProfile) {											// Delete installed profile only if flag is set
+            promise = promise.then(function (code) {
+                return deleteProfile();
+            });
+        }
 
-    console.error(err);
-    return promise.then(function () {
-        process.exit(1);
-    });
-})
-    .done(function (code) {
-    process.env['DEVELOPER_DIR'] = origXcodeDeveloperDir;			// Return to original developer dir if set
-    var promise = deleteKeychain ? deleteKeychain() : Q(0);	        // Delete temp keychain if created
-    if (deleteProfile) {											// Delete installed profile only if flag is set
-        promise = promise.then(function (code) {
-            return deleteProfile();
+        console.error(err);
+        return promise.then(function () {
+            process.exit(1);
         });
-    }
-    return promise.then(function () {
-        process.exit(code);
+    })
+    .done(function (code) {
+        process.env['DEVELOPER_DIR'] = origXcodeDeveloperDir;			// Return to original developer dir if set
+        var promise = deleteKeychain ? deleteKeychain() : Q(0);	        // Delete temp keychain if created
+        if (deleteProfile) {											// Delete installed profile only if flag is set
+            promise = promise.then(function (code) {
+                return deleteProfile();
+            });
+        }
+        return promise.then(function () {
+            process.exit(code);
+        });
     });
-});
 
 // Process VSO task inputs and get ready to build
 function processInputs() {
@@ -162,18 +162,18 @@ function iosIdentity(code) {
 
     return xcutils.determineIdentity(input)
         .then(function (result) {
-        console.log('determineIdentity result ' + JSON.stringify(result));
-        if (result.identity) {
-            iosXcConfig += 'CODE_SIGN_IDENTITY=' + result.identity + '\n';
-            iosXcConfig += 'CODE_SIGN_IDENTITY[sdk=iphoneos*]=' + result.identity + '\n';
-        } else {
-            console.log('No explicit signing identity specified in task.')
-        }
-        if (result.keychain) {
-            iosXcConfig += 'OTHER_CODE_SIGN_FLAGS=--keychain=' + result.keychain + '\n';
-        }
-        deleteKeychain = result.deleteCommand;
-    });
+            console.log('determineIdentity result ' + JSON.stringify(result));
+            if (result.identity) {
+                iosXcConfig += 'CODE_SIGN_IDENTITY=' + result.identity + '\n';
+                iosXcConfig += 'CODE_SIGN_IDENTITY[sdk=iphoneos*]=' + result.identity + '\n';
+            } else {
+                console.log('No explicit signing identity specified in task.')
+            }
+            if (result.keychain) {
+                iosXcConfig += 'OTHER_CODE_SIGN_FLAGS=--keychain=' + result.keychain + '\n';
+            }
+            deleteKeychain = result.deleteCommand;
+        });
 }
 
 // Process VSO task inputs specific to iOS mobile provisioning profiles
@@ -187,12 +187,12 @@ function iosProfile(code) {
 
     return xcutils.determineProfile(input)
         .then(function (result) {
-        console.log('determineProfile result ' + JSON.stringify(result));
-        if (result.uuid) {
-            iosXcConfig += 'PROVISIONING_PROFILE=' + result.uuid + '\n';
-        }
-        deleteProfile = result.deleteCommand;
-    });
+            console.log('determineProfile result ' + JSON.stringify(result));
+            if (result.uuid) {
+                iosXcConfig += 'PROVISIONING_PROFILE=' + result.uuid + '\n';
+            }
+            deleteProfile = result.deleteCommand;
+        });
 }
 
 // Process VSO task inputs specific to Android
@@ -294,12 +294,16 @@ function copyToOutputFolder(code) {
     }
 
     sources.forEach(function (source) {
-        if (fileExistsSync(source.directory)) {
-            console.log('Copying ' + source.fullSource + ' to ' + configOutputDirectory);
-            // Workaround for shelljs 0.6.0 bug with cp, wildcards, and recursive option
-            // see https://github.com/shelljs/shelljs/issues/376 for more information
-            var options = "-" + (fs.existsSync(source.fullSource) && fs.statSync(source.fullSource).isDirectory ? "R" : "") + "f";
-            shelljs.cp(options, source.fullSource, configOutputDirectory);
+        var expandedList = glob.sync(source.fullSource);
+        console.log('Copying ' + source.fullSource + ' to ' + configOutputDirectory);
+        for (var file in expandedList) {
+            var testFileOrDirectory = expandedList[file];
+            if (fileExistsSync(testFileOrDirectory)) {
+                // Workaround for shelljs 0.6.0 bug with cp, wildcards, and recursive option
+                // see https://github.com/shelljs/shelljs/issues/376 for more information
+                var options = "-" + (fs.existsSync(testFileOrDirectory) && fs.statSync(testFileOrDirectory).isDirectory ? "R" : "") + "f";
+                shelljs.cp(options, testFileOrDirectory, configOutputDirectory);
+            }
         }
     });
 
@@ -341,65 +345,65 @@ function execBuild(code) {
     var updateXcconfig = (iosXcConfig != '');
     return teambuild.setupCordova(cordovaConfig)
         .then(function (cordova) {
-        // Add update Xcconfig hook if needed
-        if (updateXcconfig) {
-            console.log('Adding Xcconfig update hook')
-            cordova.on('before_compile', writeVsoXcconfig)
-        }
-
-        return teambuild.getNpmVersionFromConfig(cordovaConfig).then(function (cordovaVersion) {
-            if (antProperties.override) {
-                if (semver.valid(cordovaVersion) && semver.lt(cordovaVersion, '5.0.0')) {
-                    console.log('WARN: Cordova versions < 5.0.0 may see build option warnings when specifying Android signing options. These can be safely ignored and do not affect signing when building with Ant.');
-                }
-
-                console.log('Adding ant.properties update hook')
-                cordova.on('before_compile', writeAntProperties)
+            // Add update Xcconfig hook if needed
+            if (updateXcconfig) {
+                console.log('Adding Xcconfig update hook')
+                cordova.on('before_compile', writeVsoXcconfig)
             }
 
-            if (platform === 'android') {
-                if (semver.valid(cordovaVersion) && semver.lt(cordovaVersion, '4.0.0')) {
-                    // Special case: android on cordova versions earlier than v4.0.0 will
-                    // actively fail the build if it encounters unexpected options
-                    console.log('Stripping inapplicable arguments for android on cordova ' + cordovaVersion);
-                    buildArgs = stripNewerAndroidArgs(buildArgs);
+            return teambuild.getNpmVersionFromConfig(cordovaConfig).then(function (cordovaVersion) {
+                if (antProperties.override) {
+                    if (semver.valid(cordovaVersion) && semver.lt(cordovaVersion, '5.0.0')) {
+                        console.log('WARN: Cordova versions < 5.0.0 may see build option warnings when specifying Android signing options. These can be safely ignored and do not affect signing when building with Ant.');
+                    }
+
+                    console.log('Adding ant.properties update hook')
+                    cordova.on('before_compile', writeAntProperties)
                 }
 
-                if (semver.valid(cordovaVersion) && semver.lte(cordovaVersion, '3.5.0-0.2.7')) {
-                    // Special case: android on cordova versions 3.5.0-0.2.7 need
-                    // "android" to be on the path, so make sure it is there
-                    var currentPath = process.env['PATH'];
-                    var androidHome = process.env['ANDROID_HOME'];
-                    if (currentPath && androidHome && currentPath.indexOf(androidHome) === -1) {
-                        console.log('Appending ANDROID_HOME to the current PATH');
-                        process.env['PATH'] = currentPath + ';' + path.join(androidHome, 'tools');
+                if (platform === 'android') {
+                    if (semver.valid(cordovaVersion) && semver.lt(cordovaVersion, '4.0.0')) {
+                        // Special case: android on cordova versions earlier than v4.0.0 will
+                        // actively fail the build if it encounters unexpected options
+                        console.log('Stripping inapplicable arguments for android on cordova ' + cordovaVersion);
+                        buildArgs = stripNewerAndroidArgs(buildArgs);
+                    }
+
+                    if (semver.valid(cordovaVersion) && semver.lte(cordovaVersion, '3.5.0-0.2.7')) {
+                        // Special case: android on cordova versions 3.5.0-0.2.7 need
+                        // "android" to be on the path, so make sure it is there
+                        var currentPath = process.env['PATH'];
+                        var androidHome = process.env['ANDROID_HOME'];
+                        if (currentPath && androidHome && currentPath.indexOf(androidHome) === -1) {
+                            console.log('Appending ANDROID_HOME to the current PATH');
+                            process.env['PATH'] = currentPath + ';' + path.join(androidHome, 'tools');
+                        }
                     }
                 }
-            }
 
-            if (platform !== 'ios') {
-                if (semver.valid(cordovaVersion) && semver.lt(cordovaVersion, '3.6.0')) {
-                    // For cordova 3.5.0-0.2.7 or lower, we should remove the --device and --emulator
-                    // flag on non-ios platforms, since they were otherwise unsupported
-                    buildArgs = buildArgs.filter(function (arg) { return arg !== '--device' && arg !== '--emulator'; })
+                if (platform !== 'ios') {
+                    if (semver.valid(cordovaVersion) && semver.lt(cordovaVersion, '3.6.0')) {
+                        // For cordova 3.5.0-0.2.7 or lower, we should remove the --device and --emulator
+                        // flag on non-ios platforms, since they were otherwise unsupported
+                        buildArgs = buildArgs.filter(function (arg) { return arg !== '--device' && arg !== '--emulator'; })
+                    }
                 }
-            }
 
-            return Q();
-        }).then(function () {
-            return teambuild.buildProject(platform, buildArgs)
-        }).fin(function () {
-            // Remove xcconfig hook
-            if (updateXcconfig) {
-                console.log('Removing Xcconfig update hook')
-                cordova.off('before_compile', writeVsoXcconfig)
-            }
-            if (antProperties.override) {
-                console.log('Removing ant.properties update hook')
-                cordova.off('before_compile', writeAntProperties)
-            }
+                return Q();
+            }).then(function () {
+                return teambuild.buildProject(platform, buildArgs)
+            }).fin(function () {
+                // Remove xcconfig hook
+                if (updateXcconfig) {
+                    console.log('Removing Xcconfig update hook')
+                    cordova.off('before_compile', writeVsoXcconfig)
+                }
+                if (antProperties.override) {
+                    console.log('Removing ant.properties update hook')
+                    cordova.off('before_compile', writeAntProperties)
+                }
+            });
         });
-    });
 }
 
 function stripNewerAndroidArgs(args) {
