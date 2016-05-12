@@ -39,16 +39,16 @@ function callCordova() {
 
         var cordovaExecutable = process.platform == "win32" ? "cordova.cmd" : "cordova";
         var cordovaCmd = path.resolve(cordovaModule.path, "..", ".bin", cordovaExecutable);
-        var rawCmd = process.env["INPUT_CORDOVACOMMAND"].split(" ");
-        var rawArgs = process.env["INPUT_CORDOVAARGS"].split(" ");
+        var rawCmd = process.env["INPUT_CORDOVACOMMAND"];
+        var rawArgs = process.env["INPUT_CORDOVAARGS"];
         var spawnArgs = [];
 
         if (rawCmd) {
-            spawnArgs = spawnArgs.concat(rawCmd);
+            spawnArgs = spawnArgs.concat(rawCmd.split(" "));
         }
 
         if (rawArgs) {
-            spawnArgs = spawnArgs.concat(rawArgs);
+            spawnArgs = spawnArgs.concat(rawArgs.split(" "));
         }
 
         var result = spawnSync(cordovaCmd, spawnArgs, { stdio: "inherit" });

@@ -43,16 +43,16 @@ function callIonic() {
 
         var ionicExecutable = process.platform == "win32" ? "ionic.cmd" : "ionic";
         var ionicCmd = path.resolve(ionicModule.path, "..", ".bin", ionicExecutable);
-        var rawCmd = process.env["INPUT_IONICCOMMAND"].split(" ");
-        var rawArgs = process.env["INPUT_IONICARGS"].split(" ");
+        var rawCmd = process.env["INPUT_IONICCOMMAND"];
+        var rawArgs = process.env["INPUT_IONICARGS"];
         var spawnArgs = [];
 
         if (rawCmd) {
-            spawnArgs = spawnArgs.concat(rawCmd);
+            spawnArgs = spawnArgs.concat(rawCmd.split(" "));
         }
 
         if (rawArgs) {
-            spawnArgs = spawnArgs.concat(rawArgs);
+            spawnArgs = spawnArgs.concat(rawArgs.split(" "));
         }
 
         var result = spawnSync(ionicCmd, spawnArgs, { stdio: "inherit" });
