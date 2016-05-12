@@ -38,17 +38,16 @@ function callPhoneGap() {
 
         var phonegapExecutable = process.platform == "win32" ? "phonegap.cmd" : "phonegap";
         var phonegapCmd = path.resolve(phonegapModule.path, "..", ".bin", phonegapExecutable);
-        var rawCmd = process.env["INPUT_PHONEGAPCOMMAND"];
-        var rawArgs = process.env["INPUT_PHONEGAPARGS"];
-
+        var rawCmd = process.env["INPUT_PHONEGAPCOMMAND"].split(" ");
+        var rawArgs = process.env["INPUT_PHONEGAPARGS"].split(" ");
         var spawnArgs = [];
 
         if (rawCmd) {
-            spawnArgs.push(rawCmd);
+            spawnArgs = spawnArgs.concat(rawCmd);
         }
 
         if (rawArgs) {
-            spawnArgs.push(rawArgs);
+            spawnArgs = spawnArgs.concat(rawArgs);
         }
 
         var result = spawnSync(phonegapCmd, spawnArgs, { stdio: "inherit" });
