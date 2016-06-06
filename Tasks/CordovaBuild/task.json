@@ -11,8 +11,8 @@
     "author": "Microsoft Corporation",
     "version": {
         "Major": 1,
-        "Minor": 2,
-        "Patch": 16
+        "Minor": 3,
+        "Patch": 9
     },
     "demands": [
         "npm"
