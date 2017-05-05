@@ -362,6 +362,9 @@ function execBuild(code) {
                 }
 
                 if (platform === 'android') {
+                    // Removes the old temp directory
+                    shelljs.rm("-rf", path.join(cordovaConfig.projectPath, 'platforms', 'android', '.gradle'));
+
                     if (semver.valid(cordovaVersion) && semver.lt(cordovaVersion, '4.0.0')) {
                         // Special case: android on cordova versions earlier than v4.0.0 will
                         // actively fail the build if it encounters unexpected options
