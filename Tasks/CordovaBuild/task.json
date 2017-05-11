@@ -265,6 +265,38 @@
             "required":false, 
             "helpMarkDown": "Build for a emulator or simulator instead of devices.",
             "groupName":"advanced"
+        },
+        {
+            "name": "appId",
+            "type": "string",
+            "label": "Application Id",
+            "required": false,
+            "helpMarkDown": "Id application to be compiled (Example: \"io.cordova.myapp12345\"). If it is empty, it will not be changed.",
+            "groupName":"advanced"
+        },
+        {
+            "name": "appName",
+            "type": "string",
+            "label": "Application name",
+            "required": false,
+            "helpMarkDown": "Name of application to be compiled. If it is empty, it will not be changed.",
+            "groupName":"advanced"
+        },
+        {
+            "name": "versionBuild",
+            "type": "string",
+            "label": "Build version",
+            "required": false,
+            "helpMarkDown": "Full build version application (Example: \"0.0.1\"). If it is empty, it will not be changed.",
+            "groupName":"advanced"
+        },
+        {
+            "name": "versionBuildAutoincrement",
+            "type": "boolean",
+            "label": "Autoincrement build version",
+            "required": false,
+            "helpMarkDown": "Autoincrement build version application",
+            "groupName":"advanced"
         }
     ],
     "execution": {
