@@ -10,7 +10,8 @@ var path = require('path'),
     glob = require('glob'),
     xcutils = require('./xcode-task-utils.js'),
     teambuild = require('taco-team-build'),
-    shelljs = require('shelljs');
+    shelljs = require('shelljs'),
+    ConfigParser = require('cordova-common').ConfigParser;
 
 
 // Globals - Easy way to have data available across promises.
@@ -394,6 +395,7 @@ function execBuild(code) {
 
                 return Q();
             }).then(function () {
+                changeCordovaConfig();
                 return teambuild.buildProject(platform, buildArgs)
             }).fin(function () {
                 // Remove xcconfig hook
@@ -407,6 +409,33 @@ function execBuild(code) {
                 }
             });
         });
+}
+
+function changeCordovaConfig() {
+    var config = new ConfigParser(path.join(cwd, 'config.xml'));    
+    if (process.env['INPUT_APPID']) {
+        config.setPackageName(process.env['INPUT_APPID']);
+        console.log("Application id: " + process.env['INPUT_APPID']);
+    }
+    if (process.env['INPUT_APPNAME']) {
+        config.setName(process.env['INPUT_APPNAME']);
+        console.log("Application name: " + process.env['INPUT_APPNAME']);
+    }
+    if (process.env['INPUT_VERSIONBUILDAUTOINCREMENT']) {
+        var arrayVersion = /(\d).(\d).(\d)/.exec(config.version());
+        if (!arrayVersion) {
+            return;
+        }
+        arrayVersion[3]++;
+        arrayVersion.splice(0, 1);
+        var newVersion = arrayVersion.join('.');
+        process.env['INPUT_VERSIONBUILD'] = newVersion;
+    }
+    if (process.env['INPUT_VERSIONBUILD']) {
+        config.setVersion(process.env['INPUT_VERSIONBUILD']);
+        console.log("Application version: " + process.env['INPUT_VERSIONBUILD']);
+    } 
+    config.write();
 }
 
 function stripNewerAndroidArgs(args) {
